@@ -7,7 +7,7 @@ import (
 )
 
 type Service struct {
-	product.UnimplementedDummyServer
+	product.UnimplementedProductCustomerServer
 
 	logger *zap.Logger
 	cfg    config.Config

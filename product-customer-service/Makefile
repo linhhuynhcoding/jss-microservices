@@ -23,4 +23,7 @@ update:
 	go mod tidy
 	go mod vendor
 
+update-rpc:
+	go get github.com/linhhuynhcoding/jss-microservices/rpc@main
+
 .PHOYE: network postgres createdb dropdb migrate-up new_migration update

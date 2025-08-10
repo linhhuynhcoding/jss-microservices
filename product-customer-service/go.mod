@@ -4,7 +4,7 @@ go 1.24.5
 
 require (
 	github.com/jackc/pgx/v5 v5.7.5
-	github.com/linhhuynhcoding/jss-microservices/rpc v0.0.0-20250810080950-f915638c9efa
+	github.com/linhhuynhcoding/jss-microservices/rpc v0.0.0-20250810103552-2d5661645c3e
 	go.uber.org/zap v1.27.0
 	google.golang.org/grpc v1.74.2
 )
