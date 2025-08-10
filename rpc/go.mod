@@ -1,4 +1,4 @@
-module module github.com/linhhuynhcoding/jss-microservices/rpc
+module github.com/linhhuynhcoding/jss-microservices/rpc
 
 go 1.24.5
 
