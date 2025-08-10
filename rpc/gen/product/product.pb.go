@@ -118,8 +118,8 @@ const file_product_product_proto_rawDesc = "" +
 	"\fDummyRequest\x12\x14\n" +
 	"\x05dummy\x18\x01 \x01(\x05R\x05dummy\"%\n" +
 	"\rDummyResponse\x12\x14\n" +
-	"\x05dummy\x18\x01 \x01(\x05R\x05dummy2U\n" +
-	"\x05Dummy\x12L\n" +
+	"\x05dummy\x18\x01 \x01(\x05R\x05dummy2_\n" +
+	"\x0fProductCustomer\x12L\n" +
 	"\x05Dummy\x12\x15.product.DummyRequest\x1a\x16.product.DummyResponse\"\x14\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/v1/dummyB\x19Z\x17rpc.jss.com/gen/productb\x06proto3"
 
 var (
@@ -140,8 +140,8 @@ var file_product_product_proto_goTypes = []any{
 	(*DummyResponse)(nil), // 1: product.DummyResponse
 }
 var file_product_product_proto_depIdxs = []int32{
-	0, // 0: product.Dummy.Dummy:input_type -> product.DummyRequest
-	1, // 1: product.Dummy.Dummy:output_type -> product.DummyResponse
+	0, // 0: product.ProductCustomer.Dummy:input_type -> product.DummyRequest
+	1, // 1: product.ProductCustomer.Dummy:output_type -> product.DummyResponse
 	1, // [1:2] is the sub-list for method output_type
 	0, // [0:1] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name

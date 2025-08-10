@@ -19,101 +19,101 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Dummy_Dummy_FullMethodName = "/product.Dummy/Dummy"
+	ProductCustomer_Dummy_FullMethodName = "/product.ProductCustomer/Dummy"
 )
 
-// DummyClient is the client API for Dummy service.
+// ProductCustomerClient is the client API for ProductCustomer service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type DummyClient interface {
+type ProductCustomerClient interface {
 	Dummy(ctx context.Context, in *DummyRequest, opts ...grpc.CallOption) (*DummyResponse, error)
 }
 
-type dummyClient struct {
+type productCustomerClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewDummyClient(cc grpc.ClientConnInterface) DummyClient {
-	return &dummyClient{cc}
+func NewProductCustomerClient(cc grpc.ClientConnInterface) ProductCustomerClient {
+	return &productCustomerClient{cc}
 }
 
-func (c *dummyClient) Dummy(ctx context.Context, in *DummyRequest, opts ...grpc.CallOption) (*DummyResponse, error) {
+func (c *productCustomerClient) Dummy(ctx context.Context, in *DummyRequest, opts ...grpc.CallOption) (*DummyResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(DummyResponse)
-	err := c.cc.Invoke(ctx, Dummy_Dummy_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, ProductCustomer_Dummy_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// DummyServer is the server API for Dummy service.
-// All implementations must embed UnimplementedDummyServer
+// ProductCustomerServer is the server API for ProductCustomer service.
+// All implementations must embed UnimplementedProductCustomerServer
 // for forward compatibility.
-type DummyServer interface {
+type ProductCustomerServer interface {
 	Dummy(context.Context, *DummyRequest) (*DummyResponse, error)
-	mustEmbedUnimplementedDummyServer()
+	mustEmbedUnimplementedProductCustomerServer()
 }
 
-// UnimplementedDummyServer must be embedded to have
+// UnimplementedProductCustomerServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedDummyServer struct{}
+type UnimplementedProductCustomerServer struct{}
 
-func (UnimplementedDummyServer) Dummy(context.Context, *DummyRequest) (*DummyResponse, error) {
+func (UnimplementedProductCustomerServer) Dummy(context.Context, *DummyRequest) (*DummyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Dummy not implemented")
 }
-func (UnimplementedDummyServer) mustEmbedUnimplementedDummyServer() {}
-func (UnimplementedDummyServer) testEmbeddedByValue()               {}
+func (UnimplementedProductCustomerServer) mustEmbedUnimplementedProductCustomerServer() {}
+func (UnimplementedProductCustomerServer) testEmbeddedByValue()                         {}
 
-// UnsafeDummyServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to DummyServer will
+// UnsafeProductCustomerServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ProductCustomerServer will
 // result in compilation errors.
-type UnsafeDummyServer interface {
-	mustEmbedUnimplementedDummyServer()
+type UnsafeProductCustomerServer interface {
+	mustEmbedUnimplementedProductCustomerServer()
 }
 
-func RegisterDummyServer(s grpc.ServiceRegistrar, srv DummyServer) {
-	// If the following call pancis, it indicates UnimplementedDummyServer was
+func RegisterProductCustomerServer(s grpc.ServiceRegistrar, srv ProductCustomerServer) {
+	// If the following call pancis, it indicates UnimplementedProductCustomerServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&Dummy_ServiceDesc, srv)
+	s.RegisterService(&ProductCustomer_ServiceDesc, srv)
 }
 
-func _Dummy_Dummy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ProductCustomer_Dummy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DummyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DummyServer).Dummy(ctx, in)
+		return srv.(ProductCustomerServer).Dummy(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Dummy_Dummy_FullMethodName,
+		FullMethod: ProductCustomer_Dummy_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DummyServer).Dummy(ctx, req.(*DummyRequest))
+		return srv.(ProductCustomerServer).Dummy(ctx, req.(*DummyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Dummy_ServiceDesc is the grpc.ServiceDesc for Dummy service.
+// ProductCustomer_ServiceDesc is the grpc.ServiceDesc for ProductCustomer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Dummy_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "product.Dummy",
-	HandlerType: (*DummyServer)(nil),
+var ProductCustomer_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "product.ProductCustomer",
+	HandlerType: (*ProductCustomerServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Dummy",
-			Handler:    _Dummy_Dummy_Handler,
+			Handler:    _ProductCustomer_Dummy_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

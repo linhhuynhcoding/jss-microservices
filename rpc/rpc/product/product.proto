@@ -6,7 +6,7 @@ import "google/api/annotations.proto";
 
 option go_package = "rpc.jss.com/gen/product";
 
-service Dummy {
+service ProductCustomer {
     rpc Dummy (DummyRequest) returns (DummyResponse) {
         option (google.api.http) = {
             post: "/v1/dummy"

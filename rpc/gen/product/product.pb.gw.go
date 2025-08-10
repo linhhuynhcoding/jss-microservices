@@ -35,7 +35,7 @@ var (
 	_ = metadata.Join
 )
 
-func request_Dummy_Dummy_0(ctx context.Context, marshaler runtime.Marshaler, client DummyClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ProductCustomer_Dummy_0(ctx context.Context, marshaler runtime.Marshaler, client ProductCustomerClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq DummyRequest
 		metadata runtime.ServerMetadata
@@ -50,7 +50,7 @@ func request_Dummy_Dummy_0(ctx context.Context, marshaler runtime.Marshaler, cli
 	return msg, metadata, err
 }
 
-func local_request_Dummy_Dummy_0(ctx context.Context, marshaler runtime.Marshaler, server DummyServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ProductCustomer_Dummy_0(ctx context.Context, marshaler runtime.Marshaler, server ProductCustomerServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq DummyRequest
 		metadata runtime.ServerMetadata
@@ -62,39 +62,39 @@ func local_request_Dummy_Dummy_0(ctx context.Context, marshaler runtime.Marshale
 	return msg, metadata, err
 }
 
-// RegisterDummyHandlerServer registers the http handlers for service Dummy to "mux".
-// UnaryRPC     :call DummyServer directly.
+// RegisterProductCustomerHandlerServer registers the http handlers for service ProductCustomer to "mux".
+// UnaryRPC     :call ProductCustomerServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterDummyHandlerFromEndpoint instead.
+// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterProductCustomerHandlerFromEndpoint instead.
 // GRPC interceptors will not work for this type of registration. To use interceptors, you must use the "runtime.WithMiddlewares" option in the "runtime.NewServeMux" call.
-func RegisterDummyHandlerServer(ctx context.Context, mux *runtime.ServeMux, server DummyServer) error {
-	mux.Handle(http.MethodPost, pattern_Dummy_Dummy_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+func RegisterProductCustomerHandlerServer(ctx context.Context, mux *runtime.ServeMux, server ProductCustomerServer) error {
+	mux.Handle(http.MethodPost, pattern_ProductCustomer_Dummy_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/product.Dummy/Dummy", runtime.WithHTTPPathPattern("/v1/dummy"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/product.ProductCustomer/Dummy", runtime.WithHTTPPathPattern("/v1/dummy"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_Dummy_Dummy_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ProductCustomer_Dummy_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_Dummy_Dummy_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProductCustomer_Dummy_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
 
 	return nil
 }
 
-// RegisterDummyHandlerFromEndpoint is same as RegisterDummyHandler but
+// RegisterProductCustomerHandlerFromEndpoint is same as RegisterProductCustomerHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterDummyHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterProductCustomerHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.NewClient(endpoint, opts...)
 	if err != nil {
 		return err
@@ -113,45 +113,45 @@ func RegisterDummyHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux
 			}
 		}()
 	}()
-	return RegisterDummyHandler(ctx, mux, conn)
+	return RegisterProductCustomerHandler(ctx, mux, conn)
 }
 
-// RegisterDummyHandler registers the http handlers for service Dummy to "mux".
+// RegisterProductCustomerHandler registers the http handlers for service ProductCustomer to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterDummyHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterDummyHandlerClient(ctx, mux, NewDummyClient(conn))
+func RegisterProductCustomerHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterProductCustomerHandlerClient(ctx, mux, NewProductCustomerClient(conn))
 }
 
-// RegisterDummyHandlerClient registers the http handlers for service Dummy
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "DummyClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "DummyClient"
+// RegisterProductCustomerHandlerClient registers the http handlers for service ProductCustomer
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "ProductCustomerClient".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "ProductCustomerClient"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "DummyClient" to call the correct interceptors. This client ignores the HTTP middlewares.
-func RegisterDummyHandlerClient(ctx context.Context, mux *runtime.ServeMux, client DummyClient) error {
-	mux.Handle(http.MethodPost, pattern_Dummy_Dummy_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+// "ProductCustomerClient" to call the correct interceptors. This client ignores the HTTP middlewares.
+func RegisterProductCustomerHandlerClient(ctx context.Context, mux *runtime.ServeMux, client ProductCustomerClient) error {
+	mux.Handle(http.MethodPost, pattern_ProductCustomer_Dummy_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/product.Dummy/Dummy", runtime.WithHTTPPathPattern("/v1/dummy"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/product.ProductCustomer/Dummy", runtime.WithHTTPPathPattern("/v1/dummy"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_Dummy_Dummy_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ProductCustomer_Dummy_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_Dummy_Dummy_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProductCustomer_Dummy_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
 	return nil
 }
 
 var (
-	pattern_Dummy_Dummy_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "dummy"}, ""))
+	pattern_ProductCustomer_Dummy_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "dummy"}, ""))
 )
 
 var (
-	forward_Dummy_Dummy_0 = runtime.ForwardResponseMessage
+	forward_ProductCustomer_Dummy_0 = runtime.ForwardResponseMessage
 )
