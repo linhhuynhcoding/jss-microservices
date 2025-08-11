@@ -1233,7 +1233,7 @@ const file_product_product_proto_rawDesc = "" +
 	"\vGetCustomer\x12\x1b.product.GetCustomerRequest\x1a\x19.product.CustomerResponse\"\x1a\x82\xd3\xe4\x93\x02\x14\x12\x12/v1/customers/{id}\x12e\n" +
 	"\rListCustomers\x12\x1d.product.ListCustomersRequest\x1a\x1e.product.ListCustomersResponse\"\x15\x82\xd3\xe4\x93\x02\x0f\x12\r/v1/customers\x12j\n" +
 	"\x0eUpdateCustomer\x12\x1e.product.UpdateCustomerRequest\x1a\x19.product.CustomerResponse\"\x1d\x82\xd3\xe4\x93\x02\x17:\x01*2\x12/v1/customers/{id}\x12m\n" +
-	"\x0eDeleteCustomer\x12\x1e.product.DeleteCustomerRequest\x1a\x1f.product.DeleteCustomerResponse\"\x1a\x82\xd3\xe4\x93\x02\x14*\x12/v1/customers/{id}B\x19Z\x17rpc.jss.com/gen/productb\x06proto3"
+	"\x0eDeleteCustomer\x12\x1e.product.DeleteCustomerRequest\x1a\x1f.product.DeleteCustomerResponse\"\x1a\x82\xd3\xe4\x93\x02\x14*\x12/v1/customers/{id}B>Z<github.com/linhhuynhcoding/jss-microservices/rpc/gen/productb\x06proto3"
 
 var (
 	file_product_product_proto_rawDescOnce sync.Once
