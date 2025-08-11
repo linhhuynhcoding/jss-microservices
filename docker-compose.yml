@@ -1,0 +1,161 @@
+services:
+  mongo:
+    image: mongo:6
+    container_name: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: software_dev
+      MONGO_INITDB_ROOT_PASSWORD: 123456Aa.
+      MONGO_INITDB_DATABASE: cluster0
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - microservice-network
+    command: mongod --auth
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - microservice-network
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "check_port_connectivity"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  redis:
+    image: redis:7
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - microservice-network
+
+  auth-service:
+    build:
+      context: .
+      dockerfile: auth-service/Dockerfile
+    container_name: auth-service
+    env_file:
+      - ./auth-service/.env.example
+    ports:
+      - "8001:8001"
+      - "50001:50001"
+    depends_on:
+      mongo:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - microservice-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # product-service:
+  #   build:
+  #     context: ./product-service
+  #     dockerfile: Dockerfile
+  #   container_name: product-service
+  #   env_file:
+  #     - ./product-service/.env.example
+  #   ports:
+  #     - "8002:8002"
+  #     - "50002:50002"
+  #   depends_on:
+  #     auth-service:
+  #       condition: service_healthy
+  #     rabbitmq:
+  #       condition: service_healthy
+  #   networks:
+  #     - microservice-network
+
+  kong-database:
+    image: postgres:13
+    container_name: kong-database
+    restart: always
+    environment:
+      POSTGRES_USER: kong
+      POSTGRES_PASSWORD: kongpass
+      POSTGRES_DB: kong
+    volumes:
+      - kong_data:/var/lib/postgresql/data
+    networks:
+      - microservice-network
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "kong"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  kong-migration:
+    image: kong:3.3.1
+    command: kong migrations bootstrap
+    depends_on:
+      kong-database:
+        condition: service_healthy
+    environment:
+      KONG_DATABASE: postgres
+      KONG_PG_HOST: kong-database
+      KONG_PG_USER: kong
+      KONG_PG_PASSWORD: kongpass
+    networks:
+      - microservice-network
+    restart: on-failure
+
+  kong:
+    image: kong:3.3.1
+    container_name: kong
+    restart: always
+    environment:
+      KONG_DATABASE: off
+      KONG_DECLARATIVE_CONFIG: /usr/local/kong/declarative/kong.yml
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_LISTEN: 0.0.0.0:8004
+    ports:
+      - "8000:8000" # Proxy
+      - "8004:8004" # Admin API
+      - "8443:8443" # Proxy SSL
+      - "8444:8444" # Admin SSL
+    volumes:
+      - ./api-gateway/kong.yml:/usr/local/kong/declarative/kong.yml:ro
+    networks:
+      - microservice-network
+    healthcheck:
+      test: ["CMD", "kong", "health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mongo_data:
+  rabbitmq_data:
+  kong_data:
+    driver: local
+
+networks:
+  microservice-network:
+    driver: bridge
