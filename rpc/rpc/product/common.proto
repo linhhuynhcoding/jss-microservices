@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package product;
 
-option go_package = "rpc.jss.com/gen/product";
+option go_package = "github.com/linhhuynhcoding/jss-microservices/rpc/gen/product";
 
 message User {
     string dummy = 1;

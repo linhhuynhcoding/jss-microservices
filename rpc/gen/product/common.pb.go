@@ -398,7 +398,7 @@ const file_product_common_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\x06 \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\a \x01(\tR\tupdatedAtB\x19Z\x17rpc.jss.com/gen/productb\x06proto3"
+	"updated_at\x18\a \x01(\tR\tupdatedAtB>Z<github.com/linhhuynhcoding/jss-microservices/rpc/gen/productb\x06proto3"
 
 var (
 	file_product_common_proto_rawDescOnce sync.Once

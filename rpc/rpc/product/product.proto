@@ -5,7 +5,7 @@ package product;
 import "google/api/annotations.proto";
 import "product/common.proto"; 
 
-option go_package = "rpc.jss.com/gen/product";
+option go_package = "github.com/linhhuynhcoding/jss-microservices/rpc/gen/product";
 
 service ProductCustomer {
     rpc Dummy (DummyRequest) returns (DummyResponse) {
