@@ -1,0 +1,149 @@
+syntax = "proto3";
+
+package auth;
+import "google/api/annotations.proto";
+
+// Go package path khi generate stub
+option go_package = "github.com/linhhuynhcoding/jss-microservices/rpc/gen/auth";
+
+// Các role cố định
+enum Role {
+  ROLE_UNSPECIFIED = 0;
+  ADMIN            = 1;
+  MANAGER          = 2;
+  STAFF            = 3;
+}
+
+// Payload tạo access token
+message AccessTokenRequest {
+  string user_id   = 1;
+  Role   role      = 2;
+  string device_id = 3;
+}
+
+// Kết quả trả về token
+message TokenResponse {
+  string access_token  = 1;
+  string refresh_token = 2;
+}
+
+// Register
+message RegisterRequest {
+  string email    = 1;
+  string name     = 2;
+  string password = 3;
+  string code     = 4; // OTP
+}
+message RegisterResponse {
+  string user_id = 1;
+}
+
+// Send OTP
+message SendOTPRequest {
+  string email = 1;
+  // REGISTER hoặc FORGOT_PASSWORD
+  enum Type { TYPE_UNSPECIFIED = 0; REGISTER = 1; FORGOT_PASSWORD = 2; }
+  Type type = 2;
+}
+message SendOTPResponse {
+  string message = 1;
+}
+
+// Login
+message LoginRequest {
+  string email    = 1;
+  string password = 2;
+}
+message LoginResponse {
+  TokenResponse tokens = 1;
+}
+
+// Refresh token
+message RefreshTokenRequest {
+  string refresh_token = 1;
+}
+message RefreshTokenResponse {
+  TokenResponse tokens = 1;
+}
+
+// Logout
+message LogoutRequest {
+  string refresh_token = 1;
+}
+message LogoutResponse {
+  string message = 1;
+}
+
+// Validate access token
+message ValidateTokenRequest {
+  string token = 1;
+}
+message ValidateTokenResponse {
+  bool   valid   = 1;
+  string user_id = 2;
+  Role   role    = 3;
+}
+
+// Forgot password
+message ForgotPasswordRequest {
+  string email           = 1;
+  string code            = 2;
+  string new_password    = 3;
+}
+message ForgotPasswordResponse {
+  string message = 1;
+}
+
+// Auth service interface
+service AuthService {
+  // Đăng ký
+  rpc Register(RegisterRequest) returns (RegisterResponse) {
+    option (google.api.http) = {
+      post: "/v1/auth/register"
+      body: "*"
+    };
+  }
+
+  // Gửi OTP
+  rpc SendOTP(SendOTPRequest) returns (SendOTPResponse) {
+    option (google.api.http) = {
+      post: "/v1/auth/otp"
+      body: "*"
+    };
+  }
+
+  // Đăng nhập
+  rpc Login(LoginRequest) returns (LoginResponse) {
+    option (google.api.http) = {
+      post: "/v1/auth/login"
+      body: "*"
+    };
+  }
+
+  // Refresh token
+  rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse) {
+    option (google.api.http) = {
+      post: "/v1/auth/refresh-token"
+      body: "*"
+    };
+  }
+
+  // Logout
+  rpc Logout(LogoutRequest) returns (LogoutResponse) {
+    option (google.api.http) = {
+      post: "/v1/auth/logout"
+      body: "*"
+    };
+  }
+
+  // Validate token
+  rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse);
+
+  // Quên mật khẩu
+  rpc ForgotPassword(ForgotPasswordRequest) returns (ForgotPasswordResponse) {
+    option (google.api.http) = {
+      post: "/v1/auth/forgot-password"
+      body: "*"
+    };
+  }
+}
