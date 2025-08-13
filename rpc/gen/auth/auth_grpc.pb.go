@@ -4,7 +4,7 @@
 // - protoc             v3.21.12
 // source: auth/auth.proto
 
-package auth
+package authpb
 
 import (
 	context "context"
@@ -22,20 +22,14 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AuthServiceClient interface {
-	// Đăng ký
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
-	// Gửi OTP
-	SendOTP(ctx context.Context, in *SendOTPRequest, opts ...grpc.CallOption) (*SendOTPResponse, error)
-	// Đăng nhập
-	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
-	// Refresh token
-	RefreshToken(ctx context.Context, in *RefreshTokenRequest, opts ...grpc.CallOption) (*RefreshTokenResponse, error)
-	// Logout
-	Logout(ctx context.Context, in *LogoutRequest, opts ...grpc.CallOption) (*LogoutResponse, error)
-	// Validate token
-	ValidateToken(ctx context.Context, in *ValidateTokenRequest, opts ...grpc.CallOption) (*ValidateTokenResponse, error)
-	// Quên mật khẩu
-	ForgotPassword(ctx context.Context, in *ForgotPasswordRequest, opts ...grpc.CallOption) (*ForgotPasswordResponse, error)
+	SendOtp(ctx context.Context, in *SendOtpRequest, opts ...grpc.CallOption) (*MessageResponse, error)
+	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*TokenResponse, error)
+	RefreshToken(ctx context.Context, in *RefreshTokenRequest, opts ...grpc.CallOption) (*TokenResponse, error)
+	Logout(ctx context.Context, in *LogoutRequest, opts ...grpc.CallOption) (*MessageResponse, error)
+	ForgotPassword(ctx context.Context, in *ForgotPasswordRequest, opts ...grpc.CallOption) (*MessageResponse, error)
+	GetAuthorizationUrl(ctx context.Context, in *GoogleAuthState, opts ...grpc.CallOption) (*AuthorizationUrlResponse, error)
+	GoogleCallback(ctx context.Context, in *GoogleCallbackRequest, opts ...grpc.CallOption) (*TokenResponse, error)
 }
 
 type authServiceClient struct {
@@ -55,17 +49,17 @@ func (c *authServiceClient) Register(ctx context.Context, in *RegisterRequest, o
 	return out, nil
 }
 
-func (c *authServiceClient) SendOTP(ctx context.Context, in *SendOTPRequest, opts ...grpc.CallOption) (*SendOTPResponse, error) {
-	out := new(SendOTPResponse)
-	err := c.cc.Invoke(ctx, "/auth.AuthService/SendOTP", in, out, opts...)
+func (c *authServiceClient) SendOtp(ctx context.Context, in *SendOtpRequest, opts ...grpc.CallOption) (*MessageResponse, error) {
+	out := new(MessageResponse)
+	err := c.cc.Invoke(ctx, "/auth.AuthService/SendOtp", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *authServiceClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
-	out := new(LoginResponse)
+func (c *authServiceClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*TokenResponse, error) {
+	out := new(TokenResponse)
 	err := c.cc.Invoke(ctx, "/auth.AuthService/Login", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -73,8 +67,8 @@ func (c *authServiceClient) Login(ctx context.Context, in *LoginRequest, opts ..
 	return out, nil
 }
 
-func (c *authServiceClient) RefreshToken(ctx context.Context, in *RefreshTokenRequest, opts ...grpc.CallOption) (*RefreshTokenResponse, error) {
-	out := new(RefreshTokenResponse)
+func (c *authServiceClient) RefreshToken(ctx context.Context, in *RefreshTokenRequest, opts ...grpc.CallOption) (*TokenResponse, error) {
+	out := new(TokenResponse)
 	err := c.cc.Invoke(ctx, "/auth.AuthService/RefreshToken", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -82,8 +76,8 @@ func (c *authServiceClient) RefreshToken(ctx context.Context, in *RefreshTokenRe
 	return out, nil
 }
 
-func (c *authServiceClient) Logout(ctx context.Context, in *LogoutRequest, opts ...grpc.CallOption) (*LogoutResponse, error) {
-	out := new(LogoutResponse)
+func (c *authServiceClient) Logout(ctx context.Context, in *LogoutRequest, opts ...grpc.CallOption) (*MessageResponse, error) {
+	out := new(MessageResponse)
 	err := c.cc.Invoke(ctx, "/auth.AuthService/Logout", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -91,18 +85,27 @@ func (c *authServiceClient) Logout(ctx context.Context, in *LogoutRequest, opts 
 	return out, nil
 }
 
-func (c *authServiceClient) ValidateToken(ctx context.Context, in *ValidateTokenRequest, opts ...grpc.CallOption) (*ValidateTokenResponse, error) {
-	out := new(ValidateTokenResponse)
-	err := c.cc.Invoke(ctx, "/auth.AuthService/ValidateToken", in, out, opts...)
+func (c *authServiceClient) ForgotPassword(ctx context.Context, in *ForgotPasswordRequest, opts ...grpc.CallOption) (*MessageResponse, error) {
+	out := new(MessageResponse)
+	err := c.cc.Invoke(ctx, "/auth.AuthService/ForgotPassword", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *authServiceClient) ForgotPassword(ctx context.Context, in *ForgotPasswordRequest, opts ...grpc.CallOption) (*ForgotPasswordResponse, error) {
-	out := new(ForgotPasswordResponse)
-	err := c.cc.Invoke(ctx, "/auth.AuthService/ForgotPassword", in, out, opts...)
+func (c *authServiceClient) GetAuthorizationUrl(ctx context.Context, in *GoogleAuthState, opts ...grpc.CallOption) (*AuthorizationUrlResponse, error) {
+	out := new(AuthorizationUrlResponse)
+	err := c.cc.Invoke(ctx, "/auth.AuthService/GetAuthorizationUrl", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) GoogleCallback(ctx context.Context, in *GoogleCallbackRequest, opts ...grpc.CallOption) (*TokenResponse, error) {
+	out := new(TokenResponse)
+	err := c.cc.Invoke(ctx, "/auth.AuthService/GoogleCallback", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -113,20 +116,14 @@ func (c *authServiceClient) ForgotPassword(ctx context.Context, in *ForgotPasswo
 // All implementations must embed UnimplementedAuthServiceServer
 // for forward compatibility
 type AuthServiceServer interface {
-	// Đăng ký
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
-	// Gửi OTP
-	SendOTP(context.Context, *SendOTPRequest) (*SendOTPResponse, error)
-	// Đăng nhập
-	Login(context.Context, *LoginRequest) (*LoginResponse, error)
-	// Refresh token
-	RefreshToken(context.Context, *RefreshTokenRequest) (*RefreshTokenResponse, error)
-	// Logout
-	Logout(context.Context, *LogoutRequest) (*LogoutResponse, error)
-	// Validate token
-	ValidateToken(context.Context, *ValidateTokenRequest) (*ValidateTokenResponse, error)
-	// Quên mật khẩu
-	ForgotPassword(context.Context, *ForgotPasswordRequest) (*ForgotPasswordResponse, error)
+	SendOtp(context.Context, *SendOtpRequest) (*MessageResponse, error)
+	Login(context.Context, *LoginRequest) (*TokenResponse, error)
+	RefreshToken(context.Context, *RefreshTokenRequest) (*TokenResponse, error)
+	Logout(context.Context, *LogoutRequest) (*MessageResponse, error)
+	ForgotPassword(context.Context, *ForgotPasswordRequest) (*MessageResponse, error)
+	GetAuthorizationUrl(context.Context, *GoogleAuthState) (*AuthorizationUrlResponse, error)
+	GoogleCallback(context.Context, *GoogleCallbackRequest) (*TokenResponse, error)
 	mustEmbedUnimplementedAuthServiceServer()
 }
 
@@ -137,23 +134,26 @@ type UnimplementedAuthServiceServer struct {
 func (UnimplementedAuthServiceServer) Register(context.Context, *RegisterRequest) (*RegisterResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
 }
-func (UnimplementedAuthServiceServer) SendOTP(context.Context, *SendOTPRequest) (*SendOTPResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SendOTP not implemented")
+func (UnimplementedAuthServiceServer) SendOtp(context.Context, *SendOtpRequest) (*MessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendOtp not implemented")
 }
-func (UnimplementedAuthServiceServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
+func (UnimplementedAuthServiceServer) Login(context.Context, *LoginRequest) (*TokenResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
-func (UnimplementedAuthServiceServer) RefreshToken(context.Context, *RefreshTokenRequest) (*RefreshTokenResponse, error) {
+func (UnimplementedAuthServiceServer) RefreshToken(context.Context, *RefreshTokenRequest) (*TokenResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RefreshToken not implemented")
 }
-func (UnimplementedAuthServiceServer) Logout(context.Context, *LogoutRequest) (*LogoutResponse, error) {
+func (UnimplementedAuthServiceServer) Logout(context.Context, *LogoutRequest) (*MessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Logout not implemented")
 }
-func (UnimplementedAuthServiceServer) ValidateToken(context.Context, *ValidateTokenRequest) (*ValidateTokenResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ValidateToken not implemented")
-}
-func (UnimplementedAuthServiceServer) ForgotPassword(context.Context, *ForgotPasswordRequest) (*ForgotPasswordResponse, error) {
+func (UnimplementedAuthServiceServer) ForgotPassword(context.Context, *ForgotPasswordRequest) (*MessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ForgotPassword not implemented")
+}
+func (UnimplementedAuthServiceServer) GetAuthorizationUrl(context.Context, *GoogleAuthState) (*AuthorizationUrlResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAuthorizationUrl not implemented")
+}
+func (UnimplementedAuthServiceServer) GoogleCallback(context.Context, *GoogleCallbackRequest) (*TokenResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GoogleCallback not implemented")
 }
 func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
 
@@ -186,20 +186,20 @@ func _AuthService_Register_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AuthService_SendOTP_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SendOTPRequest)
+func _AuthService_SendOtp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SendOtpRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServiceServer).SendOTP(ctx, in)
+		return srv.(AuthServiceServer).SendOtp(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/auth.AuthService/SendOTP",
+		FullMethod: "/auth.AuthService/SendOtp",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServiceServer).SendOTP(ctx, req.(*SendOTPRequest))
+		return srv.(AuthServiceServer).SendOtp(ctx, req.(*SendOtpRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -258,24 +258,6 @@ func _AuthService_Logout_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AuthService_ValidateToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ValidateTokenRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AuthServiceServer).ValidateToken(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/auth.AuthService/ValidateToken",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServiceServer).ValidateToken(ctx, req.(*ValidateTokenRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _AuthService_ForgotPassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ForgotPasswordRequest)
 	if err := dec(in); err != nil {
@@ -294,6 +276,42 @@ func _AuthService_ForgotPassword_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AuthService_GetAuthorizationUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GoogleAuthState)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).GetAuthorizationUrl(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/auth.AuthService/GetAuthorizationUrl",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).GetAuthorizationUrl(ctx, req.(*GoogleAuthState))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_GoogleCallback_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GoogleCallbackRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).GoogleCallback(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/auth.AuthService/GoogleCallback",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).GoogleCallback(ctx, req.(*GoogleCallbackRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AuthService_ServiceDesc is the grpc.ServiceDesc for AuthService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -306,8 +324,8 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AuthService_Register_Handler,
 		},
 		{
-			MethodName: "SendOTP",
-			Handler:    _AuthService_SendOTP_Handler,
+			MethodName: "SendOtp",
+			Handler:    _AuthService_SendOtp_Handler,
 		},
 		{
 			MethodName: "Login",
@@ -322,12 +340,16 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AuthService_Logout_Handler,
 		},
 		{
-			MethodName: "ValidateToken",
-			Handler:    _AuthService_ValidateToken_Handler,
-		},
-		{
 			MethodName: "ForgotPassword",
 			Handler:    _AuthService_ForgotPassword_Handler,
+		},
+		{
+			MethodName: "GetAuthorizationUrl",
+			Handler:    _AuthService_GetAuthorizationUrl_Handler,
+		},
+		{
+			MethodName: "GoogleCallback",
+			Handler:    _AuthService_GoogleCallback_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
