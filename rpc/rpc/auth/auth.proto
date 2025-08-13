@@ -1,102 +1,105 @@
 syntax = "proto3";
 
 package auth;
+
 import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "google/protobuf/empty.proto";
 
-// Go package path khi generate stub
-option go_package = "github.com/linhhuynhcoding/jss-microservices/rpc/gen/auth";
+option go_package = "github.com/linhhuynhcoding/jss-microservices/rpc/gen/auth;authpb";
 
-// Các role cố định
-enum Role {
-  ROLE_UNSPECIFIED = 0;
-  ADMIN            = 1;
-  MANAGER          = 2;
-  STAFF            = 3;
+// -----------------------------------------------------------------------------
+// ENUMS
+// -----------------------------------------------------------------------------
+
+enum VerificationCodeType {
+  VERIFICATION_CODE_TYPE_UNSPECIFIED = 0;
+  REGISTER = 1;
+  FORGOT_PASSWORD = 2;
 }
 
-// Payload tạo access token
-message AccessTokenRequest {
-  string user_id   = 1;
-  Role   role      = 2;
-  string device_id = 3;
+// -----------------------------------------------------------------------------
+// MESSAGES
+// -----------------------------------------------------------------------------
+
+message RegisterRequest {
+  string email            = 1 [(google.api.field_behavior) = REQUIRED];
+  string password         = 2 [(google.api.field_behavior) = REQUIRED];
+  string confirm_password = 3 [(google.api.field_behavior) = REQUIRED];
+  string name             = 4 [(google.api.field_behavior) = REQUIRED];
+  string phone_number     = 5 [(google.api.field_behavior) = REQUIRED];
+  string code             = 6 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Kết quả trả về token
+message User {
+  int32  id           = 1;
+  string email        = 2;
+  string name         = 3;
+  string phone_number = 4;
+  string avatar       = 5;
+}
+
+message RegisterResponse {
+  User user = 1;
+}
+
+message SendOtpRequest {
+  string email              = 1 [(google.api.field_behavior) = REQUIRED];
+  VerificationCodeType type = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+message MessageResponse {
+  string message = 1;
+}
+
+message LoginRequest {
+  string email      = 1 [(google.api.field_behavior) = REQUIRED];
+  string password   = 2 [(google.api.field_behavior) = REQUIRED];
+  string user_agent = 3;
+  string ip         = 4;
+}
+
 message TokenResponse {
   string access_token  = 1;
   string refresh_token = 2;
 }
 
-// Register
-message RegisterRequest {
-  string email    = 1;
-  string name     = 2;
-  string password = 3;
-  string code     = 4; // OTP
-}
-message RegisterResponse {
-  string user_id = 1;
-}
-
-// Send OTP
-message SendOTPRequest {
-  string email = 1;
-  // REGISTER hoặc FORGOT_PASSWORD
-  enum Type { TYPE_UNSPECIFIED = 0; REGISTER = 1; FORGOT_PASSWORD = 2; }
-  Type type = 2;
-}
-message SendOTPResponse {
-  string message = 1;
-}
-
-// Login
-message LoginRequest {
-  string email    = 1;
-  string password = 2;
-}
-message LoginResponse {
-  TokenResponse tokens = 1;
-}
-
-// Refresh token
 message RefreshTokenRequest {
-  string refresh_token = 1;
-}
-message RefreshTokenResponse {
-  TokenResponse tokens = 1;
+  string refresh_token = 1 [(google.api.field_behavior) = REQUIRED];
+  string user_agent    = 2;
+  string ip            = 3;
 }
 
-// Logout
 message LogoutRequest {
-  string refresh_token = 1;
-}
-message LogoutResponse {
-  string message = 1;
+  string refresh_token = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Validate access token
-message ValidateTokenRequest {
-  string token = 1;
-}
-message ValidateTokenResponse {
-  bool   valid   = 1;
-  string user_id = 2;
-  Role   role    = 3;
-}
-
-// Forgot password
 message ForgotPasswordRequest {
-  string email           = 1;
-  string code            = 2;
-  string new_password    = 3;
-}
-message ForgotPasswordResponse {
-  string message = 1;
+  string email            = 1 [(google.api.field_behavior) = REQUIRED];
+  string code             = 2 [(google.api.field_behavior) = REQUIRED];
+  string new_password     = 3 [(google.api.field_behavior) = REQUIRED];
+  string confirm_password = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Auth service interface
+message GoogleAuthState {
+  string user_agent = 1;
+  string ip         = 2;
+}
+
+message AuthorizationUrlResponse {
+  string url = 1;
+}
+
+message GoogleCallbackRequest {
+  string code  = 1 [(google.api.field_behavior) = REQUIRED];
+  string state = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// -----------------------------------------------------------------------------
+// SERVICE
+// -----------------------------------------------------------------------------
+
 service AuthService {
-  // Đăng ký
   rpc Register(RegisterRequest) returns (RegisterResponse) {
     option (google.api.http) = {
       post: "/v1/auth/register"
@@ -104,46 +107,50 @@ service AuthService {
     };
   }
 
-  // Gửi OTP
-  rpc SendOTP(SendOTPRequest) returns (SendOTPResponse) {
+  rpc SendOtp(SendOtpRequest) returns (MessageResponse) {
     option (google.api.http) = {
       post: "/v1/auth/otp"
       body: "*"
     };
   }
 
-  // Đăng nhập
-  rpc Login(LoginRequest) returns (LoginResponse) {
+  rpc Login(LoginRequest) returns (TokenResponse) {
     option (google.api.http) = {
       post: "/v1/auth/login"
       body: "*"
     };
   }
 
-  // Refresh token
-  rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse) {
+  rpc RefreshToken(RefreshTokenRequest) returns (TokenResponse) {
     option (google.api.http) = {
       post: "/v1/auth/refresh-token"
       body: "*"
     };
   }
 
-  // Logout
-  rpc Logout(LogoutRequest) returns (LogoutResponse) {
+  rpc Logout(LogoutRequest) returns (MessageResponse) {
     option (google.api.http) = {
       post: "/v1/auth/logout"
       body: "*"
     };
   }
 
-  // Validate token
-  rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse);
-
-  // Quên mật khẩu
-  rpc ForgotPassword(ForgotPasswordRequest) returns (ForgotPasswordResponse) {
+  rpc ForgotPassword(ForgotPasswordRequest) returns (MessageResponse) {
     option (google.api.http) = {
       post: "/v1/auth/forgot-password"
       body: "*"
+    };
+  }
+
+  rpc GetAuthorizationUrl(GoogleAuthState) returns (AuthorizationUrlResponse) {
+    option (google.api.http) = {
+      get: "/v1/auth/google-link"
+    };
+  }
+
+  rpc GoogleCallback(GoogleCallbackRequest) returns (TokenResponse) {
+    option (google.api.http) = {
+      get: "/v1/auth/google/callback"
     };
   }
 }
