@@ -12,145 +12,89 @@ option go_package = "github.com/linhhuynhcoding/jss-microservices/rpc/gen/auth;a
 // ENUMS
 // -----------------------------------------------------------------------------
 
-enum VerificationCodeType {
-  VERIFICATION_CODE_TYPE_UNSPECIFIED = 0;
-  REGISTER = 1;
-  FORGOT_PASSWORD = 2;
+enum Role {
+  ROLE_UNSPECIFIED = 0;
+  ADMIN            = 1;
+  MANAGER          = 2;
+  STAFF            = 3;
 }
 
 // -----------------------------------------------------------------------------
 // MESSAGES
 // -----------------------------------------------------------------------------
 
-message RegisterRequest {
-  string email            = 1 [(google.api.field_behavior) = REQUIRED];
-  string password         = 2 [(google.api.field_behavior) = REQUIRED];
-  string confirm_password = 3 [(google.api.field_behavior) = REQUIRED];
-  string name             = 4 [(google.api.field_behavior) = REQUIRED];
-  string phone_number     = 5 [(google.api.field_behavior) = REQUIRED];
-  string code             = 6 [(google.api.field_behavior) = REQUIRED];
+message CreateUserRequest {
+  string username = 1 [(google.api.field_behavior) = REQUIRED];
+  string email    = 2 [(google.api.field_behavior) = REQUIRED];
+  string password = 3 [(google.api.field_behavior) = REQUIRED];
+  Role   role     = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
-message User {
-  int32  id           = 1;
-  string email        = 2;
-  string name         = 3;
-  string phone_number = 4;
-  string avatar       = 5;
+message UpdateUserRequest {
+  string id       = 1 [(google.api.field_behavior) = REQUIRED];
+  string username = 2;
+  string email    = 3;
+  Role   role     = 4;
 }
 
-message RegisterResponse {
-  User user = 1;
+message GetUserRequest {
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
-message SendOtpRequest {
-  string email              = 1 [(google.api.field_behavior) = REQUIRED];
-  VerificationCodeType type = 2 [(google.api.field_behavior) = REQUIRED];
+message DeleteUserRequest {
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
-message MessageResponse {
-  string message = 1;
+message UserResponse {
+  string id       = 1;
+  string username = 2;
+  string email    = 3;
+  Role   role     = 4;
 }
 
-message LoginRequest {
-  string email      = 1 [(google.api.field_behavior) = REQUIRED];
-  string password   = 2 [(google.api.field_behavior) = REQUIRED];
-  string user_agent = 3;
-  string ip         = 4;
-}
-
-message TokenResponse {
-  string access_token  = 1;
-  string refresh_token = 2;
-}
-
-message RefreshTokenRequest {
-  string refresh_token = 1 [(google.api.field_behavior) = REQUIRED];
-  string user_agent    = 2;
-  string ip            = 3;
-}
-
-message LogoutRequest {
-  string refresh_token = 1 [(google.api.field_behavior) = REQUIRED];
-}
-
-message ForgotPasswordRequest {
-  string email            = 1 [(google.api.field_behavior) = REQUIRED];
-  string code             = 2 [(google.api.field_behavior) = REQUIRED];
-  string new_password     = 3 [(google.api.field_behavior) = REQUIRED];
-  string confirm_password = 4 [(google.api.field_behavior) = REQUIRED];
-}
-
-message GoogleAuthState {
-  string user_agent = 1;
-  string ip         = 2;
-}
-
-message AuthorizationUrlResponse {
-  string url = 1;
-}
-
-message GoogleCallbackRequest {
-  string code  = 1 [(google.api.field_behavior) = REQUIRED];
-  string state = 2 [(google.api.field_behavior) = REQUIRED];
+message ListUsersResponse {
+  repeated UserResponse users = 1;
 }
 
 // -----------------------------------------------------------------------------
 // SERVICE
 // -----------------------------------------------------------------------------
 
-service AuthService {
-  rpc Register(RegisterRequest) returns (RegisterResponse) {
+service UserService {
+  // Create a new user (Admin can create Manager/Staff; Manager only Staff)
+  rpc CreateUser(CreateUserRequest) returns (UserResponse) {
     option (google.api.http) = {
-      post: "/v1/auth/register"
+      post: "/v1/users"
       body: "*"
     };
   }
 
-  rpc SendOtp(SendOtpRequest) returns (MessageResponse) {
+  // List users (Admin lists all; Manager lists Staff)
+  rpc ListUsers(google.protobuf.Empty) returns (ListUsersResponse) {
     option (google.api.http) = {
-      post: "/v1/auth/otp"
+      get: "/v1/users"
+    };
+  }
+
+  // Get single user
+  rpc GetUser(GetUserRequest) returns (UserResponse) {
+    option (google.api.http) = {
+      get: "/v1/users/{id}"
+    };
+  }
+
+  // Update a user
+  rpc UpdateUser(UpdateUserRequest) returns (UserResponse) {
+    option (google.api.http) = {
+      put: "/v1/users/{id}"
       body: "*"
     };
   }
 
-  rpc Login(LoginRequest) returns (TokenResponse) {
+  // Delete a user
+  rpc DeleteUser(DeleteUserRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      post: "/v1/auth/login"
-      body: "*"
-    };
-  }
-
-  rpc RefreshToken(RefreshTokenRequest) returns (TokenResponse) {
-    option (google.api.http) = {
-      post: "/v1/auth/refresh-token"
-      body: "*"
-    };
-  }
-
-  rpc Logout(LogoutRequest) returns (MessageResponse) {
-    option (google.api.http) = {
-      post: "/v1/auth/logout"
-      body: "*"
-    };
-  }
-
-  rpc ForgotPassword(ForgotPasswordRequest) returns (MessageResponse) {
-    option (google.api.http) = {
-      post: "/v1/auth/forgot-password"
-      body: "*"
-    };
-  }
-
-  rpc GetAuthorizationUrl(GoogleAuthState) returns (AuthorizationUrlResponse) {
-    option (google.api.http) = {
-      get: "/v1/auth/google-link"
-    };
-  }
-
-  rpc GoogleCallback(GoogleCallbackRequest) returns (TokenResponse) {
-    option (google.api.http) = {
-      get: "/v1/auth/google/callback"
+      delete: "/v1/users/{id}"
     };
   }
 }
