@@ -9,7 +9,17 @@ import (
 )
 
 type Querier interface {
-	ListProducts(ctx context.Context) ([]Product, error)
+	CreateCustomer(ctx context.Context, arg CreateCustomerParams) (Customer, error)
+	CreateProduct(ctx context.Context, arg CreateProductParams) (Product, error)
+	DeleteCustomer(ctx context.Context, id int32) error
+	DeleteProduct(ctx context.Context, id int32) error
+	GetCustomerByID(ctx context.Context, id int32) (Customer, error)
+	GetCustomerByPhone(ctx context.Context, phone string) (Customer, error)
+	GetProductByID(ctx context.Context, id int32) (Product, error)
+	ListCustomers(ctx context.Context, arg ListCustomersParams) ([]Customer, error)
+	ListProducts(ctx context.Context, arg ListProductsParams) ([]Product, error)
+	UpdateCustomer(ctx context.Context, arg UpdateCustomerParams) (Customer, error)
+	UpsertProduct(ctx context.Context, arg UpsertProductParams) (Product, error)
 }
 
 var _ Querier = (*Queries)(nil)

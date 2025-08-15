@@ -3,14 +3,14 @@ module github.com/linhhuynhcoding/jss-microservices/product
 go 1.24.5
 
 require (
+	github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.1
 	github.com/jackc/pgx/v5 v5.7.5
-	github.com/linhhuynhcoding/jss-microservices/rpc v0.0.0-20250810103552-2d5661645c3e
+	github.com/linhhuynhcoding/jss-microservices/rpc v0.0.0-20250815060507-5e274b04de2a
 	go.uber.org/zap v1.27.0
 	google.golang.org/grpc v1.74.2
 )
 
 require (
-	github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.1 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
 	github.com/jackc/puddle/v2 v2.2.2 // indirect

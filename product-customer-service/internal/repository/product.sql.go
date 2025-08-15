@@ -7,14 +7,114 @@ package repository
 
 import (
 	"context"
+
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
-const listProducts = `-- name: ListProducts :many
-SELECT id, name, code, category_id, weight, gold_price_at_time, labor_cost, stone_cost, markup_rate, selling_price, warranty_period, image, created_at, updated_at FROM products
+const createProduct = `-- name: CreateProduct :one
+INSERT INTO products (
+  name, code, category_id, weight, gold_price_at_time, labor_cost, stone_cost, 
+  markup_rate, selling_price, warranty_period, image, created_at, updated_at
+) VALUES (
+  $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, NOW(), NOW()
+)
+RETURNING id, name, code, category_id, weight, gold_price_at_time, labor_cost, stone_cost, markup_rate, selling_price, warranty_period, image, created_at, updated_at
 `
 
-func (q *Queries) ListProducts(ctx context.Context) ([]Product, error) {
-	rows, err := q.db.Query(ctx, listProducts)
+type CreateProductParams struct {
+	Name            string         `json:"name"`
+	Code            string         `json:"code"`
+	CategoryID      int32          `json:"category_id"`
+	Weight          pgtype.Numeric `json:"weight"`
+	GoldPriceAtTime pgtype.Numeric `json:"gold_price_at_time"`
+	LaborCost       pgtype.Numeric `json:"labor_cost"`
+	StoneCost       pgtype.Numeric `json:"stone_cost"`
+	MarkupRate      pgtype.Numeric `json:"markup_rate"`
+	SellingPrice    pgtype.Numeric `json:"selling_price"`
+	WarrantyPeriod  pgtype.Int4    `json:"warranty_period"`
+	Image           string         `json:"image"`
+}
+
+func (q *Queries) CreateProduct(ctx context.Context, arg CreateProductParams) (Product, error) {
+	row := q.db.QueryRow(ctx, createProduct,
+		arg.Name,
+		arg.Code,
+		arg.CategoryID,
+		arg.Weight,
+		arg.GoldPriceAtTime,
+		arg.LaborCost,
+		arg.StoneCost,
+		arg.MarkupRate,
+		arg.SellingPrice,
+		arg.WarrantyPeriod,
+		arg.Image,
+	)
+	var i Product
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.Code,
+		&i.CategoryID,
+		&i.Weight,
+		&i.GoldPriceAtTime,
+		&i.LaborCost,
+		&i.StoneCost,
+		&i.MarkupRate,
+		&i.SellingPrice,
+		&i.WarrantyPeriod,
+		&i.Image,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const deleteProduct = `-- name: DeleteProduct :exec
+DELETE FROM products WHERE id = $1
+`
+
+func (q *Queries) DeleteProduct(ctx context.Context, id int32) error {
+	_, err := q.db.Exec(ctx, deleteProduct, id)
+	return err
+}
+
+const getProductByID = `-- name: GetProductByID :one
+SELECT id, name, code, category_id, weight, gold_price_at_time, labor_cost, stone_cost, markup_rate, selling_price, warranty_period, image, created_at, updated_at FROM products WHERE id = $1
+`
+
+func (q *Queries) GetProductByID(ctx context.Context, id int32) (Product, error) {
+	row := q.db.QueryRow(ctx, getProductByID, id)
+	var i Product
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.Code,
+		&i.CategoryID,
+		&i.Weight,
+		&i.GoldPriceAtTime,
+		&i.LaborCost,
+		&i.StoneCost,
+		&i.MarkupRate,
+		&i.SellingPrice,
+		&i.WarrantyPeriod,
+		&i.Image,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const listProducts = `-- name: ListProducts :many
+SELECT id, name, code, category_id, weight, gold_price_at_time, labor_cost, stone_cost, markup_rate, selling_price, warranty_period, image, created_at, updated_at FROM products ORDER BY id LIMIT $1 OFFSET $2
+`
+
+type ListProductsParams struct {
+	Limit  int32 `json:"limit"`
+	Offset int32 `json:"offset"`
+}
+
+func (q *Queries) ListProducts(ctx context.Context, arg ListProductsParams) ([]Product, error) {
+	rows, err := q.db.Query(ctx, listProducts, arg.Limit, arg.Offset)
 	if err != nil {
 		return nil, err
 	}
@@ -46,4 +146,74 @@ func (q *Queries) ListProducts(ctx context.Context) ([]Product, error) {
 		return nil, err
 	}
 	return items, nil
+}
+
+const upsertProduct = `-- name: UpsertProduct :one
+INSERT INTO products (
+  name, code, category_id, weight, gold_price_at_time, labor_cost, stone_cost, 
+  markup_rate, selling_price, warranty_period, image, created_at, updated_at
+) VALUES (
+  $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, NOW(), NOW()
+)
+ON CONFLICT (code) DO UPDATE SET
+  name = EXCLUDED.name,
+  category_id = EXCLUDED.category_id,
+  weight = EXCLUDED.weight,
+  gold_price_at_time = EXCLUDED.gold_price_at_time,
+  labor_cost = EXCLUDED.labor_cost,
+  stone_cost = EXCLUDED.stone_cost,
+  markup_rate = EXCLUDED.markup_rate,
+  selling_price = EXCLUDED.selling_price,
+  warranty_period = EXCLUDED.warranty_period,
+  image = EXCLUDED.image,
+  updated_at = NOW()
+RETURNING id, name, code, category_id, weight, gold_price_at_time, labor_cost, stone_cost, markup_rate, selling_price, warranty_period, image, created_at, updated_at
+`
+
+type UpsertProductParams struct {
+	Name            string         `json:"name"`
+	Code            string         `json:"code"`
+	CategoryID      int32          `json:"category_id"`
+	Weight          pgtype.Numeric `json:"weight"`
+	GoldPriceAtTime pgtype.Numeric `json:"gold_price_at_time"`
+	LaborCost       pgtype.Numeric `json:"labor_cost"`
+	StoneCost       pgtype.Numeric `json:"stone_cost"`
+	MarkupRate      pgtype.Numeric `json:"markup_rate"`
+	SellingPrice    pgtype.Numeric `json:"selling_price"`
+	WarrantyPeriod  pgtype.Int4    `json:"warranty_period"`
+	Image           string         `json:"image"`
+}
+
+func (q *Queries) UpsertProduct(ctx context.Context, arg UpsertProductParams) (Product, error) {
+	row := q.db.QueryRow(ctx, upsertProduct,
+		arg.Name,
+		arg.Code,
+		arg.CategoryID,
+		arg.Weight,
+		arg.GoldPriceAtTime,
+		arg.LaborCost,
+		arg.StoneCost,
+		arg.MarkupRate,
+		arg.SellingPrice,
+		arg.WarrantyPeriod,
+		arg.Image,
+	)
+	var i Product
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.Code,
+		&i.CategoryID,
+		&i.Weight,
+		&i.GoldPriceAtTime,
+		&i.LaborCost,
+		&i.StoneCost,
+		&i.MarkupRate,
+		&i.SellingPrice,
+		&i.WarrantyPeriod,
+		&i.Image,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
 }
