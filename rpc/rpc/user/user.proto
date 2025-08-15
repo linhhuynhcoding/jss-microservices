@@ -6,10 +6,10 @@ import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "google/protobuf/empty.proto";
 
-option go_package = "github.com/linhhuynhcoding/jss-microservices/rpc/gen/auth;authpb";
+option go_package = "github.com/linhhuynhcoding/jss-microservices/rpc/gen/user;userpb";
 
 // -----------------------------------------------------------------------------
-// ENUMS
+// ENUMS.
 // -----------------------------------------------------------------------------
 
 enum Role {
