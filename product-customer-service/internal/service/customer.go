@@ -39,7 +39,10 @@ func (s *Service) GetCustomer(ctx context.Context, req *pb.GetCustomerRequest) (
 
 // ----- ListCustomers -----
 func (s *Service) ListCustomers(ctx context.Context, req *pb.ListCustomersRequest) (*pb.ListCustomersResponse, error) {
-	customers, err := s.queries.ListCustomers(ctx)
+	customers, err := s.queries.ListCustomers(ctx, db.ListCustomersParams{
+		Limit: req.Limit,
+		Offset: req.Page * req.Limit,
+	})
 	if err != nil {
 		return nil, err
 	}

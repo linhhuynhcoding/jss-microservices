@@ -16,8 +16,8 @@ type Querier interface {
 	GetCustomerByID(ctx context.Context, id int32) (Customer, error)
 	GetCustomerByPhone(ctx context.Context, phone string) (Customer, error)
 	GetProductByID(ctx context.Context, id int32) (Product, error)
-	ListCustomers(ctx context.Context) ([]Customer, error)
-	ListProducts(ctx context.Context) ([]Product, error)
+	ListCustomers(ctx context.Context, arg ListCustomersParams) ([]Customer, error)
+	ListProducts(ctx context.Context, arg ListProductsParams) ([]Product, error)
 	UpdateCustomer(ctx context.Context, arg UpdateCustomerParams) (Customer, error)
 	UpsertProduct(ctx context.Context, arg UpsertProductParams) (Product, error)
 }

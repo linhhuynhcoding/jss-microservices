@@ -47,7 +47,10 @@ func (s *Service) GetProduct(ctx context.Context, req *api.GetProductRequest) (*
 }
 
 func (s *Service) ListProducts(ctx context.Context, req *api.ListProductsRequest) (*api.ListProductsResponse, error) {
-	products, err := s.queries.ListProducts(ctx)
+	products, err := s.queries.ListProducts(ctx, db.ListProductsParams{
+		Limit:  req.Limit,
+		Offset: req.Page * req.Limit,
+	})
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to list products: %v", err)
 	}

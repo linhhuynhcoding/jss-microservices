@@ -16,7 +16,7 @@ WHERE phone = $1;
 
 -- name: ListCustomers :many
 SELECT * FROM customers
-ORDER BY id;
+ORDER BY id LIMIT $1 OFFSET $2;
 
 -- name: UpdateCustomer :one
 UPDATE customers

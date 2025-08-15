@@ -99,11 +99,16 @@ func (q *Queries) GetCustomerByPhone(ctx context.Context, phone string) (Custome
 
 const listCustomers = `-- name: ListCustomers :many
 SELECT id, name, phone, email, address, created_at, updated_at FROM customers
-ORDER BY id
+ORDER BY id LIMIT $1 OFFSET $2
 `
 
-func (q *Queries) ListCustomers(ctx context.Context) ([]Customer, error) {
-	rows, err := q.db.Query(ctx, listCustomers)
+type ListCustomersParams struct {
+	Limit  int32 `json:"limit"`
+	Offset int32 `json:"offset"`
+}
+
+func (q *Queries) ListCustomers(ctx context.Context, arg ListCustomersParams) ([]Customer, error) {
+	rows, err := q.db.Query(ctx, listCustomers, arg.Limit, arg.Offset)
 	if err != nil {
 		return nil, err
 	}
