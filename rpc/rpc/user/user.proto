@@ -97,4 +97,10 @@ service UserService {
       delete: "/v1/users/{id}"
     };
   }
+
+  rpc GetMe(google.protobuf.Empty) returns (UserResponse) {
+    option (google.api.http) = {
+      get: "/v1/users/me"
+    };
+  }
 }
