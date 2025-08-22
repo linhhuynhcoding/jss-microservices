@@ -1,15 +1,17 @@
-package example
+package main
 
 import (
 	"fmt"
 	"log"
+	"time"
 
-	mq "github.com/linhhuynhcoding/jss-microservices/mq"
+	"github.com/linhhuynhcoding/jss-microservices/mq"
 	"github.com/linhhuynhcoding/jss-microservices/mq/config"
-	"go.uber.org/zap"
+	"github.com/linhhuynhcoding/jss-microservices/mq/consts"
+	"github.com/linhhuynhcoding/jss-microservices/mq/events"
 )
 
-func example() {
+func main() {
 	config := config.RabbitMQConfig{
 		ConnStr:        "amqp://localhost:5672/",
 		ExchangeName:   "my-exchange",
@@ -18,13 +20,26 @@ func example() {
 		PublisherName:  "linh-publisher",
 		SubscriberName: "linh-subscriber",
 	}
+	fmt.Println("Start")
 
-	logger, _ := zap.NewProduction()
-	subscriber, err := mq.NewSubscriber(config, logger)
+	publisher, err := mq.NewPublisher(config)
 	if err != nil {
-		log.Fatal(err)
+		fmt.Printf("Error %v", err)
 	}
-	defer subscriber.Close()
+	fmt.Println("Init Publisher successfully")
+
+	go func() {
+		<-time.After(time.Second * 3)
+		err = publisher.SendMessage(&events.ProductEvent{
+			ProductId: "productID",
+		}, consts.TOPIC_CREATE_PRODUCT)
+	}()
+
+	subscriber, err := mq.NewSubscriber(config)
+	if err != nil {
+		fmt.Printf("Error %v", err)
+	}
+	fmt.Println("Init Subscriber successfully")
 
 	// Start consuming
 	go func() {
@@ -36,4 +51,6 @@ func example() {
 			log.Printf("Consumer error: %v", err)
 		}
 	}()
+
+	fmt.Println("Done")
 }

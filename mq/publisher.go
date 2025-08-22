@@ -26,9 +26,10 @@ type Publisher struct {
 
 func NewPublisher(
 	cfg config.RabbitMQConfig,
+	log *zap.Logger,
 ) (*Publisher, error) {
 	ctx, cancel := context.WithCancel(context.Background())
-	logger := zap.NewNop()
+	logger := log.With(zap.String("Publisher", "NewPublisher"))
 
 	conn, err := amqp.Dial(cfg.ConnStr)
 	if err != nil {
