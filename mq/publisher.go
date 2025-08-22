@@ -29,7 +29,7 @@ func NewPublisher(
 	log *zap.Logger,
 ) (*Publisher, error) {
 	ctx, cancel := context.WithCancel(context.Background())
-	logger := log.With(zap.String("Publisher", "NewPublisher"))
+	logger := log.With(zap.String("Publisher", cfg.PublisherName))
 
 	conn, err := amqp.Dial(cfg.ConnStr)
 	if err != nil {
@@ -108,7 +108,10 @@ func (p *Publisher) SendMessage(event proto.Message, topic string) error {
 			ContentType: "text/plain",
 			Body:        []byte(body),
 		})
-	p.logger.Info(" [x] Sent: ", zap.Any("content", body))
+	if err != nil {
+		p.logger.Fatal("failed to sent message", zap.Error(err))
+	}
+	p.logger.Info("Sent message sucessfully", zap.Any("topic", topic))
 	return nil
 }
 
