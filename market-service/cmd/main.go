@@ -7,10 +7,10 @@ import (
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/jackc/pgx/v5/pgxpool"
-	"github.com/linhhuynhcoding/jss-microservices/product/config"
-	"github.com/linhhuynhcoding/jss-microservices/product/internal/repository"
-	"github.com/linhhuynhcoding/jss-microservices/product/internal/service"
-	"github.com/linhhuynhcoding/jss-microservices/rpc/gen/product"
+	"github.com/linhhuynhcoding/jss-microservices/market/config"
+	"github.com/linhhuynhcoding/jss-microservices/market/internal/repository"
+	"github.com/linhhuynhcoding/jss-microservices/market/internal/service"
+	"github.com/linhhuynhcoding/jss-microservices/rpc/gen/market"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -23,7 +23,7 @@ func main() {
 	// ------------------------------------------------------------
 	ctx := context.Background()
 	cfg := config.NewConfig()
-	log := zap.NewNop()
+	log, _ := zap.NewProduction()
 
 	go NewServer(ctx, cfg, log)
 	NewGatewayServer(ctx, cfg, log)
@@ -52,7 +52,7 @@ func NewServer(
 	}
 
 	s := grpc.NewServer()
-	product.RegisterProductCustomerServer(s, service.NewService(ctx, log, config.NewConfig(), store))
+	market.RegisterMarketServer(s, service.NewService(ctx, log, config.NewConfig(), store))
 
 	log.Info("gRPC server listening on :50051")
 	if err := s.Serve(lis); err != nil {
@@ -68,7 +68,7 @@ func NewGatewayServer(
 	mux := runtime.NewServeMux()
 
 	opts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
-	err := product.RegisterProductCustomerHandlerFromEndpoint(ctx, mux, "localhost:50051", opts)
+	err := market.RegisterMarketHandlerFromEndpoint(ctx, mux, "localhost:50051", opts)
 	if err != nil {
 		log.Fatal("failed to start gateway", zap.Error(err))
 	}
