@@ -37,7 +37,6 @@ func NewPublisher(
 		defer cancel()
 		return nil, err
 	}
-	defer conn.Close()
 
 	ch, err := conn.Channel()
 	if err != nil {
@@ -45,7 +44,6 @@ func NewPublisher(
 		defer cancel()
 		return nil, err
 	}
-	defer ch.Close()
 
 	err = ch.ExchangeDeclare(
 		cfg.ExchangeName,           // name
@@ -112,6 +110,22 @@ func (p *Publisher) SendMessage(event proto.Message, topic string) error {
 		})
 	p.logger.Info(" [x] Sent: ", zap.Any("content", body))
 	return nil
+}
+
+func (p *Publisher) Close() {
+	if p.ch != nil {
+		err := p.ch.Close()
+		if err != nil {
+			p.logger.Warn("failed to closing channel")
+		}
+	}
+
+	if p.conn != nil {
+		err := p.conn.Close()
+		if err != nil {
+			p.logger.Warn("failed to closing connection")
+		}
+	}
 }
 
 func generateEventID() string {

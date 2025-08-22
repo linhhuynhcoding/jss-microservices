@@ -28,6 +28,7 @@ func main() {
 	if err != nil {
 		fmt.Printf("Error %v", err)
 	}
+	defer publisher.Close()
 	fmt.Println("Init Publisher successfully")
 
 	go func() {

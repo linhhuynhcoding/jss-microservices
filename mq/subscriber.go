@@ -34,7 +34,6 @@ func NewSubscriber(
 		defer cancel()
 		return nil, err
 	}
-	defer conn.Close()
 
 	ch, err := conn.Channel()
 	if err != nil {
@@ -42,7 +41,6 @@ func NewSubscriber(
 		defer cancel()
 		return nil, err
 	}
-	defer ch.Close()
 
 	err = ch.ExchangeDeclare(
 		cfg.ExchangeName, // name
@@ -138,6 +136,22 @@ func (s *Subscriber) Consume(handler func([]byte) error) error {
 			go s.handleMessage(msg, handler)
 		}
 
+	}
+}
+
+func (s *Subscriber) Close() {
+	if s.ch != nil {
+		err := s.ch.Close()
+		if err != nil {
+			s.logger.Warn("failed to closing channel")
+		}
+	}
+
+	if s.conn != nil {
+		err := s.conn.Close()
+		if err != nil {
+			s.logger.Warn("failed to closing connection")
+		}
 	}
 }
 
