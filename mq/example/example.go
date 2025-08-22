@@ -9,20 +9,22 @@ import (
 	"github.com/linhhuynhcoding/jss-microservices/mq/config"
 	"github.com/linhhuynhcoding/jss-microservices/mq/consts"
 	"github.com/linhhuynhcoding/jss-microservices/mq/events"
+	"go.uber.org/zap"
 )
 
 func main() {
+	logger, err := zap.NewProduction()
 	config := config.RabbitMQConfig{
-		ConnStr:        "amqp://localhost:5672/",
+		ConnStr:        "amqp://admin:admin@localhost:5672/",
 		ExchangeName:   "my-exchange",
 		ExchangeType:   "topic",
-		SubscribeKeys:  []string{"user.created", "user.updated"},
+		SubscribeKeys:  []string{consts.TOPIC_CREATE_PRODUCT},
 		PublisherName:  "linh-publisher",
 		SubscriberName: "linh-subscriber",
 	}
 	fmt.Println("Start")
 
-	publisher, err := mq.NewPublisher(config)
+	publisher, err := mq.NewPublisher(config, logger)
 	if err != nil {
 		fmt.Printf("Error %v", err)
 	}
@@ -35,22 +37,28 @@ func main() {
 		}, consts.TOPIC_CREATE_PRODUCT)
 	}()
 
-	subscriber, err := mq.NewSubscriber(config)
+	subscriber, err := mq.NewSubscriber(config, logger)
 	if err != nil {
 		fmt.Printf("Error %v", err)
 	}
 	fmt.Println("Init Subscriber successfully")
 
+	errCh := make(chan error)
+
 	// Start consuming
 	go func() {
-		if err := subscriber.Consume(func(body []byte) error {
-			// Your message handler logic
+		if errCh <- subscriber.Consume(func(body []byte) error {
 			fmt.Printf("Received: %s\n", body)
 			return nil
-		}); err != nil {
+		}); errCh != nil {
 			log.Printf("Consumer error: %v", err)
 		}
 	}()
 
-	fmt.Println("Done")
+	select {
+	case <-errCh:
+		{
+			fmt.Println("Done")
+		}
+	}
 }
