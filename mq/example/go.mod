@@ -2,7 +2,7 @@ module example
 
 go 1.24.6
 
-require github.com/linhhuynhcoding/jss-microservices/mq v0.0.0-20250822135140-06fef9029f3b
+require github.com/linhhuynhcoding/jss-microservices/mq v0.0.0-20250822140504-2144b09c24af
 
 require (
 	github.com/rabbitmq/amqp091-go v1.10.0 // indirect
