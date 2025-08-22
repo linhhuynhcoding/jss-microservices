@@ -35,7 +35,7 @@ var (
 	_ = metadata.Join
 )
 
-func request_GoldPriceService_CreateGoldPrice_0(ctx context.Context, marshaler runtime.Marshaler, client GoldPriceServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Market_CreateGoldPrice_0(ctx context.Context, marshaler runtime.Marshaler, client MarketClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq CreateGoldPriceRequest
 		metadata runtime.ServerMetadata
@@ -50,7 +50,7 @@ func request_GoldPriceService_CreateGoldPrice_0(ctx context.Context, marshaler r
 	return msg, metadata, err
 }
 
-func local_request_GoldPriceService_CreateGoldPrice_0(ctx context.Context, marshaler runtime.Marshaler, server GoldPriceServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Market_CreateGoldPrice_0(ctx context.Context, marshaler runtime.Marshaler, server MarketServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq CreateGoldPriceRequest
 		metadata runtime.ServerMetadata
@@ -62,7 +62,7 @@ func local_request_GoldPriceService_CreateGoldPrice_0(ctx context.Context, marsh
 	return msg, metadata, err
 }
 
-func request_GoldPriceService_GetGoldPrice_0(ctx context.Context, marshaler runtime.Marshaler, client GoldPriceServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Market_GetGoldPrice_0(ctx context.Context, marshaler runtime.Marshaler, client MarketClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq GetGoldPriceRequest
 		metadata runtime.ServerMetadata
@@ -83,7 +83,7 @@ func request_GoldPriceService_GetGoldPrice_0(ctx context.Context, marshaler runt
 	return msg, metadata, err
 }
 
-func local_request_GoldPriceService_GetGoldPrice_0(ctx context.Context, marshaler runtime.Marshaler, server GoldPriceServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Market_GetGoldPrice_0(ctx context.Context, marshaler runtime.Marshaler, server MarketServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq GetGoldPriceRequest
 		metadata runtime.ServerMetadata
@@ -101,9 +101,9 @@ func local_request_GoldPriceService_GetGoldPrice_0(ctx context.Context, marshale
 	return msg, metadata, err
 }
 
-var filter_GoldPriceService_ListGoldPrices_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+var filter_Market_ListGoldPrices_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 
-func request_GoldPriceService_ListGoldPrices_0(ctx context.Context, marshaler runtime.Marshaler, client GoldPriceServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Market_ListGoldPrices_0(ctx context.Context, marshaler runtime.Marshaler, client MarketClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq ListGoldPricesRequest
 		metadata runtime.ServerMetadata
@@ -114,14 +114,14 @@ func request_GoldPriceService_ListGoldPrices_0(ctx context.Context, marshaler ru
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_GoldPriceService_ListGoldPrices_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Market_ListGoldPrices_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	msg, err := client.ListGoldPrices(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 }
 
-func local_request_GoldPriceService_ListGoldPrices_0(ctx context.Context, marshaler runtime.Marshaler, server GoldPriceServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Market_ListGoldPrices_0(ctx context.Context, marshaler runtime.Marshaler, server MarketServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq ListGoldPricesRequest
 		metadata runtime.ServerMetadata
@@ -129,14 +129,14 @@ func local_request_GoldPriceService_ListGoldPrices_0(ctx context.Context, marsha
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_GoldPriceService_ListGoldPrices_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Market_ListGoldPrices_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	msg, err := server.ListGoldPrices(ctx, &protoReq)
 	return msg, metadata, err
 }
 
-func request_GoldPriceService_UpdateGoldPrice_0(ctx context.Context, marshaler runtime.Marshaler, client GoldPriceServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Market_UpdateGoldPrice_0(ctx context.Context, marshaler runtime.Marshaler, client MarketClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq UpdateGoldPriceRequest
 		metadata runtime.ServerMetadata
@@ -160,7 +160,7 @@ func request_GoldPriceService_UpdateGoldPrice_0(ctx context.Context, marshaler r
 	return msg, metadata, err
 }
 
-func local_request_GoldPriceService_UpdateGoldPrice_0(ctx context.Context, marshaler runtime.Marshaler, server GoldPriceServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Market_UpdateGoldPrice_0(ctx context.Context, marshaler runtime.Marshaler, server MarketServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq UpdateGoldPriceRequest
 		metadata runtime.ServerMetadata
@@ -181,7 +181,7 @@ func local_request_GoldPriceService_UpdateGoldPrice_0(ctx context.Context, marsh
 	return msg, metadata, err
 }
 
-func request_GoldPriceService_DeleteGoldPrice_0(ctx context.Context, marshaler runtime.Marshaler, client GoldPriceServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Market_DeleteGoldPrice_0(ctx context.Context, marshaler runtime.Marshaler, client MarketClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq DeleteGoldPriceRequest
 		metadata runtime.ServerMetadata
@@ -202,7 +202,7 @@ func request_GoldPriceService_DeleteGoldPrice_0(ctx context.Context, marshaler r
 	return msg, metadata, err
 }
 
-func local_request_GoldPriceService_DeleteGoldPrice_0(ctx context.Context, marshaler runtime.Marshaler, server GoldPriceServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Market_DeleteGoldPrice_0(ctx context.Context, marshaler runtime.Marshaler, server MarketServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq DeleteGoldPriceRequest
 		metadata runtime.ServerMetadata
@@ -220,7 +220,7 @@ func local_request_GoldPriceService_DeleteGoldPrice_0(ctx context.Context, marsh
 	return msg, metadata, err
 }
 
-func request_BuybackPolicyService_CreateBuybackPolicy_0(ctx context.Context, marshaler runtime.Marshaler, client BuybackPolicyServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Market_CreateBuybackPolicy_0(ctx context.Context, marshaler runtime.Marshaler, client MarketClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq CreateBuybackPolicyRequest
 		metadata runtime.ServerMetadata
@@ -235,7 +235,7 @@ func request_BuybackPolicyService_CreateBuybackPolicy_0(ctx context.Context, mar
 	return msg, metadata, err
 }
 
-func local_request_BuybackPolicyService_CreateBuybackPolicy_0(ctx context.Context, marshaler runtime.Marshaler, server BuybackPolicyServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Market_CreateBuybackPolicy_0(ctx context.Context, marshaler runtime.Marshaler, server MarketServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq CreateBuybackPolicyRequest
 		metadata runtime.ServerMetadata
@@ -247,7 +247,7 @@ func local_request_BuybackPolicyService_CreateBuybackPolicy_0(ctx context.Contex
 	return msg, metadata, err
 }
 
-func request_BuybackPolicyService_GetBuybackPolicy_0(ctx context.Context, marshaler runtime.Marshaler, client BuybackPolicyServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Market_GetBuybackPolicy_0(ctx context.Context, marshaler runtime.Marshaler, client MarketClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq GetBuybackPolicyRequest
 		metadata runtime.ServerMetadata
@@ -268,7 +268,7 @@ func request_BuybackPolicyService_GetBuybackPolicy_0(ctx context.Context, marsha
 	return msg, metadata, err
 }
 
-func local_request_BuybackPolicyService_GetBuybackPolicy_0(ctx context.Context, marshaler runtime.Marshaler, server BuybackPolicyServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Market_GetBuybackPolicy_0(ctx context.Context, marshaler runtime.Marshaler, server MarketServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq GetBuybackPolicyRequest
 		metadata runtime.ServerMetadata
@@ -286,9 +286,9 @@ func local_request_BuybackPolicyService_GetBuybackPolicy_0(ctx context.Context, 
 	return msg, metadata, err
 }
 
-var filter_BuybackPolicyService_ListBuybackPolicies_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+var filter_Market_ListBuybackPolicies_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 
-func request_BuybackPolicyService_ListBuybackPolicies_0(ctx context.Context, marshaler runtime.Marshaler, client BuybackPolicyServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Market_ListBuybackPolicies_0(ctx context.Context, marshaler runtime.Marshaler, client MarketClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq ListBuybackPoliciesRequest
 		metadata runtime.ServerMetadata
@@ -299,14 +299,14 @@ func request_BuybackPolicyService_ListBuybackPolicies_0(ctx context.Context, mar
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_BuybackPolicyService_ListBuybackPolicies_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Market_ListBuybackPolicies_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	msg, err := client.ListBuybackPolicies(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 }
 
-func local_request_BuybackPolicyService_ListBuybackPolicies_0(ctx context.Context, marshaler runtime.Marshaler, server BuybackPolicyServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Market_ListBuybackPolicies_0(ctx context.Context, marshaler runtime.Marshaler, server MarketServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq ListBuybackPoliciesRequest
 		metadata runtime.ServerMetadata
@@ -314,14 +314,14 @@ func local_request_BuybackPolicyService_ListBuybackPolicies_0(ctx context.Contex
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_BuybackPolicyService_ListBuybackPolicies_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Market_ListBuybackPolicies_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	msg, err := server.ListBuybackPolicies(ctx, &protoReq)
 	return msg, metadata, err
 }
 
-func request_BuybackPolicyService_UpdateBuybackPolicy_0(ctx context.Context, marshaler runtime.Marshaler, client BuybackPolicyServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Market_UpdateBuybackPolicy_0(ctx context.Context, marshaler runtime.Marshaler, client MarketClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq UpdateBuybackPolicyRequest
 		metadata runtime.ServerMetadata
@@ -345,7 +345,7 @@ func request_BuybackPolicyService_UpdateBuybackPolicy_0(ctx context.Context, mar
 	return msg, metadata, err
 }
 
-func local_request_BuybackPolicyService_UpdateBuybackPolicy_0(ctx context.Context, marshaler runtime.Marshaler, server BuybackPolicyServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Market_UpdateBuybackPolicy_0(ctx context.Context, marshaler runtime.Marshaler, server MarketServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq UpdateBuybackPolicyRequest
 		metadata runtime.ServerMetadata
@@ -366,7 +366,7 @@ func local_request_BuybackPolicyService_UpdateBuybackPolicy_0(ctx context.Contex
 	return msg, metadata, err
 }
 
-func request_BuybackPolicyService_DeleteBuybackPolicy_0(ctx context.Context, marshaler runtime.Marshaler, client BuybackPolicyServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Market_DeleteBuybackPolicy_0(ctx context.Context, marshaler runtime.Marshaler, client MarketClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq DeleteBuybackPolicyRequest
 		metadata runtime.ServerMetadata
@@ -387,7 +387,7 @@ func request_BuybackPolicyService_DeleteBuybackPolicy_0(ctx context.Context, mar
 	return msg, metadata, err
 }
 
-func local_request_BuybackPolicyService_DeleteBuybackPolicy_0(ctx context.Context, marshaler runtime.Marshaler, server BuybackPolicyServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Market_DeleteBuybackPolicy_0(ctx context.Context, marshaler runtime.Marshaler, server MarketServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq DeleteBuybackPolicyRequest
 		metadata runtime.ServerMetadata
@@ -405,229 +405,219 @@ func local_request_BuybackPolicyService_DeleteBuybackPolicy_0(ctx context.Contex
 	return msg, metadata, err
 }
 
-// RegisterGoldPriceServiceHandlerServer registers the http handlers for service GoldPriceService to "mux".
-// UnaryRPC     :call GoldPriceServiceServer directly.
+// RegisterMarketHandlerServer registers the http handlers for service Market to "mux".
+// UnaryRPC     :call MarketServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterGoldPriceServiceHandlerFromEndpoint instead.
+// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterMarketHandlerFromEndpoint instead.
 // GRPC interceptors will not work for this type of registration. To use interceptors, you must use the "runtime.WithMiddlewares" option in the "runtime.NewServeMux" call.
-func RegisterGoldPriceServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server GoldPriceServiceServer) error {
-	mux.Handle(http.MethodPost, pattern_GoldPriceService_CreateGoldPrice_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+func RegisterMarketHandlerServer(ctx context.Context, mux *runtime.ServeMux, server MarketServer) error {
+	mux.Handle(http.MethodPost, pattern_Market_CreateGoldPrice_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/market.GoldPriceService/CreateGoldPrice", runtime.WithHTTPPathPattern("/v1/gold-prices"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/market.Market/CreateGoldPrice", runtime.WithHTTPPathPattern("/v1/gold-prices"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_GoldPriceService_CreateGoldPrice_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Market_CreateGoldPrice_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_GoldPriceService_CreateGoldPrice_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Market_CreateGoldPrice_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
-	mux.Handle(http.MethodGet, pattern_GoldPriceService_GetGoldPrice_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle(http.MethodGet, pattern_Market_GetGoldPrice_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/market.GoldPriceService/GetGoldPrice", runtime.WithHTTPPathPattern("/v1/gold-prices/{id}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/market.Market/GetGoldPrice", runtime.WithHTTPPathPattern("/v1/gold-prices/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_GoldPriceService_GetGoldPrice_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Market_GetGoldPrice_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_GoldPriceService_GetGoldPrice_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Market_GetGoldPrice_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
-	mux.Handle(http.MethodGet, pattern_GoldPriceService_ListGoldPrices_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle(http.MethodGet, pattern_Market_ListGoldPrices_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/market.GoldPriceService/ListGoldPrices", runtime.WithHTTPPathPattern("/v1/gold-prices"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/market.Market/ListGoldPrices", runtime.WithHTTPPathPattern("/v1/gold-prices"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_GoldPriceService_ListGoldPrices_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Market_ListGoldPrices_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_GoldPriceService_ListGoldPrices_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Market_ListGoldPrices_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
-	mux.Handle(http.MethodPut, pattern_GoldPriceService_UpdateGoldPrice_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle(http.MethodPut, pattern_Market_UpdateGoldPrice_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/market.GoldPriceService/UpdateGoldPrice", runtime.WithHTTPPathPattern("/v1/gold-prices/{id}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/market.Market/UpdateGoldPrice", runtime.WithHTTPPathPattern("/v1/gold-prices/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_GoldPriceService_UpdateGoldPrice_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Market_UpdateGoldPrice_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_GoldPriceService_UpdateGoldPrice_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Market_UpdateGoldPrice_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
-	mux.Handle(http.MethodDelete, pattern_GoldPriceService_DeleteGoldPrice_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle(http.MethodDelete, pattern_Market_DeleteGoldPrice_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/market.GoldPriceService/DeleteGoldPrice", runtime.WithHTTPPathPattern("/v1/gold-prices/{id}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/market.Market/DeleteGoldPrice", runtime.WithHTTPPathPattern("/v1/gold-prices/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_GoldPriceService_DeleteGoldPrice_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Market_DeleteGoldPrice_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_GoldPriceService_DeleteGoldPrice_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Market_DeleteGoldPrice_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodPost, pattern_Market_CreateBuybackPolicy_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/market.Market/CreateBuybackPolicy", runtime.WithHTTPPathPattern("/v1/buyback-policies"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_Market_CreateBuybackPolicy_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_Market_CreateBuybackPolicy_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodGet, pattern_Market_GetBuybackPolicy_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/market.Market/GetBuybackPolicy", runtime.WithHTTPPathPattern("/v1/buyback-policies/{id}"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_Market_GetBuybackPolicy_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_Market_GetBuybackPolicy_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodGet, pattern_Market_ListBuybackPolicies_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/market.Market/ListBuybackPolicies", runtime.WithHTTPPathPattern("/v1/buyback-policies"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_Market_ListBuybackPolicies_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_Market_ListBuybackPolicies_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodPut, pattern_Market_UpdateBuybackPolicy_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/market.Market/UpdateBuybackPolicy", runtime.WithHTTPPathPattern("/v1/buyback-policies/{id}"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_Market_UpdateBuybackPolicy_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_Market_UpdateBuybackPolicy_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodDelete, pattern_Market_DeleteBuybackPolicy_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/market.Market/DeleteBuybackPolicy", runtime.WithHTTPPathPattern("/v1/buyback-policies/{id}"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_Market_DeleteBuybackPolicy_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_Market_DeleteBuybackPolicy_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
 
 	return nil
 }
 
-// RegisterBuybackPolicyServiceHandlerServer registers the http handlers for service BuybackPolicyService to "mux".
-// UnaryRPC     :call BuybackPolicyServiceServer directly.
-// StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterBuybackPolicyServiceHandlerFromEndpoint instead.
-// GRPC interceptors will not work for this type of registration. To use interceptors, you must use the "runtime.WithMiddlewares" option in the "runtime.NewServeMux" call.
-func RegisterBuybackPolicyServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server BuybackPolicyServiceServer) error {
-	mux.Handle(http.MethodPost, pattern_BuybackPolicyService_CreateBuybackPolicy_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		var stream runtime.ServerTransportStream
-		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/market.BuybackPolicyService/CreateBuybackPolicy", runtime.WithHTTPPathPattern("/v1/buyback-policies"))
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := local_request_BuybackPolicyService_CreateBuybackPolicy_0(annotatedContext, inboundMarshaler, server, req, pathParams)
-		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
-		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
-		if err != nil {
-			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		forward_BuybackPolicyService_CreateBuybackPolicy_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-	})
-	mux.Handle(http.MethodGet, pattern_BuybackPolicyService_GetBuybackPolicy_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		var stream runtime.ServerTransportStream
-		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/market.BuybackPolicyService/GetBuybackPolicy", runtime.WithHTTPPathPattern("/v1/buyback-policies/{id}"))
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := local_request_BuybackPolicyService_GetBuybackPolicy_0(annotatedContext, inboundMarshaler, server, req, pathParams)
-		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
-		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
-		if err != nil {
-			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		forward_BuybackPolicyService_GetBuybackPolicy_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-	})
-	mux.Handle(http.MethodGet, pattern_BuybackPolicyService_ListBuybackPolicies_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		var stream runtime.ServerTransportStream
-		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/market.BuybackPolicyService/ListBuybackPolicies", runtime.WithHTTPPathPattern("/v1/buyback-policies"))
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := local_request_BuybackPolicyService_ListBuybackPolicies_0(annotatedContext, inboundMarshaler, server, req, pathParams)
-		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
-		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
-		if err != nil {
-			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		forward_BuybackPolicyService_ListBuybackPolicies_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-	})
-	mux.Handle(http.MethodPut, pattern_BuybackPolicyService_UpdateBuybackPolicy_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		var stream runtime.ServerTransportStream
-		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/market.BuybackPolicyService/UpdateBuybackPolicy", runtime.WithHTTPPathPattern("/v1/buyback-policies/{id}"))
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := local_request_BuybackPolicyService_UpdateBuybackPolicy_0(annotatedContext, inboundMarshaler, server, req, pathParams)
-		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
-		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
-		if err != nil {
-			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		forward_BuybackPolicyService_UpdateBuybackPolicy_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-	})
-	mux.Handle(http.MethodDelete, pattern_BuybackPolicyService_DeleteBuybackPolicy_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		var stream runtime.ServerTransportStream
-		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/market.BuybackPolicyService/DeleteBuybackPolicy", runtime.WithHTTPPathPattern("/v1/buyback-policies/{id}"))
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := local_request_BuybackPolicyService_DeleteBuybackPolicy_0(annotatedContext, inboundMarshaler, server, req, pathParams)
-		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
-		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
-		if err != nil {
-			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		forward_BuybackPolicyService_DeleteBuybackPolicy_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-	})
-
-	return nil
-}
-
-// RegisterGoldPriceServiceHandlerFromEndpoint is same as RegisterGoldPriceServiceHandler but
+// RegisterMarketHandlerFromEndpoint is same as RegisterMarketHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterGoldPriceServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterMarketHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.NewClient(endpoint, opts...)
 	if err != nil {
 		return err
@@ -646,261 +636,216 @@ func RegisterGoldPriceServiceHandlerFromEndpoint(ctx context.Context, mux *runti
 			}
 		}()
 	}()
-	return RegisterGoldPriceServiceHandler(ctx, mux, conn)
+	return RegisterMarketHandler(ctx, mux, conn)
 }
 
-// RegisterGoldPriceServiceHandler registers the http handlers for service GoldPriceService to "mux".
+// RegisterMarketHandler registers the http handlers for service Market to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterGoldPriceServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterGoldPriceServiceHandlerClient(ctx, mux, NewGoldPriceServiceClient(conn))
+func RegisterMarketHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterMarketHandlerClient(ctx, mux, NewMarketClient(conn))
 }
 
-// RegisterGoldPriceServiceHandlerClient registers the http handlers for service GoldPriceService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "GoldPriceServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "GoldPriceServiceClient"
+// RegisterMarketHandlerClient registers the http handlers for service Market
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "MarketClient".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "MarketClient"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "GoldPriceServiceClient" to call the correct interceptors. This client ignores the HTTP middlewares.
-func RegisterGoldPriceServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client GoldPriceServiceClient) error {
-	mux.Handle(http.MethodPost, pattern_GoldPriceService_CreateGoldPrice_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+// "MarketClient" to call the correct interceptors. This client ignores the HTTP middlewares.
+func RegisterMarketHandlerClient(ctx context.Context, mux *runtime.ServeMux, client MarketClient) error {
+	mux.Handle(http.MethodPost, pattern_Market_CreateGoldPrice_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/market.GoldPriceService/CreateGoldPrice", runtime.WithHTTPPathPattern("/v1/gold-prices"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/market.Market/CreateGoldPrice", runtime.WithHTTPPathPattern("/v1/gold-prices"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_GoldPriceService_CreateGoldPrice_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Market_CreateGoldPrice_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_GoldPriceService_CreateGoldPrice_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Market_CreateGoldPrice_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
-	mux.Handle(http.MethodGet, pattern_GoldPriceService_GetGoldPrice_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle(http.MethodGet, pattern_Market_GetGoldPrice_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/market.GoldPriceService/GetGoldPrice", runtime.WithHTTPPathPattern("/v1/gold-prices/{id}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/market.Market/GetGoldPrice", runtime.WithHTTPPathPattern("/v1/gold-prices/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_GoldPriceService_GetGoldPrice_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Market_GetGoldPrice_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_GoldPriceService_GetGoldPrice_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Market_GetGoldPrice_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
-	mux.Handle(http.MethodGet, pattern_GoldPriceService_ListGoldPrices_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle(http.MethodGet, pattern_Market_ListGoldPrices_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/market.GoldPriceService/ListGoldPrices", runtime.WithHTTPPathPattern("/v1/gold-prices"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/market.Market/ListGoldPrices", runtime.WithHTTPPathPattern("/v1/gold-prices"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_GoldPriceService_ListGoldPrices_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Market_ListGoldPrices_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_GoldPriceService_ListGoldPrices_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Market_ListGoldPrices_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
-	mux.Handle(http.MethodPut, pattern_GoldPriceService_UpdateGoldPrice_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle(http.MethodPut, pattern_Market_UpdateGoldPrice_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/market.GoldPriceService/UpdateGoldPrice", runtime.WithHTTPPathPattern("/v1/gold-prices/{id}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/market.Market/UpdateGoldPrice", runtime.WithHTTPPathPattern("/v1/gold-prices/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_GoldPriceService_UpdateGoldPrice_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Market_UpdateGoldPrice_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_GoldPriceService_UpdateGoldPrice_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Market_UpdateGoldPrice_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
-	mux.Handle(http.MethodDelete, pattern_GoldPriceService_DeleteGoldPrice_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle(http.MethodDelete, pattern_Market_DeleteGoldPrice_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/market.GoldPriceService/DeleteGoldPrice", runtime.WithHTTPPathPattern("/v1/gold-prices/{id}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/market.Market/DeleteGoldPrice", runtime.WithHTTPPathPattern("/v1/gold-prices/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_GoldPriceService_DeleteGoldPrice_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Market_DeleteGoldPrice_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_GoldPriceService_DeleteGoldPrice_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Market_DeleteGoldPrice_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodPost, pattern_Market_CreateBuybackPolicy_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/market.Market/CreateBuybackPolicy", runtime.WithHTTPPathPattern("/v1/buyback-policies"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_Market_CreateBuybackPolicy_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_Market_CreateBuybackPolicy_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodGet, pattern_Market_GetBuybackPolicy_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/market.Market/GetBuybackPolicy", runtime.WithHTTPPathPattern("/v1/buyback-policies/{id}"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_Market_GetBuybackPolicy_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_Market_GetBuybackPolicy_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodGet, pattern_Market_ListBuybackPolicies_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/market.Market/ListBuybackPolicies", runtime.WithHTTPPathPattern("/v1/buyback-policies"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_Market_ListBuybackPolicies_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_Market_ListBuybackPolicies_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodPut, pattern_Market_UpdateBuybackPolicy_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/market.Market/UpdateBuybackPolicy", runtime.WithHTTPPathPattern("/v1/buyback-policies/{id}"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_Market_UpdateBuybackPolicy_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_Market_UpdateBuybackPolicy_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodDelete, pattern_Market_DeleteBuybackPolicy_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/market.Market/DeleteBuybackPolicy", runtime.WithHTTPPathPattern("/v1/buyback-policies/{id}"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_Market_DeleteBuybackPolicy_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_Market_DeleteBuybackPolicy_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
 	return nil
 }
 
 var (
-	pattern_GoldPriceService_CreateGoldPrice_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "gold-prices"}, ""))
-	pattern_GoldPriceService_GetGoldPrice_0    = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "gold-prices", "id"}, ""))
-	pattern_GoldPriceService_ListGoldPrices_0  = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "gold-prices"}, ""))
-	pattern_GoldPriceService_UpdateGoldPrice_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "gold-prices", "id"}, ""))
-	pattern_GoldPriceService_DeleteGoldPrice_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "gold-prices", "id"}, ""))
+	pattern_Market_CreateGoldPrice_0     = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "gold-prices"}, ""))
+	pattern_Market_GetGoldPrice_0        = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "gold-prices", "id"}, ""))
+	pattern_Market_ListGoldPrices_0      = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "gold-prices"}, ""))
+	pattern_Market_UpdateGoldPrice_0     = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "gold-prices", "id"}, ""))
+	pattern_Market_DeleteGoldPrice_0     = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "gold-prices", "id"}, ""))
+	pattern_Market_CreateBuybackPolicy_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "buyback-policies"}, ""))
+	pattern_Market_GetBuybackPolicy_0    = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "buyback-policies", "id"}, ""))
+	pattern_Market_ListBuybackPolicies_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "buyback-policies"}, ""))
+	pattern_Market_UpdateBuybackPolicy_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "buyback-policies", "id"}, ""))
+	pattern_Market_DeleteBuybackPolicy_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "buyback-policies", "id"}, ""))
 )
 
 var (
-	forward_GoldPriceService_CreateGoldPrice_0 = runtime.ForwardResponseMessage
-	forward_GoldPriceService_GetGoldPrice_0    = runtime.ForwardResponseMessage
-	forward_GoldPriceService_ListGoldPrices_0  = runtime.ForwardResponseMessage
-	forward_GoldPriceService_UpdateGoldPrice_0 = runtime.ForwardResponseMessage
-	forward_GoldPriceService_DeleteGoldPrice_0 = runtime.ForwardResponseMessage
-)
-
-// RegisterBuybackPolicyServiceHandlerFromEndpoint is same as RegisterBuybackPolicyServiceHandler but
-// automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterBuybackPolicyServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
-	conn, err := grpc.NewClient(endpoint, opts...)
-	if err != nil {
-		return err
-	}
-	defer func() {
-		if err != nil {
-			if cerr := conn.Close(); cerr != nil {
-				grpclog.Errorf("Failed to close conn to %s: %v", endpoint, cerr)
-			}
-			return
-		}
-		go func() {
-			<-ctx.Done()
-			if cerr := conn.Close(); cerr != nil {
-				grpclog.Errorf("Failed to close conn to %s: %v", endpoint, cerr)
-			}
-		}()
-	}()
-	return RegisterBuybackPolicyServiceHandler(ctx, mux, conn)
-}
-
-// RegisterBuybackPolicyServiceHandler registers the http handlers for service BuybackPolicyService to "mux".
-// The handlers forward requests to the grpc endpoint over "conn".
-func RegisterBuybackPolicyServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterBuybackPolicyServiceHandlerClient(ctx, mux, NewBuybackPolicyServiceClient(conn))
-}
-
-// RegisterBuybackPolicyServiceHandlerClient registers the http handlers for service BuybackPolicyService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "BuybackPolicyServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "BuybackPolicyServiceClient"
-// doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "BuybackPolicyServiceClient" to call the correct interceptors. This client ignores the HTTP middlewares.
-func RegisterBuybackPolicyServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client BuybackPolicyServiceClient) error {
-	mux.Handle(http.MethodPost, pattern_BuybackPolicyService_CreateBuybackPolicy_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/market.BuybackPolicyService/CreateBuybackPolicy", runtime.WithHTTPPathPattern("/v1/buyback-policies"))
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := request_BuybackPolicyService_CreateBuybackPolicy_0(annotatedContext, inboundMarshaler, client, req, pathParams)
-		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
-		if err != nil {
-			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		forward_BuybackPolicyService_CreateBuybackPolicy_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-	})
-	mux.Handle(http.MethodGet, pattern_BuybackPolicyService_GetBuybackPolicy_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/market.BuybackPolicyService/GetBuybackPolicy", runtime.WithHTTPPathPattern("/v1/buyback-policies/{id}"))
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := request_BuybackPolicyService_GetBuybackPolicy_0(annotatedContext, inboundMarshaler, client, req, pathParams)
-		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
-		if err != nil {
-			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		forward_BuybackPolicyService_GetBuybackPolicy_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-	})
-	mux.Handle(http.MethodGet, pattern_BuybackPolicyService_ListBuybackPolicies_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/market.BuybackPolicyService/ListBuybackPolicies", runtime.WithHTTPPathPattern("/v1/buyback-policies"))
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := request_BuybackPolicyService_ListBuybackPolicies_0(annotatedContext, inboundMarshaler, client, req, pathParams)
-		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
-		if err != nil {
-			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		forward_BuybackPolicyService_ListBuybackPolicies_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-	})
-	mux.Handle(http.MethodPut, pattern_BuybackPolicyService_UpdateBuybackPolicy_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/market.BuybackPolicyService/UpdateBuybackPolicy", runtime.WithHTTPPathPattern("/v1/buyback-policies/{id}"))
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := request_BuybackPolicyService_UpdateBuybackPolicy_0(annotatedContext, inboundMarshaler, client, req, pathParams)
-		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
-		if err != nil {
-			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		forward_BuybackPolicyService_UpdateBuybackPolicy_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-	})
-	mux.Handle(http.MethodDelete, pattern_BuybackPolicyService_DeleteBuybackPolicy_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/market.BuybackPolicyService/DeleteBuybackPolicy", runtime.WithHTTPPathPattern("/v1/buyback-policies/{id}"))
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := request_BuybackPolicyService_DeleteBuybackPolicy_0(annotatedContext, inboundMarshaler, client, req, pathParams)
-		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
-		if err != nil {
-			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		forward_BuybackPolicyService_DeleteBuybackPolicy_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-	})
-	return nil
-}
-
-var (
-	pattern_BuybackPolicyService_CreateBuybackPolicy_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "buyback-policies"}, ""))
-	pattern_BuybackPolicyService_GetBuybackPolicy_0    = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "buyback-policies", "id"}, ""))
-	pattern_BuybackPolicyService_ListBuybackPolicies_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "buyback-policies"}, ""))
-	pattern_BuybackPolicyService_UpdateBuybackPolicy_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "buyback-policies", "id"}, ""))
-	pattern_BuybackPolicyService_DeleteBuybackPolicy_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "buyback-policies", "id"}, ""))
-)
-
-var (
-	forward_BuybackPolicyService_CreateBuybackPolicy_0 = runtime.ForwardResponseMessage
-	forward_BuybackPolicyService_GetBuybackPolicy_0    = runtime.ForwardResponseMessage
-	forward_BuybackPolicyService_ListBuybackPolicies_0 = runtime.ForwardResponseMessage
-	forward_BuybackPolicyService_UpdateBuybackPolicy_0 = runtime.ForwardResponseMessage
-	forward_BuybackPolicyService_DeleteBuybackPolicy_0 = runtime.ForwardResponseMessage
+	forward_Market_CreateGoldPrice_0     = runtime.ForwardResponseMessage
+	forward_Market_GetGoldPrice_0        = runtime.ForwardResponseMessage
+	forward_Market_ListGoldPrices_0      = runtime.ForwardResponseMessage
+	forward_Market_UpdateGoldPrice_0     = runtime.ForwardResponseMessage
+	forward_Market_DeleteGoldPrice_0     = runtime.ForwardResponseMessage
+	forward_Market_CreateBuybackPolicy_0 = runtime.ForwardResponseMessage
+	forward_Market_GetBuybackPolicy_0    = runtime.ForwardResponseMessage
+	forward_Market_ListBuybackPolicies_0 = runtime.ForwardResponseMessage
+	forward_Market_UpdateBuybackPolicy_0 = runtime.ForwardResponseMessage
+	forward_Market_DeleteBuybackPolicy_0 = runtime.ForwardResponseMessage
 )

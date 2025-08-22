@@ -1215,8 +1215,8 @@ const file_market_market_proto_rawDesc = "" +
 	"P*\x1eUpdate Buyback Policy Response2.Response containing the updated buyback policy\"\x9f\x01\n" +
 	"\x1aDeleteBuybackPolicyRequest\x127\n" +
 	"\x02id\x18\x01 \x01(\x03B'\x92A$2\"ID of the buyback policy to deleteR\x02id:H\x92AE\n" +
-	"C*\x1dDelete Buyback Policy Request2\"Request to delete a buyback policy2\xdb\a\n" +
-	"\x10GoldPriceService\x12\xb2\x01\n" +
+	"C*\x1dDelete Buyback Policy Request2\"Request to delete a buyback policy2\xe8\x0f\n" +
+	"\x06Market\x12\xb2\x01\n" +
 	"\x0fCreateGoldPrice\x12\x1e.market.CreateGoldPriceRequest\x1a\x1f.market.CreateGoldPriceResponse\"^\x92AA\n" +
 	"\vGold Prices\x12\x11Create gold price\x1a\x1fCreates a new gold price record\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/v1/gold-prices\x12\xac\x01\n" +
 	"\fGetGoldPrice\x12\x1b.market.GetGoldPriceRequest\x1a\x1c.market.GetGoldPriceResponse\"a\x92AB\n" +
@@ -1226,8 +1226,7 @@ const file_market_market_proto_rawDesc = "" +
 	"\x0fUpdateGoldPrice\x12\x1e.market.UpdateGoldPriceRequest\x1a\x1f.market.UpdateGoldPriceResponse\"i\x92AG\n" +
 	"\vGold Prices\x12\x11Update gold price\x1a%Updates an existing gold price record\x82\xd3\xe4\x93\x02\x19:\x01*\x1a\x14/v1/gold-prices/{id}\x12\xad\x01\n" +
 	"\x0fDeleteGoldPrice\x12\x1e.market.DeleteGoldPriceRequest\x1a\x16.google.protobuf.Empty\"b\x92AC\n" +
-	"\vGold Prices\x12\x11Delete gold price\x1a!Deletes a gold price record by ID\x82\xd3\xe4\x93\x02\x16*\x14/v1/gold-prices/{id}\x1a%\x92A\"\x12 Service for managing gold prices2\xd9\b\n" +
-	"\x14BuybackPolicyService\x12\xc9\x01\n" +
+	"\vGold Prices\x12\x11Delete gold price\x1a!Deletes a gold price record by ID\x82\xd3\xe4\x93\x02\x16*\x14/v1/gold-prices/{id}\x12\xc9\x01\n" +
 	"\x13CreateBuybackPolicy\x12\".market.CreateBuybackPolicyRequest\x1a#.market.CreateBuybackPolicyResponse\"i\x92AG\n" +
 	"\x10Buyback Policies\x12\x15Create buyback policy\x1a\x1cCreates a new buyback policy\x82\xd3\xe4\x93\x02\x19:\x01*\"\x14/v1/buyback-policies\x12\xc3\x01\n" +
 	"\x10GetBuybackPolicy\x12\x1f.market.GetBuybackPolicyRequest\x1a .market.GetBuybackPolicyResponse\"l\x92AH\n" +
@@ -1237,7 +1236,7 @@ const file_market_market_proto_rawDesc = "" +
 	"\x13UpdateBuybackPolicy\x12\".market.UpdateBuybackPolicyRequest\x1a#.market.UpdateBuybackPolicyResponse\"t\x92AM\n" +
 	"\x10Buyback Policies\x12\x15Update buyback policy\x1a\"Updates an existing buyback policy\x82\xd3\xe4\x93\x02\x1e:\x01*\x1a\x19/v1/buyback-policies/{id}\x12\xc0\x01\n" +
 	"\x13DeleteBuybackPolicy\x12\".market.DeleteBuybackPolicyRequest\x1a\x16.google.protobuf.Empty\"m\x92AI\n" +
-	"\x10Buyback Policies\x12\x15Delete buyback policy\x1a\x1eDeletes a buyback policy by ID\x82\xd3\xe4\x93\x02\x1b*\x19/v1/buyback-policies/{id}\x1a*\x92A'\x12%Service for managing buyback policiesB\x86\x03\x92A\xc5\x02\x12\xb1\x01\n" +
+	"\x10Buyback Policies\x12\x15Delete buyback policy\x1a\x1eDeletes a buyback policy by ID\x82\xd3\xe4\x93\x02\x1b*\x19/v1/buyback-policies/{id}\x1a%\x92A\"\x12 Service for managing gold pricesB\x86\x03\x92A\xc5\x02\x12\xb1\x01\n" +
 	"\x12Market Service API\x121API for managing gold prices and buyback policies\"c\n" +
 	"\x13Market Service Team\x123https://github.com/linhhuynhcoding/jss-microservice\x1a\x17support@goldservice.com2\x031.0*\x02\x02\x012\x10application/json:\x10application/jsonZY\n" +
 	"W\n" +
@@ -1296,26 +1295,26 @@ var file_market_market_proto_depIdxs = []int32{
 	10, // 9: market.GetBuybackPolicyResponse.buyback_policy:type_name -> market.BuybackPolicy
 	10, // 10: market.ListBuybackPoliciesResponse.buyback_policies:type_name -> market.BuybackPolicy
 	10, // 11: market.UpdateBuybackPolicyResponse.buyback_policy:type_name -> market.BuybackPolicy
-	1,  // 12: market.GoldPriceService.CreateGoldPrice:input_type -> market.CreateGoldPriceRequest
-	3,  // 13: market.GoldPriceService.GetGoldPrice:input_type -> market.GetGoldPriceRequest
-	5,  // 14: market.GoldPriceService.ListGoldPrices:input_type -> market.ListGoldPricesRequest
-	7,  // 15: market.GoldPriceService.UpdateGoldPrice:input_type -> market.UpdateGoldPriceRequest
-	9,  // 16: market.GoldPriceService.DeleteGoldPrice:input_type -> market.DeleteGoldPriceRequest
-	11, // 17: market.BuybackPolicyService.CreateBuybackPolicy:input_type -> market.CreateBuybackPolicyRequest
-	13, // 18: market.BuybackPolicyService.GetBuybackPolicy:input_type -> market.GetBuybackPolicyRequest
-	15, // 19: market.BuybackPolicyService.ListBuybackPolicies:input_type -> market.ListBuybackPoliciesRequest
-	17, // 20: market.BuybackPolicyService.UpdateBuybackPolicy:input_type -> market.UpdateBuybackPolicyRequest
-	19, // 21: market.BuybackPolicyService.DeleteBuybackPolicy:input_type -> market.DeleteBuybackPolicyRequest
-	2,  // 22: market.GoldPriceService.CreateGoldPrice:output_type -> market.CreateGoldPriceResponse
-	4,  // 23: market.GoldPriceService.GetGoldPrice:output_type -> market.GetGoldPriceResponse
-	6,  // 24: market.GoldPriceService.ListGoldPrices:output_type -> market.ListGoldPricesResponse
-	8,  // 25: market.GoldPriceService.UpdateGoldPrice:output_type -> market.UpdateGoldPriceResponse
-	21, // 26: market.GoldPriceService.DeleteGoldPrice:output_type -> google.protobuf.Empty
-	12, // 27: market.BuybackPolicyService.CreateBuybackPolicy:output_type -> market.CreateBuybackPolicyResponse
-	14, // 28: market.BuybackPolicyService.GetBuybackPolicy:output_type -> market.GetBuybackPolicyResponse
-	16, // 29: market.BuybackPolicyService.ListBuybackPolicies:output_type -> market.ListBuybackPoliciesResponse
-	18, // 30: market.BuybackPolicyService.UpdateBuybackPolicy:output_type -> market.UpdateBuybackPolicyResponse
-	21, // 31: market.BuybackPolicyService.DeleteBuybackPolicy:output_type -> google.protobuf.Empty
+	1,  // 12: market.Market.CreateGoldPrice:input_type -> market.CreateGoldPriceRequest
+	3,  // 13: market.Market.GetGoldPrice:input_type -> market.GetGoldPriceRequest
+	5,  // 14: market.Market.ListGoldPrices:input_type -> market.ListGoldPricesRequest
+	7,  // 15: market.Market.UpdateGoldPrice:input_type -> market.UpdateGoldPriceRequest
+	9,  // 16: market.Market.DeleteGoldPrice:input_type -> market.DeleteGoldPriceRequest
+	11, // 17: market.Market.CreateBuybackPolicy:input_type -> market.CreateBuybackPolicyRequest
+	13, // 18: market.Market.GetBuybackPolicy:input_type -> market.GetBuybackPolicyRequest
+	15, // 19: market.Market.ListBuybackPolicies:input_type -> market.ListBuybackPoliciesRequest
+	17, // 20: market.Market.UpdateBuybackPolicy:input_type -> market.UpdateBuybackPolicyRequest
+	19, // 21: market.Market.DeleteBuybackPolicy:input_type -> market.DeleteBuybackPolicyRequest
+	2,  // 22: market.Market.CreateGoldPrice:output_type -> market.CreateGoldPriceResponse
+	4,  // 23: market.Market.GetGoldPrice:output_type -> market.GetGoldPriceResponse
+	6,  // 24: market.Market.ListGoldPrices:output_type -> market.ListGoldPricesResponse
+	8,  // 25: market.Market.UpdateGoldPrice:output_type -> market.UpdateGoldPriceResponse
+	21, // 26: market.Market.DeleteGoldPrice:output_type -> google.protobuf.Empty
+	12, // 27: market.Market.CreateBuybackPolicy:output_type -> market.CreateBuybackPolicyResponse
+	14, // 28: market.Market.GetBuybackPolicy:output_type -> market.GetBuybackPolicyResponse
+	16, // 29: market.Market.ListBuybackPolicies:output_type -> market.ListBuybackPoliciesResponse
+	18, // 30: market.Market.UpdateBuybackPolicy:output_type -> market.UpdateBuybackPolicyResponse
+	21, // 31: market.Market.DeleteBuybackPolicy:output_type -> google.protobuf.Empty
 	22, // [22:32] is the sub-list for method output_type
 	12, // [12:22] is the sub-list for method input_type
 	12, // [12:12] is the sub-list for extension type_name
@@ -1336,7 +1335,7 @@ func file_market_market_proto_init() {
 			NumEnums:      0,
 			NumMessages:   20,
 			NumExtensions: 0,
-			NumServices:   2,
+			NumServices:   1,
 		},
 		GoTypes:           file_market_market_proto_goTypes,
 		DependencyIndexes: file_market_market_proto_depIdxs,

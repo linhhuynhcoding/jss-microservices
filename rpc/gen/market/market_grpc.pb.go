@@ -20,17 +20,22 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	GoldPriceService_CreateGoldPrice_FullMethodName = "/market.GoldPriceService/CreateGoldPrice"
-	GoldPriceService_GetGoldPrice_FullMethodName    = "/market.GoldPriceService/GetGoldPrice"
-	GoldPriceService_ListGoldPrices_FullMethodName  = "/market.GoldPriceService/ListGoldPrices"
-	GoldPriceService_UpdateGoldPrice_FullMethodName = "/market.GoldPriceService/UpdateGoldPrice"
-	GoldPriceService_DeleteGoldPrice_FullMethodName = "/market.GoldPriceService/DeleteGoldPrice"
+	Market_CreateGoldPrice_FullMethodName     = "/market.Market/CreateGoldPrice"
+	Market_GetGoldPrice_FullMethodName        = "/market.Market/GetGoldPrice"
+	Market_ListGoldPrices_FullMethodName      = "/market.Market/ListGoldPrices"
+	Market_UpdateGoldPrice_FullMethodName     = "/market.Market/UpdateGoldPrice"
+	Market_DeleteGoldPrice_FullMethodName     = "/market.Market/DeleteGoldPrice"
+	Market_CreateBuybackPolicy_FullMethodName = "/market.Market/CreateBuybackPolicy"
+	Market_GetBuybackPolicy_FullMethodName    = "/market.Market/GetBuybackPolicy"
+	Market_ListBuybackPolicies_FullMethodName = "/market.Market/ListBuybackPolicies"
+	Market_UpdateBuybackPolicy_FullMethodName = "/market.Market/UpdateBuybackPolicy"
+	Market_DeleteBuybackPolicy_FullMethodName = "/market.Market/DeleteBuybackPolicy"
 )
 
-// GoldPriceServiceClient is the client API for GoldPriceService service.
+// MarketClient is the client API for Market service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type GoldPriceServiceClient interface {
+type MarketClient interface {
 	// Create a new gold price record
 	CreateGoldPrice(ctx context.Context, in *CreateGoldPriceRequest, opts ...grpc.CallOption) (*CreateGoldPriceResponse, error)
 	// Get a gold price record by ID
@@ -41,260 +46,6 @@ type GoldPriceServiceClient interface {
 	UpdateGoldPrice(ctx context.Context, in *UpdateGoldPriceRequest, opts ...grpc.CallOption) (*UpdateGoldPriceResponse, error)
 	// Delete a gold price record
 	DeleteGoldPrice(ctx context.Context, in *DeleteGoldPriceRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-}
-
-type goldPriceServiceClient struct {
-	cc grpc.ClientConnInterface
-}
-
-func NewGoldPriceServiceClient(cc grpc.ClientConnInterface) GoldPriceServiceClient {
-	return &goldPriceServiceClient{cc}
-}
-
-func (c *goldPriceServiceClient) CreateGoldPrice(ctx context.Context, in *CreateGoldPriceRequest, opts ...grpc.CallOption) (*CreateGoldPriceResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateGoldPriceResponse)
-	err := c.cc.Invoke(ctx, GoldPriceService_CreateGoldPrice_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *goldPriceServiceClient) GetGoldPrice(ctx context.Context, in *GetGoldPriceRequest, opts ...grpc.CallOption) (*GetGoldPriceResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetGoldPriceResponse)
-	err := c.cc.Invoke(ctx, GoldPriceService_GetGoldPrice_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *goldPriceServiceClient) ListGoldPrices(ctx context.Context, in *ListGoldPricesRequest, opts ...grpc.CallOption) (*ListGoldPricesResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListGoldPricesResponse)
-	err := c.cc.Invoke(ctx, GoldPriceService_ListGoldPrices_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *goldPriceServiceClient) UpdateGoldPrice(ctx context.Context, in *UpdateGoldPriceRequest, opts ...grpc.CallOption) (*UpdateGoldPriceResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateGoldPriceResponse)
-	err := c.cc.Invoke(ctx, GoldPriceService_UpdateGoldPrice_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *goldPriceServiceClient) DeleteGoldPrice(ctx context.Context, in *DeleteGoldPriceRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, GoldPriceService_DeleteGoldPrice_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// GoldPriceServiceServer is the server API for GoldPriceService service.
-// All implementations must embed UnimplementedGoldPriceServiceServer
-// for forward compatibility.
-type GoldPriceServiceServer interface {
-	// Create a new gold price record
-	CreateGoldPrice(context.Context, *CreateGoldPriceRequest) (*CreateGoldPriceResponse, error)
-	// Get a gold price record by ID
-	GetGoldPrice(context.Context, *GetGoldPriceRequest) (*GetGoldPriceResponse, error)
-	// List gold price records with pagination
-	ListGoldPrices(context.Context, *ListGoldPricesRequest) (*ListGoldPricesResponse, error)
-	// Update an existing gold price record
-	UpdateGoldPrice(context.Context, *UpdateGoldPriceRequest) (*UpdateGoldPriceResponse, error)
-	// Delete a gold price record
-	DeleteGoldPrice(context.Context, *DeleteGoldPriceRequest) (*emptypb.Empty, error)
-	mustEmbedUnimplementedGoldPriceServiceServer()
-}
-
-// UnimplementedGoldPriceServiceServer must be embedded to have
-// forward compatible implementations.
-//
-// NOTE: this should be embedded by value instead of pointer to avoid a nil
-// pointer dereference when methods are called.
-type UnimplementedGoldPriceServiceServer struct{}
-
-func (UnimplementedGoldPriceServiceServer) CreateGoldPrice(context.Context, *CreateGoldPriceRequest) (*CreateGoldPriceResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateGoldPrice not implemented")
-}
-func (UnimplementedGoldPriceServiceServer) GetGoldPrice(context.Context, *GetGoldPriceRequest) (*GetGoldPriceResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetGoldPrice not implemented")
-}
-func (UnimplementedGoldPriceServiceServer) ListGoldPrices(context.Context, *ListGoldPricesRequest) (*ListGoldPricesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListGoldPrices not implemented")
-}
-func (UnimplementedGoldPriceServiceServer) UpdateGoldPrice(context.Context, *UpdateGoldPriceRequest) (*UpdateGoldPriceResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateGoldPrice not implemented")
-}
-func (UnimplementedGoldPriceServiceServer) DeleteGoldPrice(context.Context, *DeleteGoldPriceRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteGoldPrice not implemented")
-}
-func (UnimplementedGoldPriceServiceServer) mustEmbedUnimplementedGoldPriceServiceServer() {}
-func (UnimplementedGoldPriceServiceServer) testEmbeddedByValue()                          {}
-
-// UnsafeGoldPriceServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to GoldPriceServiceServer will
-// result in compilation errors.
-type UnsafeGoldPriceServiceServer interface {
-	mustEmbedUnimplementedGoldPriceServiceServer()
-}
-
-func RegisterGoldPriceServiceServer(s grpc.ServiceRegistrar, srv GoldPriceServiceServer) {
-	// If the following call pancis, it indicates UnimplementedGoldPriceServiceServer was
-	// embedded by pointer and is nil.  This will cause panics if an
-	// unimplemented method is ever invoked, so we test this at initialization
-	// time to prevent it from happening at runtime later due to I/O.
-	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
-		t.testEmbeddedByValue()
-	}
-	s.RegisterService(&GoldPriceService_ServiceDesc, srv)
-}
-
-func _GoldPriceService_CreateGoldPrice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateGoldPriceRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(GoldPriceServiceServer).CreateGoldPrice(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: GoldPriceService_CreateGoldPrice_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GoldPriceServiceServer).CreateGoldPrice(ctx, req.(*CreateGoldPriceRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _GoldPriceService_GetGoldPrice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetGoldPriceRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(GoldPriceServiceServer).GetGoldPrice(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: GoldPriceService_GetGoldPrice_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GoldPriceServiceServer).GetGoldPrice(ctx, req.(*GetGoldPriceRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _GoldPriceService_ListGoldPrices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListGoldPricesRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(GoldPriceServiceServer).ListGoldPrices(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: GoldPriceService_ListGoldPrices_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GoldPriceServiceServer).ListGoldPrices(ctx, req.(*ListGoldPricesRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _GoldPriceService_UpdateGoldPrice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateGoldPriceRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(GoldPriceServiceServer).UpdateGoldPrice(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: GoldPriceService_UpdateGoldPrice_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GoldPriceServiceServer).UpdateGoldPrice(ctx, req.(*UpdateGoldPriceRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _GoldPriceService_DeleteGoldPrice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteGoldPriceRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(GoldPriceServiceServer).DeleteGoldPrice(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: GoldPriceService_DeleteGoldPrice_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GoldPriceServiceServer).DeleteGoldPrice(ctx, req.(*DeleteGoldPriceRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-// GoldPriceService_ServiceDesc is the grpc.ServiceDesc for GoldPriceService service.
-// It's only intended for direct use with grpc.RegisterService,
-// and not to be introspected or modified (even as a copy)
-var GoldPriceService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "market.GoldPriceService",
-	HandlerType: (*GoldPriceServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "CreateGoldPrice",
-			Handler:    _GoldPriceService_CreateGoldPrice_Handler,
-		},
-		{
-			MethodName: "GetGoldPrice",
-			Handler:    _GoldPriceService_GetGoldPrice_Handler,
-		},
-		{
-			MethodName: "ListGoldPrices",
-			Handler:    _GoldPriceService_ListGoldPrices_Handler,
-		},
-		{
-			MethodName: "UpdateGoldPrice",
-			Handler:    _GoldPriceService_UpdateGoldPrice_Handler,
-		},
-		{
-			MethodName: "DeleteGoldPrice",
-			Handler:    _GoldPriceService_DeleteGoldPrice_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "market/market.proto",
-}
-
-const (
-	BuybackPolicyService_CreateBuybackPolicy_FullMethodName = "/market.BuybackPolicyService/CreateBuybackPolicy"
-	BuybackPolicyService_GetBuybackPolicy_FullMethodName    = "/market.BuybackPolicyService/GetBuybackPolicy"
-	BuybackPolicyService_ListBuybackPolicies_FullMethodName = "/market.BuybackPolicyService/ListBuybackPolicies"
-	BuybackPolicyService_UpdateBuybackPolicy_FullMethodName = "/market.BuybackPolicyService/UpdateBuybackPolicy"
-	BuybackPolicyService_DeleteBuybackPolicy_FullMethodName = "/market.BuybackPolicyService/DeleteBuybackPolicy"
-)
-
-// BuybackPolicyServiceClient is the client API for BuybackPolicyService service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type BuybackPolicyServiceClient interface {
 	// Create a new buyback policy
 	CreateBuybackPolicy(ctx context.Context, in *CreateBuybackPolicyRequest, opts ...grpc.CallOption) (*CreateBuybackPolicyResponse, error)
 	// Get a buyback policy by ID
@@ -307,68 +58,128 @@ type BuybackPolicyServiceClient interface {
 	DeleteBuybackPolicy(ctx context.Context, in *DeleteBuybackPolicyRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
-type buybackPolicyServiceClient struct {
+type marketClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewBuybackPolicyServiceClient(cc grpc.ClientConnInterface) BuybackPolicyServiceClient {
-	return &buybackPolicyServiceClient{cc}
+func NewMarketClient(cc grpc.ClientConnInterface) MarketClient {
+	return &marketClient{cc}
 }
 
-func (c *buybackPolicyServiceClient) CreateBuybackPolicy(ctx context.Context, in *CreateBuybackPolicyRequest, opts ...grpc.CallOption) (*CreateBuybackPolicyResponse, error) {
+func (c *marketClient) CreateGoldPrice(ctx context.Context, in *CreateGoldPriceRequest, opts ...grpc.CallOption) (*CreateGoldPriceResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateBuybackPolicyResponse)
-	err := c.cc.Invoke(ctx, BuybackPolicyService_CreateBuybackPolicy_FullMethodName, in, out, cOpts...)
+	out := new(CreateGoldPriceResponse)
+	err := c.cc.Invoke(ctx, Market_CreateGoldPrice_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *buybackPolicyServiceClient) GetBuybackPolicy(ctx context.Context, in *GetBuybackPolicyRequest, opts ...grpc.CallOption) (*GetBuybackPolicyResponse, error) {
+func (c *marketClient) GetGoldPrice(ctx context.Context, in *GetGoldPriceRequest, opts ...grpc.CallOption) (*GetGoldPriceResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetBuybackPolicyResponse)
-	err := c.cc.Invoke(ctx, BuybackPolicyService_GetBuybackPolicy_FullMethodName, in, out, cOpts...)
+	out := new(GetGoldPriceResponse)
+	err := c.cc.Invoke(ctx, Market_GetGoldPrice_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *buybackPolicyServiceClient) ListBuybackPolicies(ctx context.Context, in *ListBuybackPoliciesRequest, opts ...grpc.CallOption) (*ListBuybackPoliciesResponse, error) {
+func (c *marketClient) ListGoldPrices(ctx context.Context, in *ListGoldPricesRequest, opts ...grpc.CallOption) (*ListGoldPricesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListBuybackPoliciesResponse)
-	err := c.cc.Invoke(ctx, BuybackPolicyService_ListBuybackPolicies_FullMethodName, in, out, cOpts...)
+	out := new(ListGoldPricesResponse)
+	err := c.cc.Invoke(ctx, Market_ListGoldPrices_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *buybackPolicyServiceClient) UpdateBuybackPolicy(ctx context.Context, in *UpdateBuybackPolicyRequest, opts ...grpc.CallOption) (*UpdateBuybackPolicyResponse, error) {
+func (c *marketClient) UpdateGoldPrice(ctx context.Context, in *UpdateGoldPriceRequest, opts ...grpc.CallOption) (*UpdateGoldPriceResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateBuybackPolicyResponse)
-	err := c.cc.Invoke(ctx, BuybackPolicyService_UpdateBuybackPolicy_FullMethodName, in, out, cOpts...)
+	out := new(UpdateGoldPriceResponse)
+	err := c.cc.Invoke(ctx, Market_UpdateGoldPrice_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *buybackPolicyServiceClient) DeleteBuybackPolicy(ctx context.Context, in *DeleteBuybackPolicyRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *marketClient) DeleteGoldPrice(ctx context.Context, in *DeleteGoldPriceRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, BuybackPolicyService_DeleteBuybackPolicy_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Market_DeleteGoldPrice_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// BuybackPolicyServiceServer is the server API for BuybackPolicyService service.
-// All implementations must embed UnimplementedBuybackPolicyServiceServer
+func (c *marketClient) CreateBuybackPolicy(ctx context.Context, in *CreateBuybackPolicyRequest, opts ...grpc.CallOption) (*CreateBuybackPolicyResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateBuybackPolicyResponse)
+	err := c.cc.Invoke(ctx, Market_CreateBuybackPolicy_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *marketClient) GetBuybackPolicy(ctx context.Context, in *GetBuybackPolicyRequest, opts ...grpc.CallOption) (*GetBuybackPolicyResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetBuybackPolicyResponse)
+	err := c.cc.Invoke(ctx, Market_GetBuybackPolicy_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *marketClient) ListBuybackPolicies(ctx context.Context, in *ListBuybackPoliciesRequest, opts ...grpc.CallOption) (*ListBuybackPoliciesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListBuybackPoliciesResponse)
+	err := c.cc.Invoke(ctx, Market_ListBuybackPolicies_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *marketClient) UpdateBuybackPolicy(ctx context.Context, in *UpdateBuybackPolicyRequest, opts ...grpc.CallOption) (*UpdateBuybackPolicyResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateBuybackPolicyResponse)
+	err := c.cc.Invoke(ctx, Market_UpdateBuybackPolicy_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *marketClient) DeleteBuybackPolicy(ctx context.Context, in *DeleteBuybackPolicyRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Market_DeleteBuybackPolicy_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// MarketServer is the server API for Market service.
+// All implementations must embed UnimplementedMarketServer
 // for forward compatibility.
-type BuybackPolicyServiceServer interface {
+type MarketServer interface {
+	// Create a new gold price record
+	CreateGoldPrice(context.Context, *CreateGoldPriceRequest) (*CreateGoldPriceResponse, error)
+	// Get a gold price record by ID
+	GetGoldPrice(context.Context, *GetGoldPriceRequest) (*GetGoldPriceResponse, error)
+	// List gold price records with pagination
+	ListGoldPrices(context.Context, *ListGoldPricesRequest) (*ListGoldPricesResponse, error)
+	// Update an existing gold price record
+	UpdateGoldPrice(context.Context, *UpdateGoldPriceRequest) (*UpdateGoldPriceResponse, error)
+	// Delete a gold price record
+	DeleteGoldPrice(context.Context, *DeleteGoldPriceRequest) (*emptypb.Empty, error)
 	// Create a new buyback policy
 	CreateBuybackPolicy(context.Context, *CreateBuybackPolicyRequest) (*CreateBuybackPolicyResponse, error)
 	// Get a buyback policy by ID
@@ -379,168 +190,293 @@ type BuybackPolicyServiceServer interface {
 	UpdateBuybackPolicy(context.Context, *UpdateBuybackPolicyRequest) (*UpdateBuybackPolicyResponse, error)
 	// Delete a buyback policy
 	DeleteBuybackPolicy(context.Context, *DeleteBuybackPolicyRequest) (*emptypb.Empty, error)
-	mustEmbedUnimplementedBuybackPolicyServiceServer()
+	mustEmbedUnimplementedMarketServer()
 }
 
-// UnimplementedBuybackPolicyServiceServer must be embedded to have
+// UnimplementedMarketServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedBuybackPolicyServiceServer struct{}
+type UnimplementedMarketServer struct{}
 
-func (UnimplementedBuybackPolicyServiceServer) CreateBuybackPolicy(context.Context, *CreateBuybackPolicyRequest) (*CreateBuybackPolicyResponse, error) {
+func (UnimplementedMarketServer) CreateGoldPrice(context.Context, *CreateGoldPriceRequest) (*CreateGoldPriceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateGoldPrice not implemented")
+}
+func (UnimplementedMarketServer) GetGoldPrice(context.Context, *GetGoldPriceRequest) (*GetGoldPriceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGoldPrice not implemented")
+}
+func (UnimplementedMarketServer) ListGoldPrices(context.Context, *ListGoldPricesRequest) (*ListGoldPricesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListGoldPrices not implemented")
+}
+func (UnimplementedMarketServer) UpdateGoldPrice(context.Context, *UpdateGoldPriceRequest) (*UpdateGoldPriceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateGoldPrice not implemented")
+}
+func (UnimplementedMarketServer) DeleteGoldPrice(context.Context, *DeleteGoldPriceRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteGoldPrice not implemented")
+}
+func (UnimplementedMarketServer) CreateBuybackPolicy(context.Context, *CreateBuybackPolicyRequest) (*CreateBuybackPolicyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateBuybackPolicy not implemented")
 }
-func (UnimplementedBuybackPolicyServiceServer) GetBuybackPolicy(context.Context, *GetBuybackPolicyRequest) (*GetBuybackPolicyResponse, error) {
+func (UnimplementedMarketServer) GetBuybackPolicy(context.Context, *GetBuybackPolicyRequest) (*GetBuybackPolicyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBuybackPolicy not implemented")
 }
-func (UnimplementedBuybackPolicyServiceServer) ListBuybackPolicies(context.Context, *ListBuybackPoliciesRequest) (*ListBuybackPoliciesResponse, error) {
+func (UnimplementedMarketServer) ListBuybackPolicies(context.Context, *ListBuybackPoliciesRequest) (*ListBuybackPoliciesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListBuybackPolicies not implemented")
 }
-func (UnimplementedBuybackPolicyServiceServer) UpdateBuybackPolicy(context.Context, *UpdateBuybackPolicyRequest) (*UpdateBuybackPolicyResponse, error) {
+func (UnimplementedMarketServer) UpdateBuybackPolicy(context.Context, *UpdateBuybackPolicyRequest) (*UpdateBuybackPolicyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateBuybackPolicy not implemented")
 }
-func (UnimplementedBuybackPolicyServiceServer) DeleteBuybackPolicy(context.Context, *DeleteBuybackPolicyRequest) (*emptypb.Empty, error) {
+func (UnimplementedMarketServer) DeleteBuybackPolicy(context.Context, *DeleteBuybackPolicyRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteBuybackPolicy not implemented")
 }
-func (UnimplementedBuybackPolicyServiceServer) mustEmbedUnimplementedBuybackPolicyServiceServer() {}
-func (UnimplementedBuybackPolicyServiceServer) testEmbeddedByValue()                              {}
+func (UnimplementedMarketServer) mustEmbedUnimplementedMarketServer() {}
+func (UnimplementedMarketServer) testEmbeddedByValue()                {}
 
-// UnsafeBuybackPolicyServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to BuybackPolicyServiceServer will
+// UnsafeMarketServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to MarketServer will
 // result in compilation errors.
-type UnsafeBuybackPolicyServiceServer interface {
-	mustEmbedUnimplementedBuybackPolicyServiceServer()
+type UnsafeMarketServer interface {
+	mustEmbedUnimplementedMarketServer()
 }
 
-func RegisterBuybackPolicyServiceServer(s grpc.ServiceRegistrar, srv BuybackPolicyServiceServer) {
-	// If the following call pancis, it indicates UnimplementedBuybackPolicyServiceServer was
+func RegisterMarketServer(s grpc.ServiceRegistrar, srv MarketServer) {
+	// If the following call pancis, it indicates UnimplementedMarketServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&BuybackPolicyService_ServiceDesc, srv)
+	s.RegisterService(&Market_ServiceDesc, srv)
 }
 
-func _BuybackPolicyService_CreateBuybackPolicy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Market_CreateGoldPrice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateGoldPriceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarketServer).CreateGoldPrice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Market_CreateGoldPrice_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarketServer).CreateGoldPrice(ctx, req.(*CreateGoldPriceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Market_GetGoldPrice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetGoldPriceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarketServer).GetGoldPrice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Market_GetGoldPrice_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarketServer).GetGoldPrice(ctx, req.(*GetGoldPriceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Market_ListGoldPrices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListGoldPricesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarketServer).ListGoldPrices(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Market_ListGoldPrices_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarketServer).ListGoldPrices(ctx, req.(*ListGoldPricesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Market_UpdateGoldPrice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateGoldPriceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarketServer).UpdateGoldPrice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Market_UpdateGoldPrice_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarketServer).UpdateGoldPrice(ctx, req.(*UpdateGoldPriceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Market_DeleteGoldPrice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteGoldPriceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarketServer).DeleteGoldPrice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Market_DeleteGoldPrice_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarketServer).DeleteGoldPrice(ctx, req.(*DeleteGoldPriceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Market_CreateBuybackPolicy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateBuybackPolicyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BuybackPolicyServiceServer).CreateBuybackPolicy(ctx, in)
+		return srv.(MarketServer).CreateBuybackPolicy(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: BuybackPolicyService_CreateBuybackPolicy_FullMethodName,
+		FullMethod: Market_CreateBuybackPolicy_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BuybackPolicyServiceServer).CreateBuybackPolicy(ctx, req.(*CreateBuybackPolicyRequest))
+		return srv.(MarketServer).CreateBuybackPolicy(ctx, req.(*CreateBuybackPolicyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BuybackPolicyService_GetBuybackPolicy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Market_GetBuybackPolicy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetBuybackPolicyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BuybackPolicyServiceServer).GetBuybackPolicy(ctx, in)
+		return srv.(MarketServer).GetBuybackPolicy(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: BuybackPolicyService_GetBuybackPolicy_FullMethodName,
+		FullMethod: Market_GetBuybackPolicy_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BuybackPolicyServiceServer).GetBuybackPolicy(ctx, req.(*GetBuybackPolicyRequest))
+		return srv.(MarketServer).GetBuybackPolicy(ctx, req.(*GetBuybackPolicyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BuybackPolicyService_ListBuybackPolicies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Market_ListBuybackPolicies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListBuybackPoliciesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BuybackPolicyServiceServer).ListBuybackPolicies(ctx, in)
+		return srv.(MarketServer).ListBuybackPolicies(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: BuybackPolicyService_ListBuybackPolicies_FullMethodName,
+		FullMethod: Market_ListBuybackPolicies_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BuybackPolicyServiceServer).ListBuybackPolicies(ctx, req.(*ListBuybackPoliciesRequest))
+		return srv.(MarketServer).ListBuybackPolicies(ctx, req.(*ListBuybackPoliciesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BuybackPolicyService_UpdateBuybackPolicy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Market_UpdateBuybackPolicy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateBuybackPolicyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BuybackPolicyServiceServer).UpdateBuybackPolicy(ctx, in)
+		return srv.(MarketServer).UpdateBuybackPolicy(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: BuybackPolicyService_UpdateBuybackPolicy_FullMethodName,
+		FullMethod: Market_UpdateBuybackPolicy_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BuybackPolicyServiceServer).UpdateBuybackPolicy(ctx, req.(*UpdateBuybackPolicyRequest))
+		return srv.(MarketServer).UpdateBuybackPolicy(ctx, req.(*UpdateBuybackPolicyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BuybackPolicyService_DeleteBuybackPolicy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Market_DeleteBuybackPolicy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteBuybackPolicyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BuybackPolicyServiceServer).DeleteBuybackPolicy(ctx, in)
+		return srv.(MarketServer).DeleteBuybackPolicy(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: BuybackPolicyService_DeleteBuybackPolicy_FullMethodName,
+		FullMethod: Market_DeleteBuybackPolicy_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BuybackPolicyServiceServer).DeleteBuybackPolicy(ctx, req.(*DeleteBuybackPolicyRequest))
+		return srv.(MarketServer).DeleteBuybackPolicy(ctx, req.(*DeleteBuybackPolicyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// BuybackPolicyService_ServiceDesc is the grpc.ServiceDesc for BuybackPolicyService service.
+// Market_ServiceDesc is the grpc.ServiceDesc for Market service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var BuybackPolicyService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "market.BuybackPolicyService",
-	HandlerType: (*BuybackPolicyServiceServer)(nil),
+var Market_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "market.Market",
+	HandlerType: (*MarketServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
+			MethodName: "CreateGoldPrice",
+			Handler:    _Market_CreateGoldPrice_Handler,
+		},
+		{
+			MethodName: "GetGoldPrice",
+			Handler:    _Market_GetGoldPrice_Handler,
+		},
+		{
+			MethodName: "ListGoldPrices",
+			Handler:    _Market_ListGoldPrices_Handler,
+		},
+		{
+			MethodName: "UpdateGoldPrice",
+			Handler:    _Market_UpdateGoldPrice_Handler,
+		},
+		{
+			MethodName: "DeleteGoldPrice",
+			Handler:    _Market_DeleteGoldPrice_Handler,
+		},
+		{
 			MethodName: "CreateBuybackPolicy",
-			Handler:    _BuybackPolicyService_CreateBuybackPolicy_Handler,
+			Handler:    _Market_CreateBuybackPolicy_Handler,
 		},
 		{
 			MethodName: "GetBuybackPolicy",
-			Handler:    _BuybackPolicyService_GetBuybackPolicy_Handler,
+			Handler:    _Market_GetBuybackPolicy_Handler,
 		},
 		{
 			MethodName: "ListBuybackPolicies",
-			Handler:    _BuybackPolicyService_ListBuybackPolicies_Handler,
+			Handler:    _Market_ListBuybackPolicies_Handler,
 		},
 		{
 			MethodName: "UpdateBuybackPolicy",
-			Handler:    _BuybackPolicyService_UpdateBuybackPolicy_Handler,
+			Handler:    _Market_UpdateBuybackPolicy_Handler,
 		},
 		{
 			MethodName: "DeleteBuybackPolicy",
-			Handler:    _BuybackPolicyService_DeleteBuybackPolicy_Handler,
+			Handler:    _Market_DeleteBuybackPolicy_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

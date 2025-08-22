@@ -372,7 +372,7 @@ message DeleteBuybackPolicyRequest {
 
 // ===== SERVICE DEFINITIONS =====
 
-service GoldPriceService {
+service Market {
   option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_tag) = {
     description: "Service for managing gold prices";
   };
@@ -438,12 +438,6 @@ service GoldPriceService {
       tags: "Gold Prices";
     };
   }
-}
-
-service BuybackPolicyService {
-  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_tag) = {
-    description: "Service for managing buyback policies";
-  };
 
   // Create a new buyback policy
   rpc CreateBuybackPolicy(CreateBuybackPolicyRequest) returns (CreateBuybackPolicyResponse) {
