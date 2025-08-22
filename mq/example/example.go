@@ -34,10 +34,12 @@ func main() {
 	fmt.Println("Init Publisher successfully")
 
 	go func() {
-		<-time.After(time.Second * 3)
-		err = publisher.SendMessage(&events.ProductEvent{
-			ProductId: "productID",
-		}, consts.TOPIC_CREATE_PRODUCT)
+		for {
+			<-time.After(time.Second * 2)
+			err = publisher.SendMessage(&events.ProductEvent{
+				ProductId: "productID",
+			}, consts.TOPIC_CREATE_PRODUCT)
+		}
 	}()
 
 	subscriber, err := mq.NewSubscriber(config, logger)

@@ -26,7 +26,7 @@ func NewSubscriber(
 	log *zap.Logger,
 ) (*Subscriber, error) {
 	ctx, cancel := context.WithCancel(context.Background())
-	logger := log.With(zap.String("Subscriber", "NewSubscriber"))
+	logger := log.With(zap.String("Subscriber", cfg.SubscriberName))
 
 	conn, err := amqp.Dial(cfg.ConnStr)
 	if err != nil {
