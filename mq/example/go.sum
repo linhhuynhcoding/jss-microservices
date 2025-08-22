@@ -2,8 +2,8 @@ github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/google/go-cmp v0.5.5 h1:Khx7svrCpmxxtHBq5j2mp/xVjsi8hQMfNLvJFAlrGgU=
 github.com/google/go-cmp v0.5.5/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
-github.com/linhhuynhcoding/jss-microservices/mq v0.0.0-20250822134409-7c4c487bddca h1:VdnnSm/YhtlYOPoRTfEFA2fhmdIVF13oKb1PScS86Rs=
-github.com/linhhuynhcoding/jss-microservices/mq v0.0.0-20250822134409-7c4c487bddca/go.mod h1:qGMKwTgnXshnZrNsR0qUjm2Ea1TjTqOZwh1kvN7a708=
+github.com/linhhuynhcoding/jss-microservices/mq v0.0.0-20250822135140-06fef9029f3b h1:6U3SAnOvnvw6H62oXJlaTezBPG9CNHXT1Pf8s7z8oR8=
+github.com/linhhuynhcoding/jss-microservices/mq v0.0.0-20250822135140-06fef9029f3b/go.mod h1:qGMKwTgnXshnZrNsR0qUjm2Ea1TjTqOZwh1kvN7a708=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/rabbitmq/amqp091-go v1.10.0 h1:STpn5XsHlHGcecLmMFCtg7mqq0RnD+zFr4uzukfVhBw=
