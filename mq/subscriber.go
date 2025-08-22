@@ -113,7 +113,7 @@ func (s *Subscriber) Consume(handler func([]byte) error) error {
 	msgs, err := s.ch.Consume(
 		s.q.Name, // queue
 		"",       // consumer
-		true,     // auto-ack
+		false,    // auto-ack
 		false,    // exclusive
 		false,    // no-local
 		false,    // no-wait
@@ -132,8 +132,9 @@ func (s *Subscriber) Consume(handler func([]byte) error) error {
 		case msg, ok := <-msgs:
 			if !ok {
 				s.logger.Warn("Message channel closed")
+			} else {
+				go s.handleMessage(msg, handler)
 			}
-			go s.handleMessage(msg, handler)
 		}
 
 	}

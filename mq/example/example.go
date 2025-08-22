@@ -10,6 +10,8 @@ import (
 	"github.com/linhhuynhcoding/jss-microservices/mq/consts"
 	"github.com/linhhuynhcoding/jss-microservices/mq/events"
 	"go.uber.org/zap"
+	"google.golang.org/protobuf/encoding/protojson"
+	"google.golang.org/protobuf/proto"
 )
 
 func main() {
@@ -42,6 +44,7 @@ func main() {
 	if err != nil {
 		fmt.Printf("Error %v", err)
 	}
+	defer subscriber.Close()
 	fmt.Println("Init Subscriber successfully")
 
 	errCh := make(chan error)
@@ -49,7 +52,11 @@ func main() {
 	// Start consuming
 	go func() {
 		if errCh <- subscriber.Consume(func(body []byte) error {
-			fmt.Printf("Received: %s\n", body)
+			var data events.ProductEvent
+			_ = proto.Unmarshal(body, &data)
+			b, _ := protojson.Marshal(&data)
+
+			fmt.Printf("Received: %v\n", string(b))
 			return nil
 		}); errCh != nil {
 			log.Printf("Consumer error: %v", err)
