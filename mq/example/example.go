@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/linhhuynhcoding/jss-microservices/mq"
+	mq "github.com/linhhuynhcoding/jss-microservices/mq"
 	"github.com/linhhuynhcoding/jss-microservices/mq/config"
 	"go.uber.org/zap"
 )
 
-func main() {
+func example() {
 	config := config.RabbitMQConfig{
 		ConnStr:        "amqp://localhost:5672/",
 		ExchangeName:   "my-exchange",
