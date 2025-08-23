@@ -3,7 +3,7 @@ PROTO_DIR    = rpc
 OUT_DIR      = gen
 
 # Lấy danh sách proto, bỏ qua google/api
-PROTO_FILES := $(shell find $(PROTO_DIR) -name "*.proto" ! -path "$(PROTO_DIR)/google/api/*")
+PROTO_FILES := $(shell find $(PROTO_DIR) -name "*.proto" ! -path "$(PROTO_DIR)/google/*" ! -path "$(PROTO_DIR)/protoc-gen-openapiv2/*")
 
 proto: clean
 	@mkdir -p $(OUT_DIR)
