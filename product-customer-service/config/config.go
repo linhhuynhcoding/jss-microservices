@@ -1,9 +1,39 @@
 package config
 
+import "github.com/spf13/viper"
+
 type Config struct {
-	DBSource string
+	DBSource string `mapstructure:"DB_SOURCE"`
+
+	CloudinaryConfig struct {
+		ConnectString string `mapstructure:"CLOUDINARY_URL"`
+		CloudName     string `mapstructure:"CLOUDINARY_NAME"`
+		APIKey        string `mapstructure:"CLOUDINARY_API_KEY"`
+		APISecret     string `mapstructure:"CLOUDINARY_API_SECRET"`
+		UploadFolder  string `mapstructure:"CLOUDINARY_UPLOAD_FOLDER"`
+	}
 }
 
 func NewConfig() Config {
-	return Config{}
+	config, err := LoadConfig("./..")
+	if err != nil {
+		panic(err)
+	}
+	return config
+}
+
+func LoadConfig(path string) (config Config, err error) {
+	viper.AddConfigPath(path)
+	viper.SetConfigName("config")
+	viper.SetConfigType("yaml")
+
+	viper.AutomaticEnv()
+
+	err = viper.ReadInConfig()
+	if err != nil {
+		return
+	}
+
+	err = viper.Unmarshal(&config)
+	return
 }

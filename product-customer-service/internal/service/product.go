@@ -24,7 +24,7 @@ func (s *Service) CreateProduct(ctx context.Context, req *api.CreateProductReque
 		SellingPrice:    utils.ToNumeric(req.SellingPrice),
 		WarrantyPeriod:  utils.Int32(req.WarrantyPeriod),
 		Image:           req.Image,
-	}
+	}	
 
 	product, err := s.queries.CreateProduct(ctx, arg)
 	if err != nil {
