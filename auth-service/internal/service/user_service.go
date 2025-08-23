@@ -13,6 +13,7 @@ import (
 	"github.com/linhhuynhcoding/jss-microservices/auth-service/internal/repository"
 	"github.com/linhhuynhcoding/jss-microservices/auth-service/pkg/hashing"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.uber.org/zap"
 )
 
@@ -119,6 +120,18 @@ func (s *UserService) GetUser(ctx context.Context, code int64) (*domain.User, er
 	    s.log.Info("Getuser on user service")
 
 	return u, nil
+}
+
+func (s *UserService) GetUserByObjectID(ctx context.Context, id primitive.ObjectID) (*domain.User, error) {
+    u, err := s.repo.FindByID(ctx, id)
+    if err != nil {
+        return nil, err
+    }
+    if u == nil {
+        return nil, ErrUserNotFound
+    }
+    u.Password = ""
+    return u, nil
 }
 
 // UpdateUser: dùng userCode (ID số nhỏ)
