@@ -1,7 +1,10 @@
 package service
 
 import (
+	"context"
+
 	"github.com/linhhuynhcoding/jss-microservices/product/config"
+	"github.com/linhhuynhcoding/jss-microservices/product/internal/repository"
 	"github.com/linhhuynhcoding/jss-microservices/rpc/gen/product"
 	"go.uber.org/zap"
 )
@@ -9,13 +12,16 @@ import (
 type Service struct {
 	product.UnimplementedProductCustomerServer
 
-	logger *zap.Logger
-	cfg    config.Config
+	logger  *zap.Logger
+	cfg     config.Config
+	queries repository.Store
 }
 
-func NewService(logger *zap.Logger, cfg config.Config) *Service {
+func NewService(ctx context.Context, logger *zap.Logger, cfg config.Config, store repository.Store) *Service {
+
 	return &Service{
-		logger: logger,
-		cfg:    cfg,
+		logger:  logger,
+		cfg:     cfg,
+		queries: store,
 	}
 }

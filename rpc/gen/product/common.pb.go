@@ -65,13 +65,340 @@ func (x *User) GetDummy() string {
 	return ""
 }
 
+type Product struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Id              int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name            string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Code            string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`
+	CategoryId      int32                  `protobuf:"varint,4,opt,name=category_id,json=categoryId,proto3" json:"category_id,omitempty"`
+	Weight          float64                `protobuf:"fixed64,5,opt,name=weight,proto3" json:"weight,omitempty"`
+	GoldPriceAtTime float64                `protobuf:"fixed64,6,opt,name=gold_price_at_time,json=goldPriceAtTime,proto3" json:"gold_price_at_time,omitempty"`
+	LaborCost       float64                `protobuf:"fixed64,7,opt,name=labor_cost,json=laborCost,proto3" json:"labor_cost,omitempty"`
+	StoneCost       float64                `protobuf:"fixed64,8,opt,name=stone_cost,json=stoneCost,proto3" json:"stone_cost,omitempty"`
+	MarkupRate      float64                `protobuf:"fixed64,9,opt,name=markup_rate,json=markupRate,proto3" json:"markup_rate,omitempty"`
+	SellingPrice    float64                `protobuf:"fixed64,10,opt,name=selling_price,json=sellingPrice,proto3" json:"selling_price,omitempty"`
+	WarrantyPeriod  int32                  `protobuf:"varint,11,opt,name=warranty_period,json=warrantyPeriod,proto3" json:"warranty_period,omitempty"`
+	Image           string                 `protobuf:"bytes,12,opt,name=image,proto3" json:"image,omitempty"`
+	CreatedAt       string                 `protobuf:"bytes,13,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"` // ISO8601
+	UpdatedAt       string                 `protobuf:"bytes,14,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *Product) Reset() {
+	*x = Product{}
+	mi := &file_product_common_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Product) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Product) ProtoMessage() {}
+
+func (x *Product) ProtoReflect() protoreflect.Message {
+	mi := &file_product_common_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Product.ProtoReflect.Descriptor instead.
+func (*Product) Descriptor() ([]byte, []int) {
+	return file_product_common_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *Product) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *Product) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *Product) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *Product) GetCategoryId() int32 {
+	if x != nil {
+		return x.CategoryId
+	}
+	return 0
+}
+
+func (x *Product) GetWeight() float64 {
+	if x != nil {
+		return x.Weight
+	}
+	return 0
+}
+
+func (x *Product) GetGoldPriceAtTime() float64 {
+	if x != nil {
+		return x.GoldPriceAtTime
+	}
+	return 0
+}
+
+func (x *Product) GetLaborCost() float64 {
+	if x != nil {
+		return x.LaborCost
+	}
+	return 0
+}
+
+func (x *Product) GetStoneCost() float64 {
+	if x != nil {
+		return x.StoneCost
+	}
+	return 0
+}
+
+func (x *Product) GetMarkupRate() float64 {
+	if x != nil {
+		return x.MarkupRate
+	}
+	return 0
+}
+
+func (x *Product) GetSellingPrice() float64 {
+	if x != nil {
+		return x.SellingPrice
+	}
+	return 0
+}
+
+func (x *Product) GetWarrantyPeriod() int32 {
+	if x != nil {
+		return x.WarrantyPeriod
+	}
+	return 0
+}
+
+func (x *Product) GetImage() string {
+	if x != nil {
+		return x.Image
+	}
+	return ""
+}
+
+func (x *Product) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+func (x *Product) GetUpdatedAt() string {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return ""
+}
+
+type ProductCategory struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ProductCategory) Reset() {
+	*x = ProductCategory{}
+	mi := &file_product_common_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ProductCategory) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ProductCategory) ProtoMessage() {}
+
+func (x *ProductCategory) ProtoReflect() protoreflect.Message {
+	mi := &file_product_common_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ProductCategory.ProtoReflect.Descriptor instead.
+func (*ProductCategory) Descriptor() ([]byte, []int) {
+	return file_product_common_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *ProductCategory) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *ProductCategory) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+type Customer struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Phone         string                 `protobuf:"bytes,3,opt,name=phone,proto3" json:"phone,omitempty"`
+	Email         string                 `protobuf:"bytes,4,opt,name=email,proto3" json:"email,omitempty"`
+	Address       string                 `protobuf:"bytes,5,opt,name=address,proto3" json:"address,omitempty"`
+	CreatedAt     string                 `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt     string                 `protobuf:"bytes,7,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Customer) Reset() {
+	*x = Customer{}
+	mi := &file_product_common_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Customer) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Customer) ProtoMessage() {}
+
+func (x *Customer) ProtoReflect() protoreflect.Message {
+	mi := &file_product_common_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Customer.ProtoReflect.Descriptor instead.
+func (*Customer) Descriptor() ([]byte, []int) {
+	return file_product_common_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *Customer) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *Customer) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *Customer) GetPhone() string {
+	if x != nil {
+		return x.Phone
+	}
+	return ""
+}
+
+func (x *Customer) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
+func (x *Customer) GetAddress() string {
+	if x != nil {
+		return x.Address
+	}
+	return ""
+}
+
+func (x *Customer) GetCreatedAt() string {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return ""
+}
+
+func (x *Customer) GetUpdatedAt() string {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return ""
+}
+
 var File_product_common_proto protoreflect.FileDescriptor
 
 const file_product_common_proto_rawDesc = "" +
 	"\n" +
 	"\x14product/common.proto\x12\aproduct\"\x1c\n" +
 	"\x04User\x12\x14\n" +
-	"\x05dummy\x18\x01 \x01(\tR\x05dummyB\x19Z\x17rpc.jss.com/gen/productb\x06proto3"
+	"\x05dummy\x18\x01 \x01(\tR\x05dummy\"\xa8\x03\n" +
+	"\aProduct\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x12\n" +
+	"\x04code\x18\x03 \x01(\tR\x04code\x12\x1f\n" +
+	"\vcategory_id\x18\x04 \x01(\x05R\n" +
+	"categoryId\x12\x16\n" +
+	"\x06weight\x18\x05 \x01(\x01R\x06weight\x12+\n" +
+	"\x12gold_price_at_time\x18\x06 \x01(\x01R\x0fgoldPriceAtTime\x12\x1d\n" +
+	"\n" +
+	"labor_cost\x18\a \x01(\x01R\tlaborCost\x12\x1d\n" +
+	"\n" +
+	"stone_cost\x18\b \x01(\x01R\tstoneCost\x12\x1f\n" +
+	"\vmarkup_rate\x18\t \x01(\x01R\n" +
+	"markupRate\x12#\n" +
+	"\rselling_price\x18\n" +
+	" \x01(\x01R\fsellingPrice\x12'\n" +
+	"\x0fwarranty_period\x18\v \x01(\x05R\x0ewarrantyPeriod\x12\x14\n" +
+	"\x05image\x18\f \x01(\tR\x05image\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\r \x01(\tR\tcreatedAt\x12\x1d\n" +
+	"\n" +
+	"updated_at\x18\x0e \x01(\tR\tupdatedAt\"5\n" +
+	"\x0fProductCategory\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\"\xb2\x01\n" +
+	"\bCustomer\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x14\n" +
+	"\x05phone\x18\x03 \x01(\tR\x05phone\x12\x14\n" +
+	"\x05email\x18\x04 \x01(\tR\x05email\x12\x18\n" +
+	"\aaddress\x18\x05 \x01(\tR\aaddress\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\x06 \x01(\tR\tcreatedAt\x12\x1d\n" +
+	"\n" +
+	"updated_at\x18\a \x01(\tR\tupdatedAtB>Z<github.com/linhhuynhcoding/jss-microservices/rpc/gen/productb\x06proto3"
 
 var (
 	file_product_common_proto_rawDescOnce sync.Once
@@ -85,9 +412,12 @@ func file_product_common_proto_rawDescGZIP() []byte {
 	return file_product_common_proto_rawDescData
 }
 
-var file_product_common_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_product_common_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_product_common_proto_goTypes = []any{
-	(*User)(nil), // 0: product.User
+	(*User)(nil),            // 0: product.User
+	(*Product)(nil),         // 1: product.Product
+	(*ProductCategory)(nil), // 2: product.ProductCategory
+	(*Customer)(nil),        // 3: product.Customer
 }
 var file_product_common_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -108,7 +438,7 @@ func file_product_common_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_product_common_proto_rawDesc), len(file_product_common_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   1,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
