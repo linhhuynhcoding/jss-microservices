@@ -89,11 +89,11 @@ service ProductCustomer {
     }
 
     rpc UploadFile(UploadFileRequest) returns (UploadFileResponse) {
-    option (google.api.http) = {
-      post: "/api/v1/upload"
-      body: "*"
-    };
-  }
+        option (google.api.http) = {
+        post: "/v1/upload"
+        body: "*"
+        };
+    }
 } 
 
 message DummyRequest {

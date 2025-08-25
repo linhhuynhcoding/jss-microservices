@@ -1,6 +1,9 @@
 package config
 
-import "github.com/spf13/viper"
+import (
+	"github.com/linhhuynhcoding/jss-microservices/product/consts"
+	"github.com/spf13/viper"
+)
 
 type Config struct {
 	DBSource string `mapstructure:"DB_SOURCE"`
@@ -12,6 +15,8 @@ type Config struct {
 		APISecret     string `mapstructure:"CLOUDINARY_API_SECRET"`
 		UploadFolder  string `mapstructure:"CLOUDINARY_UPLOAD_FOLDER"`
 	}
+
+	UploadFolder string `mapstructure:"UPLOAD_FOLDER"`
 }
 
 func NewConfig() Config {
@@ -22,7 +27,13 @@ func NewConfig() Config {
 	return config
 }
 
+func LoadDefaultConfig(cfg *Config) {
+	cfg.UploadFolder = consts.DEAFULT_UPLOAD_FOLDER
+}
+
 func LoadConfig(path string) (config Config, err error) {
+	LoadDefaultConfig(&config)
+
 	viper.AddConfigPath(path)
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
