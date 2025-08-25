@@ -216,4 +216,5 @@ message UploadFileResponse {
   string file_id = 2;
   string filename = 3;
   int64 file_size = 4;
+  string file_url = 5;
 }

@@ -1208,6 +1208,7 @@ type UploadFileResponse struct {
 	FileId        string                 `protobuf:"bytes,2,opt,name=file_id,json=fileId,proto3" json:"file_id,omitempty"`
 	Filename      string                 `protobuf:"bytes,3,opt,name=filename,proto3" json:"filename,omitempty"`
 	FileSize      int64                  `protobuf:"varint,4,opt,name=file_size,json=fileSize,proto3" json:"file_size,omitempty"`
+	FileUrl       string                 `protobuf:"bytes,5,opt,name=file_url,json=fileUrl,proto3" json:"file_url,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1268,6 +1269,13 @@ func (x *UploadFileResponse) GetFileSize() int64 {
 		return x.FileSize
 	}
 	return 0
+}
+
+func (x *UploadFileResponse) GetFileUrl() string {
+	if x != nil {
+		return x.FileUrl
+	}
+	return ""
 }
 
 var File_product_product_proto protoreflect.FileDescriptor
@@ -1360,12 +1368,13 @@ const file_product_product_proto_rawDesc = "" +
 	"\tfile_data\x18\x01 \x01(\fR\bfileData\x12\x1a\n" +
 	"\bfilename\x18\x02 \x01(\tR\bfilename\x12!\n" +
 	"\fcontent_type\x18\x03 \x01(\tR\vcontentType\x12\x1b\n" +
-	"\tfile_size\x18\x04 \x01(\x03R\bfileSize\"\x80\x01\n" +
+	"\tfile_size\x18\x04 \x01(\x03R\bfileSize\"\x9b\x01\n" +
 	"\x12UploadFileResponse\x12\x18\n" +
 	"\amessage\x18\x01 \x01(\tR\amessage\x12\x17\n" +
 	"\afile_id\x18\x02 \x01(\tR\x06fileId\x12\x1a\n" +
 	"\bfilename\x18\x03 \x01(\tR\bfilename\x12\x1b\n" +
-	"\tfile_size\x18\x04 \x01(\x03R\bfileSize2\xca\n" +
+	"\tfile_size\x18\x04 \x01(\x03R\bfileSize\x12\x19\n" +
+	"\bfile_url\x18\x05 \x01(\tR\afileUrl2\xca\n" +
 	"\n" +
 	"\x0fProductCustomer\x12L\n" +
 	"\x05Dummy\x12\x15.product.DummyRequest\x1a\x16.product.DummyResponse\"\x14\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/v1/dummy\x12a\n" +
