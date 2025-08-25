@@ -6,5 +6,5 @@ var (
 )
 
 var (
-	DEAFULT_UPLOAD_FOLDER string = "./upload"
+	DEAFAULT_UPLOAD_FOLDER string = "./upload"
 )

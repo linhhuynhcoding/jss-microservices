@@ -23,22 +23,15 @@ func main() {
 	// 		INIT VARIABLES
 	// ------------------------------------------------------------
 	ctx := context.Background()
-	cfg := config.NewConfig()
 	log, err := zap.NewProduction()
 	if err != nil {
 		fmt.Printf("Failed to init logger! %v", err)
-		return	
+		return
 	}
 
-	go NewServer(ctx, cfg, log)
-	NewGatewayServer(ctx, cfg, log)
-}
+	cfg := config.NewConfig()
+	log.Info("Config: ", zap.Any("cfg", cfg))
 
-func NewServer(
-	ctx context.Context,
-	cfg config.Config,
-	log *zap.Logger,
-) {
 	// ------------------------------------------------------------
 	// 		INIT DB
 	// ------------------------------------------------------------
@@ -47,6 +40,19 @@ func NewServer(
 		log.Fatal("cannot connect to db")
 	}
 	store := repository.NewStore(connPool)
+
+	s := service.NewService(ctx, log, cfg, store)
+
+	go NewServer(ctx, cfg, log, s)
+	NewGatewayServer(ctx, cfg, log, s)
+}
+
+func NewServer(
+	ctx context.Context,
+	cfg config.Config,
+	log *zap.Logger,
+	service *service.Service,
+) {
 
 	// ------------------------------------------------------------
 	// 		START SERVER
@@ -57,7 +63,7 @@ func NewServer(
 	}
 
 	s := grpc.NewServer()
-	product.RegisterProductCustomerServer(s, service.NewService(ctx, log, config.NewConfig(), store))
+	product.RegisterProductCustomerServer(s, service)
 
 	log.Info("gRPC server listening on :50051")
 	if err := s.Serve(lis); err != nil {
@@ -69,6 +75,7 @@ func NewGatewayServer(
 	ctx context.Context,
 	cfg config.Config,
 	log *zap.Logger,
+	service *service.Service,
 ) {
 	mux := runtime.NewServeMux()
 
@@ -77,6 +84,8 @@ func NewGatewayServer(
 	if err != nil {
 		log.Fatal("failed to start gateway", zap.Error(err))
 	}
+
+	mux.HandlePath("POST", "/v1/upload", service.UploadFileHTTP)
 
 	log.Info("gRPC-Gateway listening on :8080")
 	if err := http.ListenAndServe(":8080", mux); err != nil {

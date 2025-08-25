@@ -14,7 +14,7 @@ type Config struct {
 		APIKey        string `mapstructure:"CLOUDINARY_API_KEY"`
 		APISecret     string `mapstructure:"CLOUDINARY_API_SECRET"`
 		UploadFolder  string `mapstructure:"CLOUDINARY_UPLOAD_FOLDER"`
-	}
+	} `mapstructure:"CLOUDINARY"`
 
 	UploadFolder string `mapstructure:"UPLOAD_FOLDER"`
 }
@@ -28,7 +28,7 @@ func NewConfig() Config {
 }
 
 func LoadDefaultConfig(cfg *Config) {
-	cfg.UploadFolder = consts.DEAFULT_UPLOAD_FOLDER
+	cfg.UploadFolder = consts.DEAFAULT_UPLOAD_FOLDER
 }
 
 func LoadConfig(path string) (config Config, err error) {

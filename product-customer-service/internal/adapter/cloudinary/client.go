@@ -22,15 +22,16 @@ type CloudinaryClient struct {
 }
 
 func NewCloudinaryClient(logger *zap.Logger, cfg config.Config) ICoundinaryClient {
-	cld, err := cloudinary.New()
+	cld, err := cloudinary.NewFromURL(cfg.CloudinaryConfig.ConnectString)
 	if err != nil {
 		logger.Error("failed to connect to cloudinary", zap.Error(err))
 		return nil
 	}
-	cld.Config.URL.Secure = true
-	cld.Config.Cloud.APIKey = cfg.CloudinaryConfig.APIKey
-	cld.Config.Cloud.APISecret = cfg.CloudinaryConfig.APISecret
-	cld.Config.Cloud.CloudName = cfg.CloudinaryConfig.CloudName
+	// cld.Config.URL.Secure = true
+	// cld.Config.URL = cfg.CloudinaryConfig.ConnectString
+	// cld.Config.Cloud.APIKey = cfg.CloudinaryConfig.APIKey
+	// cld.Config.Cloud.APISecret = cfg.CloudinaryConfig.APISecret
+	// cld.Config.Cloud.CloudName = cfg.CloudinaryConfig.CloudName
 
 	return &CloudinaryClient{
 		cld:    cld,
