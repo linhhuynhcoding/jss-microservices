@@ -25,12 +25,10 @@ type Service struct {
 }
 
 func NewService(ctx context.Context, logger *zap.Logger, cfg config.Config, store repository.Store) *Service {
-
 	return &Service{
 		logger:  logger,
 		cfg:     cfg,
 		queries: store,
-
 		adapter: &Adapter{
 			cloudinaryAdapter: cloudinary.NewCloudinaryClient(logger, cfg),
 		},

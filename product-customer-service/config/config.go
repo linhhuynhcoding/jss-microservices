@@ -15,7 +15,7 @@ type Config struct {
 }
 
 func NewConfig() Config {
-	config, err := LoadConfig("./..")
+	config, err := LoadConfig("./")
 	if err != nil {
 		panic(err)
 	}

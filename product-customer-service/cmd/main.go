@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"net"
 	"net/http"
 
@@ -23,7 +24,11 @@ func main() {
 	// ------------------------------------------------------------
 	ctx := context.Background()
 	cfg := config.NewConfig()
-	log := zap.NewNop()
+	log, err := zap.NewProduction()
+	if err != nil {
+		fmt.Printf("Failed to init logger! %v", err)
+		return	
+	}
 
 	go NewServer(ctx, cfg, log)
 	NewGatewayServer(ctx, cfg, log)

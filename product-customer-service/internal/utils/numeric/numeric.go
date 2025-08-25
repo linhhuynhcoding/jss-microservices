@@ -1,12 +1,14 @@
 package utils
 
 import (
+	"strconv"
+
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
 func ToNumeric(val float64) pgtype.Numeric {
 	var num pgtype.Numeric
-	_ = num.Scan(val) // convert float64 -> pgtype.Numeric
+	_ = num.Scan(strconv.FormatFloat(val, 'f', -1, 64)) // convert float64 -> pgtype.Numeric
 	return num
 }
 

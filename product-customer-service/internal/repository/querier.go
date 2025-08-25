@@ -11,14 +11,20 @@ import (
 type Querier interface {
 	CreateCustomer(ctx context.Context, arg CreateCustomerParams) (Customer, error)
 	CreateProduct(ctx context.Context, arg CreateProductParams) (Product, error)
+	CreateProductCategory(ctx context.Context, name string) (ProductCategory, error)
 	DeleteCustomer(ctx context.Context, id int32) error
 	DeleteProduct(ctx context.Context, id int32) error
+	DeleteProductCategory(ctx context.Context, id int32) error
 	GetCustomerByID(ctx context.Context, id int32) (Customer, error)
 	GetCustomerByPhone(ctx context.Context, phone string) (Customer, error)
 	GetProductByID(ctx context.Context, id int32) (Product, error)
+	GetProductCategoryByID(ctx context.Context, id int32) (ProductCategory, error)
+	GetProductCategoryByName(ctx context.Context, name string) (ProductCategory, error)
 	ListCustomers(ctx context.Context, arg ListCustomersParams) ([]Customer, error)
+	ListProductCategories(ctx context.Context) ([]ProductCategory, error)
 	ListProducts(ctx context.Context, arg ListProductsParams) ([]Product, error)
 	UpdateCustomer(ctx context.Context, arg UpdateCustomerParams) (Customer, error)
+	UpdateProductCategory(ctx context.Context, arg UpdateProductCategoryParams) (ProductCategory, error)
 	UpsertProduct(ctx context.Context, arg UpsertProductParams) (Product, error)
 }
 

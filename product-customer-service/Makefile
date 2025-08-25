@@ -26,4 +26,7 @@ update:
 update-rpc:
 	go get github.com/linhhuynhcoding/jss-microservices/rpc@main
 
+run:
+	go run ./cmd/main.go
+
 .PHOYE: network postgres createdb dropdb migrate-up new_migration update
