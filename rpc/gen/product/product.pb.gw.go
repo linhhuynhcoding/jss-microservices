@@ -732,7 +732,7 @@ func RegisterProductCustomerHandlerServer(ctx context.Context, mux *runtime.Serv
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/product.ProductCustomer/UploadFile", runtime.WithHTTPPathPattern("/api/v1/upload"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/product.ProductCustomer/UploadFile", runtime.WithHTTPPathPattern("/v1/upload"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -994,7 +994,7 @@ func RegisterProductCustomerHandlerClient(ctx context.Context, mux *runtime.Serv
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/product.ProductCustomer/UploadFile", runtime.WithHTTPPathPattern("/api/v1/upload"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/product.ProductCustomer/UploadFile", runtime.WithHTTPPathPattern("/v1/upload"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1023,7 +1023,7 @@ var (
 	pattern_ProductCustomer_ListCustomers_0         = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "customers"}, ""))
 	pattern_ProductCustomer_UpdateCustomer_0        = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "customers", "id"}, ""))
 	pattern_ProductCustomer_DeleteCustomer_0        = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "customers", "id"}, ""))
-	pattern_ProductCustomer_UploadFile_0            = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "upload"}, ""))
+	pattern_ProductCustomer_UploadFile_0            = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "upload"}, ""))
 )
 
 var (

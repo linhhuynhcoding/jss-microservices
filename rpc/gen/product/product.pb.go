@@ -1365,7 +1365,7 @@ const file_product_product_proto_rawDesc = "" +
 	"\amessage\x18\x01 \x01(\tR\amessage\x12\x17\n" +
 	"\afile_id\x18\x02 \x01(\tR\x06fileId\x12\x1a\n" +
 	"\bfilename\x18\x03 \x01(\tR\bfilename\x12\x1b\n" +
-	"\tfile_size\x18\x04 \x01(\x03R\bfileSize2\xce\n" +
+	"\tfile_size\x18\x04 \x01(\x03R\bfileSize2\xca\n" +
 	"\n" +
 	"\x0fProductCustomer\x12L\n" +
 	"\x05Dummy\x12\x15.product.DummyRequest\x1a\x16.product.DummyResponse\"\x14\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/v1/dummy\x12a\n" +
@@ -1380,9 +1380,10 @@ const file_product_product_proto_rawDesc = "" +
 	"\vGetCustomer\x12\x1b.product.GetCustomerRequest\x1a\x19.product.CustomerResponse\"\x1a\x82\xd3\xe4\x93\x02\x14\x12\x12/v1/customers/{id}\x12e\n" +
 	"\rListCustomers\x12\x1d.product.ListCustomersRequest\x1a\x1e.product.ListCustomersResponse\"\x15\x82\xd3\xe4\x93\x02\x0f\x12\r/v1/customers\x12j\n" +
 	"\x0eUpdateCustomer\x12\x1e.product.UpdateCustomerRequest\x1a\x19.product.CustomerResponse\"\x1d\x82\xd3\xe4\x93\x02\x17:\x01*2\x12/v1/customers/{id}\x12m\n" +
-	"\x0eDeleteCustomer\x12\x1e.product.DeleteCustomerRequest\x1a\x1f.product.DeleteCustomerResponse\"\x1a\x82\xd3\xe4\x93\x02\x14*\x12/v1/customers/{id}\x12`\n" +
+	"\x0eDeleteCustomer\x12\x1e.product.DeleteCustomerRequest\x1a\x1f.product.DeleteCustomerResponse\"\x1a\x82\xd3\xe4\x93\x02\x14*\x12/v1/customers/{id}\x12\\\n" +
 	"\n" +
-	"UploadFile\x12\x1a.product.UploadFileRequest\x1a\x1b.product.UploadFileResponse\"\x19\x82\xd3\xe4\x93\x02\x13:\x01*\"\x0e/api/v1/uploadB>Z<github.com/linhhuynhcoding/jss-microservices/rpc/gen/productb\x06proto3"
+	"UploadFile\x12\x1a.product.UploadFileRequest\x1a\x1b.product.UploadFileResponse\"\x15\x82\xd3\xe4\x93\x02\x0f:\x01*\"\n" +
+	"/v1/uploadB>Z<github.com/linhhuynhcoding/jss-microservices/rpc/gen/productb\x06proto3"
 
 var (
 	file_product_product_proto_rawDescOnce sync.Once
