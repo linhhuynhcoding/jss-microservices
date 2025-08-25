@@ -1134,6 +1134,142 @@ func (x *CustomerResponse) GetCustomer() *Customer {
 	return nil
 }
 
+type UploadFileRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	FileData      []byte                 `protobuf:"bytes,1,opt,name=file_data,json=fileData,proto3" json:"file_data,omitempty"`
+	Filename      string                 `protobuf:"bytes,2,opt,name=filename,proto3" json:"filename,omitempty"`
+	ContentType   string                 `protobuf:"bytes,3,opt,name=content_type,json=contentType,proto3" json:"content_type,omitempty"`
+	FileSize      int64                  `protobuf:"varint,4,opt,name=file_size,json=fileSize,proto3" json:"file_size,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UploadFileRequest) Reset() {
+	*x = UploadFileRequest{}
+	mi := &file_product_product_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UploadFileRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UploadFileRequest) ProtoMessage() {}
+
+func (x *UploadFileRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_product_product_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UploadFileRequest.ProtoReflect.Descriptor instead.
+func (*UploadFileRequest) Descriptor() ([]byte, []int) {
+	return file_product_product_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *UploadFileRequest) GetFileData() []byte {
+	if x != nil {
+		return x.FileData
+	}
+	return nil
+}
+
+func (x *UploadFileRequest) GetFilename() string {
+	if x != nil {
+		return x.Filename
+	}
+	return ""
+}
+
+func (x *UploadFileRequest) GetContentType() string {
+	if x != nil {
+		return x.ContentType
+	}
+	return ""
+}
+
+func (x *UploadFileRequest) GetFileSize() int64 {
+	if x != nil {
+		return x.FileSize
+	}
+	return 0
+}
+
+type UploadFileResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	FileId        string                 `protobuf:"bytes,2,opt,name=file_id,json=fileId,proto3" json:"file_id,omitempty"`
+	Filename      string                 `protobuf:"bytes,3,opt,name=filename,proto3" json:"filename,omitempty"`
+	FileSize      int64                  `protobuf:"varint,4,opt,name=file_size,json=fileSize,proto3" json:"file_size,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UploadFileResponse) Reset() {
+	*x = UploadFileResponse{}
+	mi := &file_product_product_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UploadFileResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UploadFileResponse) ProtoMessage() {}
+
+func (x *UploadFileResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_product_product_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UploadFileResponse.ProtoReflect.Descriptor instead.
+func (*UploadFileResponse) Descriptor() ([]byte, []int) {
+	return file_product_product_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *UploadFileResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *UploadFileResponse) GetFileId() string {
+	if x != nil {
+		return x.FileId
+	}
+	return ""
+}
+
+func (x *UploadFileResponse) GetFilename() string {
+	if x != nil {
+		return x.Filename
+	}
+	return ""
+}
+
+func (x *UploadFileResponse) GetFileSize() int64 {
+	if x != nil {
+		return x.FileSize
+	}
+	return 0
+}
+
 var File_product_product_proto protoreflect.FileDescriptor
 
 const file_product_product_proto_rawDesc = "" +
@@ -1219,7 +1355,18 @@ const file_product_product_proto_rawDesc = "" +
 	"\x16DeleteCustomerResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\"A\n" +
 	"\x10CustomerResponse\x12-\n" +
-	"\bcustomer\x18\x01 \x01(\v2\x11.product.CustomerR\bcustomer2\xec\t\n" +
+	"\bcustomer\x18\x01 \x01(\v2\x11.product.CustomerR\bcustomer\"\x8c\x01\n" +
+	"\x11UploadFileRequest\x12\x1b\n" +
+	"\tfile_data\x18\x01 \x01(\fR\bfileData\x12\x1a\n" +
+	"\bfilename\x18\x02 \x01(\tR\bfilename\x12!\n" +
+	"\fcontent_type\x18\x03 \x01(\tR\vcontentType\x12\x1b\n" +
+	"\tfile_size\x18\x04 \x01(\x03R\bfileSize\"\x80\x01\n" +
+	"\x12UploadFileResponse\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\x12\x17\n" +
+	"\afile_id\x18\x02 \x01(\tR\x06fileId\x12\x1a\n" +
+	"\bfilename\x18\x03 \x01(\tR\bfilename\x12\x1b\n" +
+	"\tfile_size\x18\x04 \x01(\x03R\bfileSize2\xce\n" +
+	"\n" +
 	"\x0fProductCustomer\x12L\n" +
 	"\x05Dummy\x12\x15.product.DummyRequest\x1a\x16.product.DummyResponse\"\x14\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/v1/dummy\x12a\n" +
 	"\rCreateProduct\x12\x1d.product.CreateProductRequest\x1a\x18.product.ProductResponse\"\x17\x82\xd3\xe4\x93\x02\x11:\x01*\"\f/v1/products\x12]\n" +
@@ -1233,7 +1380,9 @@ const file_product_product_proto_rawDesc = "" +
 	"\vGetCustomer\x12\x1b.product.GetCustomerRequest\x1a\x19.product.CustomerResponse\"\x1a\x82\xd3\xe4\x93\x02\x14\x12\x12/v1/customers/{id}\x12e\n" +
 	"\rListCustomers\x12\x1d.product.ListCustomersRequest\x1a\x1e.product.ListCustomersResponse\"\x15\x82\xd3\xe4\x93\x02\x0f\x12\r/v1/customers\x12j\n" +
 	"\x0eUpdateCustomer\x12\x1e.product.UpdateCustomerRequest\x1a\x19.product.CustomerResponse\"\x1d\x82\xd3\xe4\x93\x02\x17:\x01*2\x12/v1/customers/{id}\x12m\n" +
-	"\x0eDeleteCustomer\x12\x1e.product.DeleteCustomerRequest\x1a\x1f.product.DeleteCustomerResponse\"\x1a\x82\xd3\xe4\x93\x02\x14*\x12/v1/customers/{id}B>Z<github.com/linhhuynhcoding/jss-microservices/rpc/gen/productb\x06proto3"
+	"\x0eDeleteCustomer\x12\x1e.product.DeleteCustomerRequest\x1a\x1f.product.DeleteCustomerResponse\"\x1a\x82\xd3\xe4\x93\x02\x14*\x12/v1/customers/{id}\x12`\n" +
+	"\n" +
+	"UploadFile\x12\x1a.product.UploadFileRequest\x1a\x1b.product.UploadFileResponse\"\x19\x82\xd3\xe4\x93\x02\x13:\x01*\"\x0e/api/v1/uploadB>Z<github.com/linhhuynhcoding/jss-microservices/rpc/gen/productb\x06proto3"
 
 var (
 	file_product_product_proto_rawDescOnce sync.Once
@@ -1247,7 +1396,7 @@ func file_product_product_proto_rawDescGZIP() []byte {
 	return file_product_product_proto_rawDescData
 }
 
-var file_product_product_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
+var file_product_product_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
 var file_product_product_proto_goTypes = []any{
 	(*DummyRequest)(nil),                  // 0: product.DummyRequest
 	(*DummyResponse)(nil),                 // 1: product.DummyResponse
@@ -1269,16 +1418,18 @@ var file_product_product_proto_goTypes = []any{
 	(*DeleteCustomerRequest)(nil),         // 17: product.DeleteCustomerRequest
 	(*DeleteCustomerResponse)(nil),        // 18: product.DeleteCustomerResponse
 	(*CustomerResponse)(nil),              // 19: product.CustomerResponse
-	(*Product)(nil),                       // 20: product.Product
-	(*ProductCategory)(nil),               // 21: product.ProductCategory
-	(*Customer)(nil),                      // 22: product.Customer
+	(*UploadFileRequest)(nil),             // 20: product.UploadFileRequest
+	(*UploadFileResponse)(nil),            // 21: product.UploadFileResponse
+	(*Product)(nil),                       // 22: product.Product
+	(*ProductCategory)(nil),               // 23: product.ProductCategory
+	(*Customer)(nil),                      // 24: product.Customer
 }
 var file_product_product_proto_depIdxs = []int32{
-	20, // 0: product.ListProductsResponse.products:type_name -> product.Product
-	20, // 1: product.ProductResponse.product:type_name -> product.Product
-	21, // 2: product.ListProductCategoriesResponse.categories:type_name -> product.ProductCategory
-	22, // 3: product.ListCustomersResponse.customers:type_name -> product.Customer
-	22, // 4: product.CustomerResponse.customer:type_name -> product.Customer
+	22, // 0: product.ListProductsResponse.products:type_name -> product.Product
+	22, // 1: product.ProductResponse.product:type_name -> product.Product
+	23, // 2: product.ListProductCategoriesResponse.categories:type_name -> product.ProductCategory
+	24, // 3: product.ListCustomersResponse.customers:type_name -> product.Customer
+	24, // 4: product.CustomerResponse.customer:type_name -> product.Customer
 	0,  // 5: product.ProductCustomer.Dummy:input_type -> product.DummyRequest
 	2,  // 6: product.ProductCustomer.CreateProduct:input_type -> product.CreateProductRequest
 	3,  // 7: product.ProductCustomer.GetProduct:input_type -> product.GetProductRequest
@@ -1291,20 +1442,22 @@ var file_product_product_proto_depIdxs = []int32{
 	14, // 14: product.ProductCustomer.ListCustomers:input_type -> product.ListCustomersRequest
 	16, // 15: product.ProductCustomer.UpdateCustomer:input_type -> product.UpdateCustomerRequest
 	17, // 16: product.ProductCustomer.DeleteCustomer:input_type -> product.DeleteCustomerRequest
-	1,  // 17: product.ProductCustomer.Dummy:output_type -> product.DummyResponse
-	9,  // 18: product.ProductCustomer.CreateProduct:output_type -> product.ProductResponse
-	9,  // 19: product.ProductCustomer.GetProduct:output_type -> product.ProductResponse
-	5,  // 20: product.ProductCustomer.ListProducts:output_type -> product.ListProductsResponse
-	9,  // 21: product.ProductCustomer.UpdateProduct:output_type -> product.ProductResponse
-	8,  // 22: product.ProductCustomer.DeleteProduct:output_type -> product.DeleteProductResponse
-	11, // 23: product.ProductCustomer.ListProductCategories:output_type -> product.ListProductCategoriesResponse
-	19, // 24: product.ProductCustomer.CreateCustomer:output_type -> product.CustomerResponse
-	19, // 25: product.ProductCustomer.GetCustomer:output_type -> product.CustomerResponse
-	15, // 26: product.ProductCustomer.ListCustomers:output_type -> product.ListCustomersResponse
-	19, // 27: product.ProductCustomer.UpdateCustomer:output_type -> product.CustomerResponse
-	18, // 28: product.ProductCustomer.DeleteCustomer:output_type -> product.DeleteCustomerResponse
-	17, // [17:29] is the sub-list for method output_type
-	5,  // [5:17] is the sub-list for method input_type
+	20, // 17: product.ProductCustomer.UploadFile:input_type -> product.UploadFileRequest
+	1,  // 18: product.ProductCustomer.Dummy:output_type -> product.DummyResponse
+	9,  // 19: product.ProductCustomer.CreateProduct:output_type -> product.ProductResponse
+	9,  // 20: product.ProductCustomer.GetProduct:output_type -> product.ProductResponse
+	5,  // 21: product.ProductCustomer.ListProducts:output_type -> product.ListProductsResponse
+	9,  // 22: product.ProductCustomer.UpdateProduct:output_type -> product.ProductResponse
+	8,  // 23: product.ProductCustomer.DeleteProduct:output_type -> product.DeleteProductResponse
+	11, // 24: product.ProductCustomer.ListProductCategories:output_type -> product.ListProductCategoriesResponse
+	19, // 25: product.ProductCustomer.CreateCustomer:output_type -> product.CustomerResponse
+	19, // 26: product.ProductCustomer.GetCustomer:output_type -> product.CustomerResponse
+	15, // 27: product.ProductCustomer.ListCustomers:output_type -> product.ListCustomersResponse
+	19, // 28: product.ProductCustomer.UpdateCustomer:output_type -> product.CustomerResponse
+	18, // 29: product.ProductCustomer.DeleteCustomer:output_type -> product.DeleteCustomerResponse
+	21, // 30: product.ProductCustomer.UploadFile:output_type -> product.UploadFileResponse
+	18, // [18:31] is the sub-list for method output_type
+	5,  // [5:18] is the sub-list for method input_type
 	5,  // [5:5] is the sub-list for extension type_name
 	5,  // [5:5] is the sub-list for extension extendee
 	0,  // [0:5] is the sub-list for field type_name
@@ -1322,7 +1475,7 @@ func file_product_product_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_product_product_proto_rawDesc), len(file_product_product_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   20,
+			NumMessages:   22,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

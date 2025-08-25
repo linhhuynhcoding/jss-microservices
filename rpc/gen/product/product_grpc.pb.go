@@ -31,6 +31,7 @@ const (
 	ProductCustomer_ListCustomers_FullMethodName         = "/product.ProductCustomer/ListCustomers"
 	ProductCustomer_UpdateCustomer_FullMethodName        = "/product.ProductCustomer/UpdateCustomer"
 	ProductCustomer_DeleteCustomer_FullMethodName        = "/product.ProductCustomer/DeleteCustomer"
+	ProductCustomer_UploadFile_FullMethodName            = "/product.ProductCustomer/UploadFile"
 )
 
 // ProductCustomerClient is the client API for ProductCustomer service.
@@ -52,6 +53,7 @@ type ProductCustomerClient interface {
 	ListCustomers(ctx context.Context, in *ListCustomersRequest, opts ...grpc.CallOption) (*ListCustomersResponse, error)
 	UpdateCustomer(ctx context.Context, in *UpdateCustomerRequest, opts ...grpc.CallOption) (*CustomerResponse, error)
 	DeleteCustomer(ctx context.Context, in *DeleteCustomerRequest, opts ...grpc.CallOption) (*DeleteCustomerResponse, error)
+	UploadFile(ctx context.Context, in *UploadFileRequest, opts ...grpc.CallOption) (*UploadFileResponse, error)
 }
 
 type productCustomerClient struct {
@@ -182,6 +184,16 @@ func (c *productCustomerClient) DeleteCustomer(ctx context.Context, in *DeleteCu
 	return out, nil
 }
 
+func (c *productCustomerClient) UploadFile(ctx context.Context, in *UploadFileRequest, opts ...grpc.CallOption) (*UploadFileResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UploadFileResponse)
+	err := c.cc.Invoke(ctx, ProductCustomer_UploadFile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ProductCustomerServer is the server API for ProductCustomer service.
 // All implementations must embed UnimplementedProductCustomerServer
 // for forward compatibility.
@@ -201,6 +213,7 @@ type ProductCustomerServer interface {
 	ListCustomers(context.Context, *ListCustomersRequest) (*ListCustomersResponse, error)
 	UpdateCustomer(context.Context, *UpdateCustomerRequest) (*CustomerResponse, error)
 	DeleteCustomer(context.Context, *DeleteCustomerRequest) (*DeleteCustomerResponse, error)
+	UploadFile(context.Context, *UploadFileRequest) (*UploadFileResponse, error)
 	mustEmbedUnimplementedProductCustomerServer()
 }
 
@@ -246,6 +259,9 @@ func (UnimplementedProductCustomerServer) UpdateCustomer(context.Context, *Updat
 }
 func (UnimplementedProductCustomerServer) DeleteCustomer(context.Context, *DeleteCustomerRequest) (*DeleteCustomerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteCustomer not implemented")
+}
+func (UnimplementedProductCustomerServer) UploadFile(context.Context, *UploadFileRequest) (*UploadFileResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UploadFile not implemented")
 }
 func (UnimplementedProductCustomerServer) mustEmbedUnimplementedProductCustomerServer() {}
 func (UnimplementedProductCustomerServer) testEmbeddedByValue()                         {}
@@ -484,6 +500,24 @@ func _ProductCustomer_DeleteCustomer_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ProductCustomer_UploadFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UploadFileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductCustomerServer).UploadFile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ProductCustomer_UploadFile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductCustomerServer).UploadFile(ctx, req.(*UploadFileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ProductCustomer_ServiceDesc is the grpc.ServiceDesc for ProductCustomer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -538,6 +572,10 @@ var ProductCustomer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteCustomer",
 			Handler:    _ProductCustomer_DeleteCustomer_Handler,
+		},
+		{
+			MethodName: "UploadFile",
+			Handler:    _ProductCustomer_UploadFile_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
