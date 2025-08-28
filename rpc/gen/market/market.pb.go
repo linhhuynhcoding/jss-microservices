@@ -30,8 +30,8 @@ type GoldPrice struct {
 	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	Date          *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=date,proto3" json:"date,omitempty"`
 	GoldType      string                 `protobuf:"bytes,3,opt,name=gold_type,json=goldType,proto3" json:"gold_type,omitempty"`
-	BuyPrice      string                 `protobuf:"bytes,4,opt,name=buy_price,json=buyPrice,proto3" json:"buy_price,omitempty"`
-	SellPrice     string                 `protobuf:"bytes,5,opt,name=sell_price,json=sellPrice,proto3" json:"sell_price,omitempty"`
+	BuyPrice      float32                `protobuf:"fixed32,4,opt,name=buy_price,json=buyPrice,proto3" json:"buy_price,omitempty"`
+	SellPrice     float32                `protobuf:"fixed32,5,opt,name=sell_price,json=sellPrice,proto3" json:"sell_price,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -87,18 +87,18 @@ func (x *GoldPrice) GetGoldType() string {
 	return ""
 }
 
-func (x *GoldPrice) GetBuyPrice() string {
+func (x *GoldPrice) GetBuyPrice() float32 {
 	if x != nil {
 		return x.BuyPrice
 	}
-	return ""
+	return 0
 }
 
-func (x *GoldPrice) GetSellPrice() string {
+func (x *GoldPrice) GetSellPrice() float32 {
 	if x != nil {
 		return x.SellPrice
 	}
-	return ""
+	return 0
 }
 
 type CreateGoldPriceRequest struct {
@@ -1122,9 +1122,9 @@ const file_market_market_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\x03B2\x92A/2+Unique identifier for the gold price record@\x01R\x02id\x12V\n" +
 	"\x04date\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampB&\x92A#2!Date and time of the price recordR\x04date\x12F\n" +
 	"\tgold_type\x18\x03 \x01(\tB)\x92A&2\"Type of gold (e.g., 24k, 18k, 14k)x2R\bgoldType\x12W\n" +
-	"\tbuy_price\x18\x04 \x01(\tB:\x92A72\x1bBuy price in decimal format\x8a\x01\x17^[0-9]+(\\.[0-9]{1,2})?$R\bbuyPrice\x12Z\n" +
+	"\tbuy_price\x18\x04 \x01(\x02B:\x92A72\x1bBuy price in decimal format\x8a\x01\x17^[0-9]+(\\.[0-9]{1,2})?$R\bbuyPrice\x12Z\n" +
 	"\n" +
-	"sell_price\x18\x05 \x01(\tB;\x92A82\x1cSell price in decimal format\x8a\x01\x17^[0-9]+(\\.[0-9]{1,2})?$R\tsellPrice:V\x92AS\n" +
+	"sell_price\x18\x05 \x01(\x02B;\x92A82\x1cSell price in decimal format\x8a\x01\x17^[0-9]+(\\.[0-9]{1,2})?$R\tsellPrice:V\x92AS\n" +
 	"Q*\n" +
 	"Gold Price2\x1eRepresents a gold price record\xd2\x01\tgold_type\xd2\x01\tbuy_price\xd2\x01\n" +
 	"sell_price\"\xee\x01\n" +

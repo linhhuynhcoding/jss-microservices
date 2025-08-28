@@ -6,7 +6,7 @@ require (
 	github.com/cloudinary/cloudinary-go/v2 v2.13.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.1
 	github.com/jackc/pgx/v5 v5.7.5
-	github.com/linhhuynhcoding/jss-microservices/rpc v0.0.0-20250825101020-4b38a1bfac5c
+	github.com/linhhuynhcoding/jss-microservices/rpc v0.0.0-20250828151922-b005870f28b0
 	github.com/spf13/viper v1.20.1
 	go.uber.org/zap v1.27.0
 	google.golang.org/grpc v1.74.2
