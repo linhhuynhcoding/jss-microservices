@@ -6,6 +6,7 @@ import (
 
 	db "github.com/linhhuynhcoding/jss-microservices/product/internal/repository"
 	utils "github.com/linhhuynhcoding/jss-microservices/product/internal/utils/numeric"
+	market_api "github.com/linhhuynhcoding/jss-microservices/rpc/gen/market"
 	api "github.com/linhhuynhcoding/jss-microservices/rpc/gen/product"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
@@ -15,18 +16,23 @@ import (
 func (s *Service) CreateProduct(ctx context.Context, req *api.CreateProductRequest) (*api.ProductResponse, error) {
 	log := s.logger.With(zap.String("func", "CreateProduct"))
 	log.Info("req", zap.Any("req", req))
+
+	goldPrice, err := s.adapter.marketClient.GetGoldPrice(ctx, &market_api.GetGoldPriceRequest{
+		Id: req.GoldType,
+	})
+
 	arg := db.CreateProductParams{
 		Name:            req.Name,
 		Code:            req.Code,
 		CategoryID:      req.CategoryId,
 		Weight:          utils.ToNumeric(req.Weight),
-		GoldPriceAtTime: utils.ToNumeric(req.GoldPriceAtTime),
 		LaborCost:       utils.ToNumeric(req.LaborCost),
 		StoneCost:       utils.ToNumeric(req.StoneCost),
 		MarkupRate:      utils.ToNumeric(req.MarkupRate),
 		SellingPrice:    utils.ToNumeric(req.SellingPrice),
 		WarrantyPeriod:  utils.Int32(req.WarrantyPeriod),
 		Image:           req.Image,
+		GoldPriceAtTime: utils.ToNumeric(goldPrice),
 	}
 	log.Info("args", zap.Any("args", arg))
 

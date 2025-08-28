@@ -17,6 +17,8 @@ type Config struct {
 	} `mapstructure:"CLOUDINARY"`
 
 	UploadFolder string `mapstructure:"UPLOAD_FOLDER"`
+
+	MarketServiceUrl string `mapstructure:"MARKET_SERVICE_URL"`
 }
 
 func NewConfig() Config {
