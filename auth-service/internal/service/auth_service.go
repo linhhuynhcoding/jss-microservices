@@ -30,7 +30,7 @@ type AuthService struct {
 	refreshRepo *repository.RefreshTokenRepository
 	hashingSvc  *hashing.HashingService
 	tokenSvc    *token.TokenService
-	log         *zap.Logger
+	log         *zap.Logger 
 }
 
 func NewAuthService(
