@@ -65,10 +65,10 @@ services:
     container_name: promtail
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
       - ./monitoring/promtail-config.yaml:/etc/promtail/promtail.yaml:ro
     command: -config.file=/etc/promtail/promtail.yaml
-    depends_on:
-      - loki
+    depends_on: [loki]
     networks: [microservice-network]
 
   tempo:
@@ -141,7 +141,6 @@ services:
         condition: service_healthy
     networks:
       - microservice-network
-
   # SEED: chạy đúng 1 lần, chờ mongo healthy rồi exit 0
   seed:
     build:
