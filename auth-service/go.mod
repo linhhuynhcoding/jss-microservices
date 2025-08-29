@@ -1,11 +1,11 @@
 module github.com/linhhuynhcoding/jss-microservices/auth-service
 
-go 1.24.5
+go 1.24.6
 
 require (
 	github.com/golang-jwt/jwt/v5 v5.3.0
 	github.com/golang/protobuf v1.5.4
-	github.com/linhhuynhcoding/jss-microservices/rpc v0.0.0-20250821141716-4f42a93533ef
+	github.com/linhhuynhcoding/jss-microservices/rpc v0.0.0-20250825055631-2e9381e61cf7
 	github.com/spf13/viper v1.20.1
 	github.com/streadway/amqp v1.1.0
 	go.mongodb.org/mongo-driver v1.17.4
@@ -28,9 +28,11 @@ require (
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.3.0 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
+	github.com/linhhuynhcoding/jss-microservices/mq v0.0.0-20250825055631-2e9381e61cf7 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
+	github.com/rabbitmq/amqp091-go v1.10.0 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.3.0 // indirect
 	golang.org/x/arch v0.20.0 // indirect

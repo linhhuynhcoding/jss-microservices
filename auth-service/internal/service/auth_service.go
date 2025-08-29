@@ -9,6 +9,9 @@ import (
 	"github.com/linhhuynhcoding/jss-microservices/auth-service/internal/repository"
 	"github.com/linhhuynhcoding/jss-microservices/auth-service/pkg/hashing"
 	"github.com/linhhuynhcoding/jss-microservices/auth-service/pkg/token"
+	"github.com/linhhuynhcoding/jss-microservices/mq"
+	mqconfig "github.com/linhhuynhcoding/jss-microservices/mq/config"
+	notificationevent "github.com/linhhuynhcoding/jss-microservices/rpc/gen/notification" // proto event
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.uber.org/zap"
@@ -69,6 +72,23 @@ func (s *AuthService) Login(ctx context.Context, req dto.LoginRequest) (*dto.Tok
 	if err != nil {
 		return nil, err
 	}
+	pubCfg := mqconfig.RabbitMQConfig{
+		ConnStr:       "amqp://guest:guest@rabbitmq:5672/",
+		ExchangeName:  "notification_exchange", // nếu dùng exchange
+		ExchangeType:  "topic",          // (nếu cần)
+		PublisherName: "auth-service",
+	}
+	publisher, err := mq.NewPublisher(pubCfg, s.log)
+	// ...
+	evt := &notificationevent.CreateNotificationRequest{
+		UserId: user.ID.Hex(),              // hoặc dùng Role
+		Title:  "Login successfully",
+		Message:"User just have got into system successfully",
+	}
+	err = publisher.SendMessage(evt, "notification.create")
+	if err != nil {
+    s.log.Error("failed to send notification event", zap.Error(err))
+  }
 
 	// KHÔNG còn user.RoleID / user.Role.Name — dùng user.Role (string)
 	return s.generateTokens(ctx, user.ID, created.ID, primitive.NilObjectID, user.Role)
