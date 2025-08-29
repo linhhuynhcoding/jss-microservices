@@ -141,7 +141,6 @@ services:
         condition: service_healthy
     networks:
       - microservice-network
-
   # SEED: chạy đúng 1 lần, chờ mongo healthy rồi exit 0
   seed:
     build:
