@@ -17,7 +17,8 @@ import (
 	"github.com/linhhuynhcoding/jss-microservices/auth-service/pkg/hashing"
 	"github.com/linhhuynhcoding/jss-microservices/auth-service/pkg/logger"
 	"github.com/linhhuynhcoding/jss-microservices/auth-service/pkg/middleware"
-	"github.com/linhhuynhcoding/jss-microservices/auth-service/pkg/queue"
+
+	// "github.com/linhhuynhcoding/jss-microservices/auth-service/pkg/queue"
 	"github.com/linhhuynhcoding/jss-microservices/auth-service/pkg/token"
 
 	authpb "github.com/linhhuynhcoding/jss-microservices/rpc/gen/auth"
@@ -44,18 +45,18 @@ func main() {
 	}()
 
 	// 3. Setup RabbitMQ (nếu cần)
-	var publisher *queue.Publisher
-	if cfg.RabbitMQURL != "" {
-		publisher = queue.NewPublisher(cfg.RabbitMQURL, cfg.ExchangeName, logg)
-		defer publisher.Close()
-	}
-	_ = publisher // hiện chưa dùng trong main, nhưng giữ lại để tiện mở rộng
+	// var publisher *queue.Publisher
+	// if cfg.RabbitMQURL != "" {
+	// 	publisher = queue.NewPublisher(cfg.RabbitMQURL, cfg.ExchangeName, logg)
+	// 	defer publisher.Close()
+	// }
+	// _ = publisher // hiện chưa dùng trong main, nhưng giữ lại để tiện mở rộng
 
 	// 4. Init repository
 	userRepo := repository.NewUserRepository(mongoDB, logg)
-    if err := userRepo.EnsureIndexes(context.Background()); err != nil {
-    logg.Warn("ensure user indexes failed", zap.Error(err))
-    }
+	if err := userRepo.EnsureIndexes(context.Background()); err != nil {
+		logg.Warn("ensure user indexes failed", zap.Error(err))
+	}
 
 	deviceRepo := repository.NewDeviceRepository(mongoDB, logg)
 	refreshRepo := repository.NewRefreshTokenRepository(mongoDB, logg)

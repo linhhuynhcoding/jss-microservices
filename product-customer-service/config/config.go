@@ -1,12 +1,19 @@
 package config
 
 import (
+	"fmt"
+
 	"github.com/linhhuynhcoding/jss-microservices/product/consts"
 	"github.com/spf13/viper"
 )
 
 type Config struct {
 	DBSource string `mapstructure:"DB_SOURCE"`
+
+	HttpPort int `mapstructure:"HTTP_PORT"`
+	GrpcPort int `mapstructure:"GRPC_PORT"`
+
+	RedisAddress string `mapstructure:"REDIS_ADDRESS"`
 
 	CloudinaryConfig struct {
 		ConnectString string `mapstructure:"CLOUDINARY_URL"`
@@ -30,7 +37,9 @@ func NewConfig() Config {
 }
 
 func LoadDefaultConfig(cfg *Config) {
-	cfg.UploadFolder = consts.DEAFAULT_UPLOAD_FOLDER
+	cfg.UploadFolder = consts.DEFAULT_UPLOAD_FOLDER
+	cfg.HttpPort = consts.HTTP_PORT
+	cfg.GrpcPort = consts.GRPC_PORT
 }
 
 func LoadConfig(path string) (config Config, err error) {
@@ -44,6 +53,7 @@ func LoadConfig(path string) (config Config, err error) {
 
 	err = viper.ReadInConfig()
 	if err != nil {
+		fmt.Printf("looking for config in: %v\n", viper.ConfigFileUsed())
 		return
 	}
 

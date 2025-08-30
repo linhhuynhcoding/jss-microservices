@@ -57,7 +57,7 @@ func NewServer(
 	// ------------------------------------------------------------
 	// 		START SERVER
 	// ------------------------------------------------------------
-	lis, err := net.Listen("tcp", ":50051")
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%v", cfg.GrpcPort))
 	if err != nil {
 		log.Fatal("failed to listen: %v", zap.Error(err))
 	}
@@ -65,7 +65,7 @@ func NewServer(
 	s := grpc.NewServer()
 	product.RegisterProductCustomerServer(s, service)
 
-	log.Info("gRPC server listening on :50051")
+	log.Info("gRPC server listening", zap.Any("port", cfg.GrpcPort))
 	if err := s.Serve(lis); err != nil {
 		log.Fatal("failed to serve: %v", zap.Error(err))
 	}
@@ -80,7 +80,7 @@ func NewGatewayServer(
 	mux := runtime.NewServeMux()
 
 	opts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
-	err := product.RegisterProductCustomerHandlerFromEndpoint(ctx, mux, "localhost:50051", opts)
+	err := product.RegisterProductCustomerHandlerFromEndpoint(ctx, mux, fmt.Sprintf("localhost:%v", cfg.GrpcPort), opts)
 	if err != nil {
 		log.Fatal("failed to start gateway", zap.Error(err))
 	}
@@ -88,7 +88,7 @@ func NewGatewayServer(
 	mux.HandlePath("POST", "/v1/upload", service.UploadFileHTTP)
 
 	log.Info("gRPC-Gateway listening on :8080")
-	if err := http.ListenAndServe(":8080", mux); err != nil {
+	if err := http.ListenAndServe(fmt.Sprintf(":%v", cfg.HttpPort), mux); err != nil {
 		log.Fatal("failed to serve: %v", zap.Error(err))
 	}
 }

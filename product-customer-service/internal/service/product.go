@@ -3,9 +3,11 @@ package service
 import (
 	"context"
 	"database/sql"
+	"fmt"
 
+	"github.com/linhhuynhcoding/jss-microservices/product/consts"
 	db "github.com/linhhuynhcoding/jss-microservices/product/internal/repository"
-	utils "github.com/linhhuynhcoding/jss-microservices/product/internal/utils/numeric"
+	utils "github.com/linhhuynhcoding/jss-microservices/product/utils/numeric"
 	market_api "github.com/linhhuynhcoding/jss-microservices/rpc/gen/market"
 	api "github.com/linhhuynhcoding/jss-microservices/rpc/gen/product"
 	"go.uber.org/zap"
@@ -18,8 +20,17 @@ func (s *Service) CreateProduct(ctx context.Context, req *api.CreateProductReque
 	log.Info("req", zap.Any("req", req))
 
 	goldPrice, err := s.adapter.marketClient.GetGoldPrice(ctx, &market_api.GetGoldPriceRequest{
-		Id: req.GoldType,
+		Id: int64(req.GoldType),
 	})
+	if err != nil {
+		log.Error("cannot get gold price", zap.Error(err))
+		return nil, fmt.Errorf("cannot get gold price")
+	}
+	goldBuyPrice := goldPrice.GoldPrice.BuyPrice
+
+	// Giá bán = giá vốn sản phẩm * tỉ lệ áp giá,
+	// Giá vốn sản phẩm = [giá vàng thời điểm * trọng lượng sản phẩm] + tiền công + tiền đá
+	sellingPrice := (1 + req.MarkupRate) * (float64(goldBuyPrice)*req.Weight/consts.MACE_OF_GOLD_WEIGHT + req.LaborCost + req.StoneCost)
 
 	arg := db.CreateProductParams{
 		Name:            req.Name,
@@ -29,10 +40,10 @@ func (s *Service) CreateProduct(ctx context.Context, req *api.CreateProductReque
 		LaborCost:       utils.ToNumeric(req.LaborCost),
 		StoneCost:       utils.ToNumeric(req.StoneCost),
 		MarkupRate:      utils.ToNumeric(req.MarkupRate),
-		SellingPrice:    utils.ToNumeric(req.SellingPrice),
+		SellingPrice:    utils.ToNumeric(sellingPrice),
 		WarrantyPeriod:  utils.Int32(req.WarrantyPeriod),
 		Image:           req.Image,
-		GoldPriceAtTime: utils.ToNumeric(goldPrice.GoldPrice.BuyPrice),
+		GoldPriceAtTime: utils.ToNumeric(float64(goldPrice.GoldPrice.BuyPrice)),
 	}
 	log.Info("args", zap.Any("args", arg))
 

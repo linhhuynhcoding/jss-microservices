@@ -4,7 +4,7 @@ import (
 	"time"
 
 	db "github.com/linhhuynhcoding/jss-microservices/product/internal/repository"
-	utils "github.com/linhhuynhcoding/jss-microservices/product/internal/utils/numeric"
+	utils "github.com/linhhuynhcoding/jss-microservices/product/utils/numeric"
 	api "github.com/linhhuynhcoding/jss-microservices/rpc/gen/product"
 )
 
