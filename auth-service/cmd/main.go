@@ -44,7 +44,7 @@ func main() {
 		}
 	}()
 
-	// 3. Setup RabbitMQ (nếu cần)
+	// // 3. Setup RabbitMQ (nếu cần)
 	// var publisher *queue.Publisher
 	// if cfg.RabbitMQURL != "" {
 	// 	publisher = queue.NewPublisher(cfg.RabbitMQURL, cfg.ExchangeName, logg)

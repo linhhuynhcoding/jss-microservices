@@ -1,33 +1,109 @@
 services:
-  # mongo:
-  #   image: mongo:6
-  #   container_name: mongo
-  #   restart: always
-  #   ports:
-  #     - "27027:27017"
-  #   environment:
-  #     MONGO_INITDB_ROOT_USERNAME: root
-  #     MONGO_INITDB_ROOT_PASSWORD: 123456
-  #     MONGO_INITDB_DATABASE: AuthService
-  #   volumes:
-  #     - mongo_data:/data/db
-  #   networks:
-  #     - microservice-network
-  #   healthcheck:
-  #     test:
-  #       [
-  #         "CMD",
-  #         "mongosh",
-  #         "--username",
-  #         "root",
-  #         "--password",
-  #         "123456",
-  #         "--eval",
-  #         "db.adminCommand('ping')",
-  #       ]
-  #     interval: 10s
-  #     timeout: 5s
-  #     retries: 5
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: minio123
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - microservice-network
+
+  # service khởi tạo bucket tự động
+  minio-init:
+    image: minio/mc:latest
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+        mc alias set myminio http://minio:9000 minio minio123 &&
+        # tạo bucket loki nếu chưa tồn tại
+        mc mb --ignore-existing myminio/loki &&
+        # tạo bucket tempo
+        mc mb --ignore-existing myminio/tempo &&
+        echo 'Buckets created'; exit 0
+      "
+    networks:
+      - microservice-network
+    restart: "no"
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    networks: [microservice-network]
+
+  loki:
+    image: grafana/loki:2.9.0
+    container_name: loki
+    volumes:
+      - ./monitoring/loki-config.yaml:/etc/loki/local-config.yaml:ro
+      - loki_data:/loki
+    command: -config.file=/etc/loki/local-config.yaml
+    depends_on:
+      minio-init:
+        condition: service_completed_successfully
+    networks: [microservice-network]
+
+  promtail:
+    image: grafana/promtail:2.9.0
+    container_name: promtail
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - ./monitoring/promtail-config.yaml:/etc/promtail/promtail.yaml:ro
+    command: -config.file=/etc/promtail/promtail.yaml
+    depends_on: [loki]
+    networks: [microservice-network]
+
+  tempo:
+    image: grafana/tempo:2.4.1
+    container_name: tempo
+    volumes:
+      - ./monitoring/tempo.yaml:/etc/tempo/tempo.yaml:ro
+      - tempo_data:/var/tempo
+    command: -config.file=/etc/tempo/tempo.yaml
+    ports:
+      - "4317:4317" # OTLP gRPC
+      - "3200:3200" # HTTP API for Tempo
+    networks: [microservice-network]
+    depends_on:
+      minio-init:
+        condition: service_completed_successfully
+
+  grafana:
+    image: grafana/grafana:10.2.1
+    container_name: grafana
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+      - ./monitoring/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./monitoring/grafana/dashboards:/etc/grafana/dashboards:ro
+    depends_on:
+      - prometheus
+      - loki
+      - tempo
+    networks: [microservice-network]
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -46,6 +122,25 @@ services:
       timeout: 3s
       retries: 5
 
+  notification-service:
+    build:
+      context: ./notification-service
+      dockerfile: Dockerfile
+    container_name: notification-service
+    env_file:
+      - ./notification-service/.env.example # ghi các biến môi trường mặc định
+    ports:
+      - "50002:50002" # gRPC
+      - "8082:8082" # REST Gateway
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      # mongo: # nếu bạn sử dụng MongoDB nội bộ cho notification
+      #   condition: service_healthy
+      minio:
+        condition: service_healthy
+    networks:
+      - microservice-network
   # SEED: chạy đúng 1 lần, chờ mongo healthy rồi exit 0
   seed:
     build:
@@ -81,8 +176,11 @@ services:
     image: kong:3.3.1
     container_name: kong
     restart: always
+    env_file:
+      - .env
     environment:
       KONG_DATABASE: off
+      JWT_SECRET: ${JWT_SECRET}
       KONG_DECLARATIVE_CONFIG: /usr/local/kong/declarative/kong.yml
       KONG_PROXY_ACCESS_LOG: /dev/stdout
       KONG_ADMIN_ACCESS_LOG: /dev/stdout
@@ -107,6 +205,11 @@ volumes:
   mongo_data:
   rabbitmq_data:
   kong_data:
+  minio_data:
+  prometheus_data:
+  loki_data:
+  tempo_data:
+  grafana_data:
 
 networks:
   microservice-network:
