@@ -105,8 +105,8 @@ type CreateGoldPriceRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Date          *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=date,proto3" json:"date,omitempty"`
 	GoldType      string                 `protobuf:"bytes,2,opt,name=gold_type,json=goldType,proto3" json:"gold_type,omitempty"`
-	BuyPrice      string                 `protobuf:"bytes,3,opt,name=buy_price,json=buyPrice,proto3" json:"buy_price,omitempty"`
-	SellPrice     string                 `protobuf:"bytes,4,opt,name=sell_price,json=sellPrice,proto3" json:"sell_price,omitempty"`
+	BuyPrice      float32                `protobuf:"fixed32,3,opt,name=buy_price,json=buyPrice,proto3" json:"buy_price,omitempty"`
+	SellPrice     float32                `protobuf:"fixed32,4,opt,name=sell_price,json=sellPrice,proto3" json:"sell_price,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -155,18 +155,18 @@ func (x *CreateGoldPriceRequest) GetGoldType() string {
 	return ""
 }
 
-func (x *CreateGoldPriceRequest) GetBuyPrice() string {
+func (x *CreateGoldPriceRequest) GetBuyPrice() float32 {
 	if x != nil {
 		return x.BuyPrice
 	}
-	return ""
+	return 0
 }
 
-func (x *CreateGoldPriceRequest) GetSellPrice() string {
+func (x *CreateGoldPriceRequest) GetSellPrice() float32 {
 	if x != nil {
 		return x.SellPrice
 	}
-	return ""
+	return 0
 }
 
 type CreateGoldPriceResponse struct {
@@ -418,8 +418,8 @@ type UpdateGoldPriceRequest struct {
 	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	Date          *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=date,proto3" json:"date,omitempty"`
 	GoldType      string                 `protobuf:"bytes,3,opt,name=gold_type,json=goldType,proto3" json:"gold_type,omitempty"`
-	BuyPrice      string                 `protobuf:"bytes,4,opt,name=buy_price,json=buyPrice,proto3" json:"buy_price,omitempty"`
-	SellPrice     string                 `protobuf:"bytes,5,opt,name=sell_price,json=sellPrice,proto3" json:"sell_price,omitempty"`
+	BuyPrice      float32                `protobuf:"fixed32,4,opt,name=buy_price,json=buyPrice,proto3" json:"buy_price,omitempty"`
+	SellPrice     float32                `protobuf:"fixed32,5,opt,name=sell_price,json=sellPrice,proto3" json:"sell_price,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -475,18 +475,18 @@ func (x *UpdateGoldPriceRequest) GetGoldType() string {
 	return ""
 }
 
-func (x *UpdateGoldPriceRequest) GetBuyPrice() string {
+func (x *UpdateGoldPriceRequest) GetBuyPrice() float32 {
 	if x != nil {
 		return x.BuyPrice
 	}
-	return ""
+	return 0
 }
 
-func (x *UpdateGoldPriceRequest) GetSellPrice() string {
+func (x *UpdateGoldPriceRequest) GetSellPrice() float32 {
 	if x != nil {
 		return x.SellPrice
 	}
-	return ""
+	return 0
 }
 
 type UpdateGoldPriceResponse struct {
@@ -581,7 +581,7 @@ type BuybackPolicy struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	ProductType   string                 `protobuf:"bytes,2,opt,name=product_type,json=productType,proto3" json:"product_type,omitempty"`
-	BuybackRate   string                 `protobuf:"bytes,3,opt,name=buyback_rate,json=buybackRate,proto3" json:"buyback_rate,omitempty"`
+	BuybackRate   float32                `protobuf:"fixed32,3,opt,name=buyback_rate,json=buybackRate,proto3" json:"buyback_rate,omitempty"`
 	Description   string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
 	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -632,11 +632,11 @@ func (x *BuybackPolicy) GetProductType() string {
 	return ""
 }
 
-func (x *BuybackPolicy) GetBuybackRate() string {
+func (x *BuybackPolicy) GetBuybackRate() float32 {
 	if x != nil {
 		return x.BuybackRate
 	}
-	return ""
+	return 0
 }
 
 func (x *BuybackPolicy) GetDescription() string {
@@ -656,7 +656,7 @@ func (x *BuybackPolicy) GetCreatedAt() *timestamppb.Timestamp {
 type CreateBuybackPolicyRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ProductType   string                 `protobuf:"bytes,1,opt,name=product_type,json=productType,proto3" json:"product_type,omitempty"`
-	BuybackRate   string                 `protobuf:"bytes,2,opt,name=buyback_rate,json=buybackRate,proto3" json:"buyback_rate,omitempty"`
+	BuybackRate   float32                `protobuf:"fixed32,2,opt,name=buyback_rate,json=buybackRate,proto3" json:"buyback_rate,omitempty"`
 	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -699,11 +699,11 @@ func (x *CreateBuybackPolicyRequest) GetProductType() string {
 	return ""
 }
 
-func (x *CreateBuybackPolicyRequest) GetBuybackRate() string {
+func (x *CreateBuybackPolicyRequest) GetBuybackRate() float32 {
 	if x != nil {
 		return x.BuybackRate
 	}
-	return ""
+	return 0
 }
 
 func (x *CreateBuybackPolicyRequest) GetDescription() string {
@@ -961,7 +961,7 @@ type UpdateBuybackPolicyRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	ProductType   string                 `protobuf:"bytes,2,opt,name=product_type,json=productType,proto3" json:"product_type,omitempty"`
-	BuybackRate   string                 `protobuf:"bytes,3,opt,name=buyback_rate,json=buybackRate,proto3" json:"buyback_rate,omitempty"`
+	BuybackRate   float32                `protobuf:"fixed32,3,opt,name=buyback_rate,json=buybackRate,proto3" json:"buyback_rate,omitempty"`
 	Description   string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1011,11 +1011,11 @@ func (x *UpdateBuybackPolicyRequest) GetProductType() string {
 	return ""
 }
 
-func (x *UpdateBuybackPolicyRequest) GetBuybackRate() string {
+func (x *UpdateBuybackPolicyRequest) GetBuybackRate() float32 {
 	if x != nil {
 		return x.BuybackRate
 	}
-	return ""
+	return 0
 }
 
 func (x *UpdateBuybackPolicyRequest) GetDescription() string {
@@ -1131,9 +1131,9 @@ const file_market_market_proto_rawDesc = "" +
 	"\x16CreateGoldPriceRequest\x12.\n" +
 	"\x04date\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\x04date\x12\x1b\n" +
 	"\tgold_type\x18\x02 \x01(\tR\bgoldType\x12\x1b\n" +
-	"\tbuy_price\x18\x03 \x01(\tR\bbuyPrice\x12\x1d\n" +
+	"\tbuy_price\x18\x03 \x01(\x02R\bbuyPrice\x12\x1d\n" +
 	"\n" +
-	"sell_price\x18\x04 \x01(\tR\tsellPrice:K\x92AH\n" +
+	"sell_price\x18\x04 \x01(\x02R\tsellPrice:K\x92AH\n" +
 	"F*\x19Create Gold Price Request2)Request to create a new gold price record\"\xa1\x01\n" +
 	"\x17CreateGoldPriceResponse\x120\n" +
 	"\n" +
@@ -1161,9 +1161,9 @@ const file_market_market_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\x12.\n" +
 	"\x04date\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x04date\x12\x1b\n" +
 	"\tgold_type\x18\x03 \x01(\tR\bgoldType\x12\x1b\n" +
-	"\tbuy_price\x18\x04 \x01(\tR\bbuyPrice\x12\x1d\n" +
+	"\tbuy_price\x18\x04 \x01(\x02R\bbuyPrice\x12\x1d\n" +
 	"\n" +
-	"sell_price\x18\x05 \x01(\tR\tsellPrice:Q\x92AN\n" +
+	"sell_price\x18\x05 \x01(\x02R\tsellPrice:Q\x92AN\n" +
 	"L*\x19Update Gold Price Request2/Request to update an existing gold price record\"\xa1\x01\n" +
 	"\x17UpdateGoldPriceResponse\x120\n" +
 	"\n" +
@@ -1175,14 +1175,14 @@ const file_market_market_proto_rawDesc = "" +
 	"\rBuybackPolicy\x12?\n" +
 	"\x02id\x18\x01 \x01(\x03B/\x92A,2(Unique identifier for the buyback policy@\x01R\x02id\x12E\n" +
 	"\fproduct_type\x18\x02 \x01(\tB\"\x92A\x1f2\x1bType of product for buybackxdR\vproductType\x12j\n" +
-	"\fbuyback_rate\x18\x03 \x01(\tBG\x92AD2(Buyback rate as percentage (e.g., 95.50)\x8a\x01\x17^[0-9]+(\\.[0-9]{1,2})?$R\vbuybackRate\x12H\n" +
+	"\fbuyback_rate\x18\x03 \x01(\x02BG\x92AD2(Buyback rate as percentage (e.g., 95.50)\x8a\x01\x17^[0-9]+(\\.[0-9]{1,2})?$R\vbuybackRate\x12H\n" +
 	"\vdescription\x18\x04 \x01(\tB&\x92A#2!Description of the buyback policyR\vdescription\x12T\n" +
 	"\n" +
 	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampB\x19\x92A\x162\x12Creation timestamp@\x01R\tcreatedAt:W\x92AT\n" +
 	"R*\x0eBuyback Policy2\"Represents a buyback policy record\xd2\x01\fproduct_type\xd2\x01\fbuyback_rate\"\xd2\x01\n" +
 	"\x1aCreateBuybackPolicyRequest\x12!\n" +
 	"\fproduct_type\x18\x01 \x01(\tR\vproductType\x12!\n" +
-	"\fbuyback_rate\x18\x02 \x01(\tR\vbuybackRate\x12 \n" +
+	"\fbuyback_rate\x18\x02 \x01(\x02R\vbuybackRate\x12 \n" +
 	"\vdescription\x18\x03 \x01(\tR\vdescription:L\x92AI\n" +
 	"G*\x1dCreate Buyback Policy Request2&Request to create a new buyback policy\"\xb2\x01\n" +
 	"\x1bCreateBuybackPolicyResponse\x12<\n" +
@@ -1207,7 +1207,7 @@ const file_market_market_proto_rawDesc = "" +
 	"\x1aUpdateBuybackPolicyRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\x12!\n" +
 	"\fproduct_type\x18\x02 \x01(\tR\vproductType\x12!\n" +
-	"\fbuyback_rate\x18\x03 \x01(\tR\vbuybackRate\x12 \n" +
+	"\fbuyback_rate\x18\x03 \x01(\x02R\vbuybackRate\x12 \n" +
 	"\vdescription\x18\x04 \x01(\tR\vdescription:R\x92AO\n" +
 	"M*\x1dUpdate Buyback Policy Request2,Request to update an existing buyback policy\"\xb2\x01\n" +
 	"\x1bUpdateBuybackPolicyResponse\x12<\n" +
