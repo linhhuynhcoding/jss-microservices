@@ -87,6 +87,13 @@ service ProductCustomer {
             delete: "/v1/customers/{id}"
         };
     }
+
+    rpc UploadFile(UploadFileRequest) returns (UploadFileResponse) {
+        option (google.api.http) = {
+        post: "/v1/upload"
+        body: "*"
+        };
+    }
 } 
 
 message DummyRequest {
@@ -102,13 +109,14 @@ message CreateProductRequest {
     string code = 2;
     int32 category_id = 3;
     double weight = 4;
-    double gold_price_at_time = 5;
-    double labor_cost = 6;
-    double stone_cost = 7;
-    double markup_rate = 8;
-    double selling_price = 9;
-    int32 warranty_period = 10;
-    string image = 11;
+    double labor_cost = 5;
+    double stone_cost = 6;
+    double markup_rate = 7;
+    double selling_price = 8;
+    int32 warranty_period = 9;
+    string image = 10;
+
+    int32 gold_type = 11;
 }
 
 message GetProductRequest {
@@ -195,4 +203,19 @@ message DeleteCustomerResponse {
 
 message CustomerResponse {
     Customer customer = 1;
+}
+
+message UploadFileRequest {
+  bytes file_data = 1;
+  string filename = 2;
+  string content_type = 3;
+  int64 file_size = 4;
+}
+
+message UploadFileResponse {
+  string message = 1;
+  string file_id = 2;
+  string filename = 3;
+  int64 file_size = 4;
+  string file_url = 5;
 }

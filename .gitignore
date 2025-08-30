@@ -1,2 +1,5 @@
 vendor/
 .env
+config.yaml
+data-market-postgres/
+product-postgres-volume/

@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"net"
 	"net/http"
 
@@ -22,18 +23,15 @@ func main() {
 	// 		INIT VARIABLES
 	// ------------------------------------------------------------
 	ctx := context.Background()
+	log, err := zap.NewProduction()
+	if err != nil {
+		fmt.Printf("Failed to init logger! %v", err)
+		return
+	}
+
 	cfg := config.NewConfig()
-	log := zap.NewNop()
+	log.Info("Config: ", zap.Any("cfg", cfg))
 
-	go NewServer(ctx, cfg, log)
-	NewGatewayServer(ctx, cfg, log)
-}
-
-func NewServer(
-	ctx context.Context,
-	cfg config.Config,
-	log *zap.Logger,
-) {
 	// ------------------------------------------------------------
 	// 		INIT DB
 	// ------------------------------------------------------------
@@ -43,18 +41,31 @@ func NewServer(
 	}
 	store := repository.NewStore(connPool)
 
+	s := service.NewService(ctx, log, cfg, store)
+
+	go NewServer(ctx, cfg, log, s)
+	NewGatewayServer(ctx, cfg, log, s)
+}
+
+func NewServer(
+	ctx context.Context,
+	cfg config.Config,
+	log *zap.Logger,
+	service *service.Service,
+) {
+
 	// ------------------------------------------------------------
 	// 		START SERVER
 	// ------------------------------------------------------------
-	lis, err := net.Listen("tcp", ":50051")
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%v", cfg.GrpcPort))
 	if err != nil {
 		log.Fatal("failed to listen: %v", zap.Error(err))
 	}
 
 	s := grpc.NewServer()
-	product.RegisterProductCustomerServer(s, service.NewService(ctx, log, config.NewConfig(), store))
+	product.RegisterProductCustomerServer(s, service)
 
-	log.Info("gRPC server listening on :50051")
+	log.Info("gRPC server listening", zap.Any("port", cfg.GrpcPort))
 	if err := s.Serve(lis); err != nil {
 		log.Fatal("failed to serve: %v", zap.Error(err))
 	}
@@ -64,17 +75,20 @@ func NewGatewayServer(
 	ctx context.Context,
 	cfg config.Config,
 	log *zap.Logger,
+	service *service.Service,
 ) {
 	mux := runtime.NewServeMux()
 
 	opts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
-	err := product.RegisterProductCustomerHandlerFromEndpoint(ctx, mux, "localhost:50051", opts)
+	err := product.RegisterProductCustomerHandlerFromEndpoint(ctx, mux, fmt.Sprintf("localhost:%v", cfg.GrpcPort), opts)
 	if err != nil {
 		log.Fatal("failed to start gateway", zap.Error(err))
 	}
 
+	mux.HandlePath("POST", "/v1/upload", service.UploadFileHTTP)
+
 	log.Info("gRPC-Gateway listening on :8080")
-	if err := http.ListenAndServe(":8080", mux); err != nil {
+	if err := http.ListenAndServe(fmt.Sprintf(":%v", cfg.HttpPort), mux); err != nil {
 		log.Fatal("failed to serve: %v", zap.Error(err))
 	}
 }

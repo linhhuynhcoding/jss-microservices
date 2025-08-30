@@ -54,9 +54,9 @@ func main() {
 
 	// 4. Init repository
 	userRepo := repository.NewUserRepository(mongoDB, logg)
-    if err := userRepo.EnsureIndexes(context.Background()); err != nil {
-    logg.Warn("ensure user indexes failed", zap.Error(err))
-    }
+	if err := userRepo.EnsureIndexes(context.Background()); err != nil {
+		logg.Warn("ensure user indexes failed", zap.Error(err))
+	}
 
 	deviceRepo := repository.NewDeviceRepository(mongoDB, logg)
 	refreshRepo := repository.NewRefreshTokenRepository(mongoDB, logg)
