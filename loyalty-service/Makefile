@@ -23,6 +23,16 @@ update:
 	go mod tidy
 	go mod vendor
 
+push:
+	git add .
+	git commit -m 'refactor: update package'
+	git push
+	git hash
+
+update-pkg:
+	go get github.com/linhhuynhcoding/jss-microservices/$(p)@$(v)
+	make update
+
 update-rpc:
 	go get github.com/linhhuynhcoding/jss-microservices/rpc@main
 

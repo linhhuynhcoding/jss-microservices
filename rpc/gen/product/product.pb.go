@@ -119,10 +119,9 @@ type CreateProductRequest struct {
 	LaborCost      float64                `protobuf:"fixed64,5,opt,name=labor_cost,json=laborCost,proto3" json:"labor_cost,omitempty"`
 	StoneCost      float64                `protobuf:"fixed64,6,opt,name=stone_cost,json=stoneCost,proto3" json:"stone_cost,omitempty"`
 	MarkupRate     float64                `protobuf:"fixed64,7,opt,name=markup_rate,json=markupRate,proto3" json:"markup_rate,omitempty"`
-	SellingPrice   float64                `protobuf:"fixed64,8,opt,name=selling_price,json=sellingPrice,proto3" json:"selling_price,omitempty"`
-	WarrantyPeriod int32                  `protobuf:"varint,9,opt,name=warranty_period,json=warrantyPeriod,proto3" json:"warranty_period,omitempty"`
-	Image          string                 `protobuf:"bytes,10,opt,name=image,proto3" json:"image,omitempty"`
-	GoldType       int32                  `protobuf:"varint,11,opt,name=gold_type,json=goldType,proto3" json:"gold_type,omitempty"`
+	WarrantyPeriod int32                  `protobuf:"varint,8,opt,name=warranty_period,json=warrantyPeriod,proto3" json:"warranty_period,omitempty"`
+	Image          string                 `protobuf:"bytes,9,opt,name=image,proto3" json:"image,omitempty"`
+	GoldType       int32                  `protobuf:"varint,10,opt,name=gold_type,json=goldType,proto3" json:"gold_type,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -202,13 +201,6 @@ func (x *CreateProductRequest) GetStoneCost() float64 {
 func (x *CreateProductRequest) GetMarkupRate() float64 {
 	if x != nil {
 		return x.MarkupRate
-	}
-	return 0
-}
-
-func (x *CreateProductRequest) GetSellingPrice() float64 {
-	if x != nil {
-		return x.SellingPrice
 	}
 	return 0
 }
@@ -1286,7 +1278,7 @@ const file_product_product_proto_rawDesc = "" +
 	"\fDummyRequest\x12\x14\n" +
 	"\x05dummy\x18\x01 \x01(\x05R\x05dummy\"%\n" +
 	"\rDummyResponse\x12\x14\n" +
-	"\x05dummy\x18\x01 \x01(\x05R\x05dummy\"\xd7\x02\n" +
+	"\x05dummy\x18\x01 \x01(\x05R\x05dummy\"\xb2\x02\n" +
 	"\x14CreateProductRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x12\n" +
 	"\x04code\x18\x02 \x01(\tR\x04code\x12\x1f\n" +
@@ -1298,12 +1290,11 @@ const file_product_product_proto_rawDesc = "" +
 	"\n" +
 	"stone_cost\x18\x06 \x01(\x01R\tstoneCost\x12\x1f\n" +
 	"\vmarkup_rate\x18\a \x01(\x01R\n" +
-	"markupRate\x12#\n" +
-	"\rselling_price\x18\b \x01(\x01R\fsellingPrice\x12'\n" +
-	"\x0fwarranty_period\x18\t \x01(\x05R\x0ewarrantyPeriod\x12\x14\n" +
-	"\x05image\x18\n" +
-	" \x01(\tR\x05image\x12\x1b\n" +
-	"\tgold_type\x18\v \x01(\x05R\bgoldType\"#\n" +
+	"markupRate\x12'\n" +
+	"\x0fwarranty_period\x18\b \x01(\x05R\x0ewarrantyPeriod\x12\x14\n" +
+	"\x05image\x18\t \x01(\tR\x05image\x12\x1b\n" +
+	"\tgold_type\x18\n" +
+	" \x01(\x05R\bgoldType\"#\n" +
 	"\x11GetProductRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\"?\n" +
 	"\x13ListProductsRequest\x12\x12\n" +

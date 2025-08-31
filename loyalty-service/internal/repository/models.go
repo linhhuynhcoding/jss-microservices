@@ -25,6 +25,16 @@ type LoyaltyPoint struct {
 	CreatedAt   pgtype.Timestamp `json:"created_at"`
 }
 
+type UsageRecord struct {
+	ID         int32            `json:"id"`
+	CustomerID int32            `json:"customer_id"`
+	VoucherID  int32            `json:"voucher_id"`
+	OrderID    int32            `json:"order_id"`
+	Status     pgtype.Text      `json:"status"`
+	CreatedAt  pgtype.Timestamp `json:"created_at"`
+	UpdatedAt  pgtype.Timestamp `json:"updated_at"`
+}
+
 type Voucher struct {
 	ID            int32            `json:"id"`
 	Code          string           `json:"code"`

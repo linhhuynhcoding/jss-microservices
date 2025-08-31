@@ -11,6 +11,8 @@ var (
 
 	TOPIC_PRODUCT_BROADCAST string = "product.*"
 	TOPIC_CREATE_PRODUCT    string = "product.create_product"
+
+	TOPIC_CREATE_ORDER string = "order.create_order"
 )
 
 // DIRECT ROUTING KEYS

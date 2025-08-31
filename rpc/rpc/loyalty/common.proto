@@ -24,7 +24,7 @@ message PaginationRequest {
     json_schema: {
       title: "Pagination Request"
       description: "Pagination parameters for list requests"
-      required: ["limit", "offset"]
+      required: ["limit", "page"]
     }
   };
 
@@ -35,8 +35,8 @@ message PaginationRequest {
     default: "10"
   }];
   
-  int32 offset = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "Number of items to skip"
+  int32 page = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Page, default = 1"
     minimum: 0
     default: "0"
   }];
@@ -59,8 +59,8 @@ message PaginationResponse {
     description: "Maximum number of items returned"
   }];
   
-  int32 offset = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "Number of items skipped"
+  int32 page = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Page, default = 1"
   }];
   
   bool has_next = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
@@ -165,6 +165,8 @@ message Voucher {
     description: "When the voucher was created"
     read_only: true
   }];
+
+  optional int32 used_number = 10;
 }
 
 // Customer Voucher entity

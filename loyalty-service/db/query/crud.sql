@@ -133,3 +133,14 @@ WHERE v.start_date <= CURRENT_DATE
        (SELECT COUNT(*) FROM customer_vouchers WHERE voucher_id = v.id AND status = 'used') < v.usage_limit)
 ORDER BY v.created_at DESC
 LIMIT $2 OFFSET $3;
+
+-- name: GetUsageRecordsByVoucherId :many
+SELECT u.*
+FROM usage_records U
+WHERE u.voucher_id = $1
+LIMIT $2 OFFSET $3;
+
+-- name: CountUsageRecordsByVoucherId :one
+SELECT COUNT(*)
+FROM usage_records
+WHERE voucher_id = $1;
