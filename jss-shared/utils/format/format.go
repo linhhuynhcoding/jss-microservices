@@ -49,6 +49,13 @@ func PgTextToString(pgT pgtype.Text) string {
 	return ""
 }
 
+func StringPointerToPgText(s *string) pgtype.Text {
+	if s == nil {
+		return pgtype.Text{Valid: false}
+	}
+	return pgtype.Text{String: *s, Valid: true}
+}
+
 func PgTextToStringPointer(pgT pgtype.Text) *string {
 	if pgT.Valid {
 		return &pgT.String
