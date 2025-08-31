@@ -134,7 +134,7 @@ func (CustomerVoucher_Status) EnumDescriptor() ([]byte, []int) {
 type PaginationRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Limit         int32                  `protobuf:"varint,1,opt,name=limit,proto3" json:"limit,omitempty"`
-	Offset        int32                  `protobuf:"varint,2,opt,name=offset,proto3" json:"offset,omitempty"`
+	Page          int32                  `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -176,9 +176,9 @@ func (x *PaginationRequest) GetLimit() int32 {
 	return 0
 }
 
-func (x *PaginationRequest) GetOffset() int32 {
+func (x *PaginationRequest) GetPage() int32 {
 	if x != nil {
-		return x.Offset
+		return x.Page
 	}
 	return 0
 }
@@ -188,7 +188,7 @@ type PaginationResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Total         int32                  `protobuf:"varint,1,opt,name=total,proto3" json:"total,omitempty"`
 	Limit         int32                  `protobuf:"varint,2,opt,name=limit,proto3" json:"limit,omitempty"`
-	Offset        int32                  `protobuf:"varint,3,opt,name=offset,proto3" json:"offset,omitempty"`
+	Page          int32                  `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
 	HasNext       bool                   `protobuf:"varint,4,opt,name=has_next,json=hasNext,proto3" json:"has_next,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -238,9 +238,9 @@ func (x *PaginationResponse) GetLimit() int32 {
 	return 0
 }
 
-func (x *PaginationResponse) GetOffset() int32 {
+func (x *PaginationResponse) GetPage() int32 {
 	if x != nil {
-		return x.Offset
+		return x.Page
 	}
 	return 0
 }
@@ -536,15 +536,15 @@ var File_loyalty_common_proto protoreflect.FileDescriptor
 
 const file_loyalty_common_proto_rawDesc = "" +
 	"\n" +
-	"\x14loyalty/common.proto\x12\x06common\x1a\x1fgoogle/protobuf/timestamp.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\"\xf5\x01\n" +
+	"\x14loyalty/common.proto\x12\x06common\x1a\x1fgoogle/protobuf/timestamp.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\"\xeb\x01\n" +
 	"\x11PaginationRequest\x12R\n" +
-	"\x05limit\x18\x01 \x01(\x05B<\x92A92!Maximum number of items to return:\x0210Y\x00\x00\x00\x00\x00\x00Y@i\x00\x00\x00\x00\x00\x00\xf0?R\x05limit\x127\n" +
-	"\x06offset\x18\x02 \x01(\x05B\x1f\x92A\x1c2\x17Number of items to skip:\x010R\x06offset:S\x92AP\n" +
-	"N*\x12Pagination Request2'Pagination parameters for list requests\xd2\x01\x05limit\xd2\x01\x06offset\"\xcf\x02\n" +
+	"\x05limit\x18\x01 \x01(\x05B<\x92A92!Maximum number of items to return:\x0210Y\x00\x00\x00\x00\x00\x00Y@i\x00\x00\x00\x00\x00\x00\xf0?R\x05limit\x12-\n" +
+	"\x04page\x18\x02 \x01(\x05B\x19\x92A\x162\x11Page, default = 1:\x010R\x04page:S\x92AP\n" +
+	"N*\x12Pagination Request2'Pagination parameters for list requests\xd2\x01\x05limit\xd2\x01\x06offset\"\xc5\x02\n" +
 	"\x12PaginationResponse\x12:\n" +
 	"\x05total\x18\x01 \x01(\x05B$\x92A!2\x1fTotal number of items availableR\x05total\x12;\n" +
-	"\x05limit\x18\x02 \x01(\x05B%\x92A\"2 Maximum number of items returnedR\x05limit\x124\n" +
-	"\x06offset\x18\x03 \x01(\x05B\x1c\x92A\x192\x17Number of items skippedR\x06offset\x12F\n" +
+	"\x05limit\x18\x02 \x01(\x05B%\x92A\"2 Maximum number of items returnedR\x05limit\x12*\n" +
+	"\x04page\x18\x03 \x01(\x05B\x16\x92A\x132\x11Page, default = 1R\x04page\x12F\n" +
 	"\bhas_next\x18\x04 \x01(\bB+\x92A(2&Whether there are more items availableR\ahasNext:B\x92A?\n" +
 	"=*\x13Pagination Response2&Pagination metadata for list responses\"\x87\x05\n" +
 	"\fLoyaltyPoint\x12E\n" +

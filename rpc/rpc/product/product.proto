@@ -112,11 +112,9 @@ message CreateProductRequest {
     double labor_cost = 5;
     double stone_cost = 6;
     double markup_rate = 7;
-    double selling_price = 8;
-    int32 warranty_period = 9;
-    string image = 10;
-
-    int32 gold_type = 11;
+    int32 warranty_period = 8;
+    string image = 9;
+    int32 gold_type = 10;
 }
 
 message GetProductRequest {

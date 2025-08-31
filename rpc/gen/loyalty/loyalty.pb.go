@@ -601,6 +601,7 @@ type CreateVoucherRequest struct {
 	StartDate     string                 `protobuf:"bytes,5,opt,name=start_date,json=startDate,proto3" json:"start_date,omitempty"`
 	EndDate       string                 `protobuf:"bytes,6,opt,name=end_date,json=endDate,proto3" json:"end_date,omitempty"`
 	UsageLimit    *int32                 `protobuf:"varint,7,opt,name=usage_limit,json=usageLimit,proto3,oneof" json:"usage_limit,omitempty"`
+	Target        string                 `protobuf:"bytes,8,opt,name=target,proto3" json:"target,omitempty"` // CUSTOMER OR ALL
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -682,6 +683,13 @@ func (x *CreateVoucherRequest) GetUsageLimit() int32 {
 		return *x.UsageLimit
 	}
 	return 0
+}
+
+func (x *CreateVoucherRequest) GetTarget() string {
+	if x != nil {
+		return x.Target
+	}
+	return ""
 }
 
 type GetVoucherRequest struct {
@@ -1651,6 +1659,314 @@ func (x *GetCustomerVouchersResponse) GetPagination() *PaginationResponse {
 	return nil
 }
 
+type CalculateDiscountAmountRequest struct {
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	Vouchers            []string               `protobuf:"bytes,1,rep,name=vouchers,proto3" json:"vouchers,omitempty"`
+	TotalProductAmount  float64                `protobuf:"fixed64,2,opt,name=total_product_amount,json=totalProductAmount,proto3" json:"total_product_amount,omitempty"`
+	TotalShippingAmount float64                `protobuf:"fixed64,3,opt,name=total_shipping_amount,json=totalShippingAmount,proto3" json:"total_shipping_amount,omitempty"`
+	CustomerId          float64                `protobuf:"fixed64,4,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"` // for validate voucher usage limit
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *CalculateDiscountAmountRequest) Reset() {
+	*x = CalculateDiscountAmountRequest{}
+	mi := &file_loyalty_loyalty_proto_msgTypes[31]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CalculateDiscountAmountRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CalculateDiscountAmountRequest) ProtoMessage() {}
+
+func (x *CalculateDiscountAmountRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_loyalty_loyalty_proto_msgTypes[31]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CalculateDiscountAmountRequest.ProtoReflect.Descriptor instead.
+func (*CalculateDiscountAmountRequest) Descriptor() ([]byte, []int) {
+	return file_loyalty_loyalty_proto_rawDescGZIP(), []int{31}
+}
+
+func (x *CalculateDiscountAmountRequest) GetVouchers() []string {
+	if x != nil {
+		return x.Vouchers
+	}
+	return nil
+}
+
+func (x *CalculateDiscountAmountRequest) GetTotalProductAmount() float64 {
+	if x != nil {
+		return x.TotalProductAmount
+	}
+	return 0
+}
+
+func (x *CalculateDiscountAmountRequest) GetTotalShippingAmount() float64 {
+	if x != nil {
+		return x.TotalShippingAmount
+	}
+	return 0
+}
+
+func (x *CalculateDiscountAmountRequest) GetCustomerId() float64 {
+	if x != nil {
+		return x.CustomerId
+	}
+	return 0
+}
+
+type CalculateDiscountAmountResponse struct {
+	state               protoimpl.MessageState                     `protogen:"open.v1"`
+	TotalDiscountAmount float64                                    `protobuf:"fixed64,1,opt,name=total_discount_amount,json=totalDiscountAmount,proto3" json:"total_discount_amount,omitempty"`
+	Vouchers            []*CalculateDiscountAmountResponse_Voucher `protobuf:"bytes,2,rep,name=vouchers,proto3" json:"vouchers,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *CalculateDiscountAmountResponse) Reset() {
+	*x = CalculateDiscountAmountResponse{}
+	mi := &file_loyalty_loyalty_proto_msgTypes[32]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CalculateDiscountAmountResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CalculateDiscountAmountResponse) ProtoMessage() {}
+
+func (x *CalculateDiscountAmountResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_loyalty_loyalty_proto_msgTypes[32]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CalculateDiscountAmountResponse.ProtoReflect.Descriptor instead.
+func (*CalculateDiscountAmountResponse) Descriptor() ([]byte, []int) {
+	return file_loyalty_loyalty_proto_rawDescGZIP(), []int{32}
+}
+
+func (x *CalculateDiscountAmountResponse) GetTotalDiscountAmount() float64 {
+	if x != nil {
+		return x.TotalDiscountAmount
+	}
+	return 0
+}
+
+func (x *CalculateDiscountAmountResponse) GetVouchers() []*CalculateDiscountAmountResponse_Voucher {
+	if x != nil {
+		return x.Vouchers
+	}
+	return nil
+}
+
+type CalculateDiscountAmountResponse_Voucher struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Code           string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	Title          string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
+	DiscountAmount float64                `protobuf:"fixed64,3,opt,name=discount_amount,json=discountAmount,proto3" json:"discount_amount,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *CalculateDiscountAmountResponse_Voucher) Reset() {
+	*x = CalculateDiscountAmountResponse_Voucher{}
+	mi := &file_loyalty_loyalty_proto_msgTypes[33]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CalculateDiscountAmountResponse_Voucher) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CalculateDiscountAmountResponse_Voucher) ProtoMessage() {}
+
+func (x *CalculateDiscountAmountResponse_Voucher) ProtoReflect() protoreflect.Message {
+	mi := &file_loyalty_loyalty_proto_msgTypes[33]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CalculateDiscountAmountResponse_Voucher.ProtoReflect.Descriptor instead.
+func (*CalculateDiscountAmountResponse_Voucher) Descriptor() ([]byte, []int) {
+	return file_loyalty_loyalty_proto_rawDescGZIP(), []int{33}
+}
+
+func (x *CalculateDiscountAmountResponse_Voucher) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *CalculateDiscountAmountResponse_Voucher) GetTitle() string {
+	if x != nil {
+		return x.Title
+	}
+	return ""
+}
+
+func (x *CalculateDiscountAmountResponse_Voucher) GetDiscountAmount() float64 {
+	if x != nil {
+		return x.DiscountAmount
+	}
+	return 0
+}
+
+type UsingVoucherRequest struct {
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	Vouchers            []string               `protobuf:"bytes,1,rep,name=vouchers,proto3" json:"vouchers,omitempty"`
+	TotalProductAmount  float64                `protobuf:"fixed64,2,opt,name=total_product_amount,json=totalProductAmount,proto3" json:"total_product_amount,omitempty"`
+	TotalShippingAmount float64                `protobuf:"fixed64,3,opt,name=total_shipping_amount,json=totalShippingAmount,proto3" json:"total_shipping_amount,omitempty"`
+	CustomerId          int32                  `protobuf:"varint,4,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	OrderId             int32                  `protobuf:"varint,5,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *UsingVoucherRequest) Reset() {
+	*x = UsingVoucherRequest{}
+	mi := &file_loyalty_loyalty_proto_msgTypes[34]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UsingVoucherRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UsingVoucherRequest) ProtoMessage() {}
+
+func (x *UsingVoucherRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_loyalty_loyalty_proto_msgTypes[34]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UsingVoucherRequest.ProtoReflect.Descriptor instead.
+func (*UsingVoucherRequest) Descriptor() ([]byte, []int) {
+	return file_loyalty_loyalty_proto_rawDescGZIP(), []int{34}
+}
+
+func (x *UsingVoucherRequest) GetVouchers() []string {
+	if x != nil {
+		return x.Vouchers
+	}
+	return nil
+}
+
+func (x *UsingVoucherRequest) GetTotalProductAmount() float64 {
+	if x != nil {
+		return x.TotalProductAmount
+	}
+	return 0
+}
+
+func (x *UsingVoucherRequest) GetTotalShippingAmount() float64 {
+	if x != nil {
+		return x.TotalShippingAmount
+	}
+	return 0
+}
+
+func (x *UsingVoucherRequest) GetCustomerId() int32 {
+	if x != nil {
+		return x.CustomerId
+	}
+	return 0
+}
+
+func (x *UsingVoucherRequest) GetOrderId() int32 {
+	if x != nil {
+		return x.OrderId
+	}
+	return 0
+}
+
+type UsingVoucherResponse struct {
+	state               protoimpl.MessageState                     `protogen:"open.v1"`
+	TotalDiscountAmount float64                                    `protobuf:"fixed64,1,opt,name=total_discount_amount,json=totalDiscountAmount,proto3" json:"total_discount_amount,omitempty"`
+	Vouchers            []*CalculateDiscountAmountResponse_Voucher `protobuf:"bytes,2,rep,name=vouchers,proto3" json:"vouchers,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *UsingVoucherResponse) Reset() {
+	*x = UsingVoucherResponse{}
+	mi := &file_loyalty_loyalty_proto_msgTypes[35]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UsingVoucherResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UsingVoucherResponse) ProtoMessage() {}
+
+func (x *UsingVoucherResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_loyalty_loyalty_proto_msgTypes[35]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UsingVoucherResponse.ProtoReflect.Descriptor instead.
+func (*UsingVoucherResponse) Descriptor() ([]byte, []int) {
+	return file_loyalty_loyalty_proto_rawDescGZIP(), []int{35}
+}
+
+func (x *UsingVoucherResponse) GetTotalDiscountAmount() float64 {
+	if x != nil {
+		return x.TotalDiscountAmount
+	}
+	return 0
+}
+
+func (x *UsingVoucherResponse) GetVouchers() []*CalculateDiscountAmountResponse_Voucher {
+	if x != nil {
+		return x.Vouchers
+	}
+	return nil
+}
+
 var File_loyalty_loyalty_proto protoreflect.FileDescriptor
 
 const file_loyalty_loyalty_proto_rawDesc = "" +
@@ -1702,7 +2018,7 @@ const file_loyalty_loyalty_proto_rawDesc = "" +
 	"\x1eGetCustomerTotalPointsResponse\x12E\n" +
 	"\ftotal_points\x18\x01 \x01(\x05B\"\x92A\x1f2\x1dTotal points for the customerR\vtotalPoints\x121\n" +
 	"\vcustomer_id\x18\x02 \x01(\x05B\x10\x92A\r2\vCustomer IDR\n" +
-	"customerId\"\xbb\x03\n" +
+	"customerId\"\xd3\x03\n" +
 	"\x14CreateVoucherRequest\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\tR\x04code\x12%\n" +
 	"\vdescription\x18\x02 \x01(\tH\x00R\vdescription\x88\x01\x01\x12A\n" +
@@ -1712,7 +2028,8 @@ const file_loyalty_loyalty_proto_rawDesc = "" +
 	"start_date\x18\x05 \x01(\tR\tstartDate\x12\x19\n" +
 	"\bend_date\x18\x06 \x01(\tR\aendDate\x12$\n" +
 	"\vusage_limit\x18\a \x01(\x05H\x01R\n" +
-	"usageLimit\x88\x01\x01:~\x92A{\n" +
+	"usageLimit\x88\x01\x01\x12\x16\n" +
+	"\x06target\x18\b \x01(\tR\x06target:~\x92A{\n" +
 	"y*\x16Create Voucher Request2\x1fRequest to create a new voucher\xd2\x01\x04code\xd2\x01\rdiscount_type\xd2\x01\x0ediscount_value\xd2\x01\n" +
 	"start_date\xd2\x01\bend_dateB\x0e\n" +
 	"\f_descriptionB\x0e\n" +
@@ -1798,7 +2115,30 @@ const file_loyalty_loyalty_proto_rawDesc = "" +
 	"\x11customer_vouchers\x18\x01 \x03(\v2\x17.common.CustomerVoucherR\x10customerVouchers\x12:\n" +
 	"\n" +
 	"pagination\x18\x02 \x01(\v2\x1a.common.PaginationResponseR\n" +
-	"pagination2\xe5)\n" +
+	"pagination\"\xc3\x01\n" +
+	"\x1eCalculateDiscountAmountRequest\x12\x1a\n" +
+	"\bvouchers\x18\x01 \x03(\tR\bvouchers\x120\n" +
+	"\x14total_product_amount\x18\x02 \x01(\x01R\x12totalProductAmount\x122\n" +
+	"\x15total_shipping_amount\x18\x03 \x01(\x01R\x13totalShippingAmount\x12\x1f\n" +
+	"\vcustomer_id\x18\x04 \x01(\x01R\n" +
+	"customerId\"\xa3\x01\n" +
+	"\x1fCalculateDiscountAmountResponse\x122\n" +
+	"\x15total_discount_amount\x18\x01 \x01(\x01R\x13totalDiscountAmount\x12L\n" +
+	"\bvouchers\x18\x02 \x03(\v20.loyalty.CalculateDiscountAmountResponse_VoucherR\bvouchers\"|\n" +
+	"'CalculateDiscountAmountResponse_Voucher\x12\x12\n" +
+	"\x04code\x18\x01 \x01(\tR\x04code\x12\x14\n" +
+	"\x05title\x18\x02 \x01(\tR\x05title\x12'\n" +
+	"\x0fdiscount_amount\x18\x03 \x01(\x01R\x0ediscountAmount\"\xd3\x01\n" +
+	"\x13UsingVoucherRequest\x12\x1a\n" +
+	"\bvouchers\x18\x01 \x03(\tR\bvouchers\x120\n" +
+	"\x14total_product_amount\x18\x02 \x01(\x01R\x12totalProductAmount\x122\n" +
+	"\x15total_shipping_amount\x18\x03 \x01(\x01R\x13totalShippingAmount\x12\x1f\n" +
+	"\vcustomer_id\x18\x04 \x01(\x05R\n" +
+	"customerId\x12\x19\n" +
+	"\border_id\x18\x05 \x01(\x05R\aorderId\"\x98\x01\n" +
+	"\x14UsingVoucherResponse\x122\n" +
+	"\x15total_discount_amount\x18\x01 \x01(\x01R\x13totalDiscountAmount\x12L\n" +
+	"\bvouchers\x18\x02 \x03(\v20.loyalty.CalculateDiscountAmountResponse_VoucherR\bvouchers2\xd9,\n" +
 	"\aLoyalty\x12\xe3\x01\n" +
 	"\x12CreateLoyaltyPoint\x12\".loyalty.CreateLoyaltyPointRequest\x1a .loyalty.GetLoyaltyPointResponse\"\x86\x01\x92Af\n" +
 	"\x0eLoyalty Points\x12!Create a new loyalty point record\x1a1Creates a new loyalty point record for a customer\x82\xd3\xe4\x93\x02\x17:\x01*\"\x12/v1/loyalty-points\x12\xd5\x01\n" +
@@ -1848,7 +2188,11 @@ const file_loyalty_loyalty_proto_rawDesc = "" +
 	"\x1bUpdateCustomerVoucherStatus\x12+.loyalty.UpdateCustomerVoucherStatusRequest\x1a#.loyalty.GetCustomerVoucherResponse\"\x8c\x01\x92A]\n" +
 	"\x11Customer Vouchers\x12\x1eUpdate customer voucher status\x1a(Updates the status of a customer voucher\x82\xd3\xe4\x93\x02&:\x01*\x1a!/v1/customer-vouchers/{id}/status\x12\xcd\x01\n" +
 	"\x15DeleteCustomerVoucher\x12%.loyalty.DeleteCustomerVoucherRequest\x1a\x16.google.protobuf.Empty\"u\x92AP\n" +
-	"\x11Customer Vouchers\x12\x1aAssign voucher to customer\x1a\x1fAssigns a voucher to a customer\x82\xd3\xe4\x93\x02\x1c*\x1a/v1/customer-vouchers/{id}B\xe9\x03\x92A\xa7\x03\x12\xb6\x01\n" +
+	"\x11Customer Vouchers\x12\x1aAssign voucher to customer\x1a\x1fAssigns a voucher to a customer\x82\xd3\xe4\x93\x02\x1c*\x1a/v1/customer-vouchers/{id}\x12\xc7\x01\n" +
+	"\x17CalculateDiscountAmount\x12'.loyalty.CalculateDiscountAmountRequest\x1a(.loyalty.CalculateDiscountAmountResponse\"Y\x92A.\n" +
+	"\x11Customer Vouchers\x12\x19Calculate discount amount\x82\xd3\xe4\x93\x02\":\x01*\"\x1d/v1/calculate-discount-amount\x12\xa7\x01\n" +
+	"\fUsingVoucher\x12\x1c.loyalty.UsingVoucherRequest\x1a\x1d.loyalty.UsingVoucherResponse\"Z\x92A;\n" +
+	"\x0eUsing Vouchers\x12)Using vouchers, calculate discount amount\x82\xd3\xe4\x93\x02\x16:\x01*\"\x11/v1/using-voucherB\xe9\x03\x92A\xa7\x03\x12\xb6\x01\n" +
 	"\x13Loyalty Service API\x125API for managing customer loyalty points and vouchers\"/\n" +
 	"\x14Loyalty Service Team\x1a\x17loyalty@yourcompany.com*2\n" +
 	"\vMIT License\x12#https://opensource.org/licenses/MIT2\x031.0\x1a\x13api.yourcompany.com\"\x03/v1*\x01\x022\x10application/json:\x10application/jsonj6\n" +
@@ -1868,125 +2212,136 @@ func file_loyalty_loyalty_proto_rawDescGZIP() []byte {
 	return file_loyalty_loyalty_proto_rawDescData
 }
 
-var file_loyalty_loyalty_proto_msgTypes = make([]protoimpl.MessageInfo, 31)
+var file_loyalty_loyalty_proto_msgTypes = make([]protoimpl.MessageInfo, 36)
 var file_loyalty_loyalty_proto_goTypes = []any{
-	(*CreateLoyaltyPointRequest)(nil),              // 0: loyalty.CreateLoyaltyPointRequest
-	(*GetLoyaltyPointRequest)(nil),                 // 1: loyalty.GetLoyaltyPointRequest
-	(*GetLoyaltyPointsByCustomerRequest)(nil),      // 2: loyalty.GetLoyaltyPointsByCustomerRequest
-	(*GetLoyaltyPointsBySourceRequest)(nil),        // 3: loyalty.GetLoyaltyPointsBySourceRequest
-	(*GetAllLoyaltyPointsRequest)(nil),             // 4: loyalty.GetAllLoyaltyPointsRequest
-	(*UpdateLoyaltyPointRequest)(nil),              // 5: loyalty.UpdateLoyaltyPointRequest
-	(*DeleteLoyaltyPointRequest)(nil),              // 6: loyalty.DeleteLoyaltyPointRequest
-	(*GetCustomerTotalPointsRequest)(nil),          // 7: loyalty.GetCustomerTotalPointsRequest
-	(*GetLoyaltyPointResponse)(nil),                // 8: loyalty.GetLoyaltyPointResponse
-	(*GetLoyaltyPointsResponse)(nil),               // 9: loyalty.GetLoyaltyPointsResponse
-	(*GetCustomerTotalPointsResponse)(nil),         // 10: loyalty.GetCustomerTotalPointsResponse
-	(*CreateVoucherRequest)(nil),                   // 11: loyalty.CreateVoucherRequest
-	(*GetVoucherRequest)(nil),                      // 12: loyalty.GetVoucherRequest
-	(*GetVoucherByCodeRequest)(nil),                // 13: loyalty.GetVoucherByCodeRequest
-	(*GetActiveVouchersRequest)(nil),               // 14: loyalty.GetActiveVouchersRequest
-	(*GetAllVouchersRequest)(nil),                  // 15: loyalty.GetAllVouchersRequest
-	(*UpdateVoucherRequest)(nil),                   // 16: loyalty.UpdateVoucherRequest
-	(*DeleteVoucherRequest)(nil),                   // 17: loyalty.DeleteVoucherRequest
-	(*GetVoucherResponse)(nil),                     // 18: loyalty.GetVoucherResponse
-	(*GetVouchersResponse)(nil),                    // 19: loyalty.GetVouchersResponse
-	(*CreateCustomerVoucherRequest)(nil),           // 20: loyalty.CreateCustomerVoucherRequest
-	(*GetCustomerVoucherRequest)(nil),              // 21: loyalty.GetCustomerVoucherRequest
-	(*GetCustomerVouchersRequest)(nil),             // 22: loyalty.GetCustomerVouchersRequest
-	(*GetCustomerVouchersByStatusRequest)(nil),     // 23: loyalty.GetCustomerVouchersByStatusRequest
-	(*GetAllCustomerVouchersRequest)(nil),          // 24: loyalty.GetAllCustomerVouchersRequest
-	(*UseCustomerVoucherRequest)(nil),              // 25: loyalty.UseCustomerVoucherRequest
-	(*UpdateCustomerVoucherStatusRequest)(nil),     // 26: loyalty.UpdateCustomerVoucherStatusRequest
-	(*DeleteCustomerVoucherRequest)(nil),           // 27: loyalty.DeleteCustomerVoucherRequest
-	(*GetAvailableVouchersForCustomerRequest)(nil), // 28: loyalty.GetAvailableVouchersForCustomerRequest
-	(*GetCustomerVoucherResponse)(nil),             // 29: loyalty.GetCustomerVoucherResponse
-	(*GetCustomerVouchersResponse)(nil),            // 30: loyalty.GetCustomerVouchersResponse
-	(*PaginationRequest)(nil),                      // 31: common.PaginationRequest
-	(*LoyaltyPoint)(nil),                           // 32: common.LoyaltyPoint
-	(*PaginationResponse)(nil),                     // 33: common.PaginationResponse
-	(Voucher_DiscountType)(0),                      // 34: common.Voucher.DiscountType
-	(*Voucher)(nil),                                // 35: common.Voucher
-	(CustomerVoucher_Status)(0),                    // 36: common.CustomerVoucher.Status
-	(*CustomerVoucher)(nil),                        // 37: common.CustomerVoucher
-	(*emptypb.Empty)(nil),                          // 38: google.protobuf.Empty
+	(*CreateLoyaltyPointRequest)(nil),               // 0: loyalty.CreateLoyaltyPointRequest
+	(*GetLoyaltyPointRequest)(nil),                  // 1: loyalty.GetLoyaltyPointRequest
+	(*GetLoyaltyPointsByCustomerRequest)(nil),       // 2: loyalty.GetLoyaltyPointsByCustomerRequest
+	(*GetLoyaltyPointsBySourceRequest)(nil),         // 3: loyalty.GetLoyaltyPointsBySourceRequest
+	(*GetAllLoyaltyPointsRequest)(nil),              // 4: loyalty.GetAllLoyaltyPointsRequest
+	(*UpdateLoyaltyPointRequest)(nil),               // 5: loyalty.UpdateLoyaltyPointRequest
+	(*DeleteLoyaltyPointRequest)(nil),               // 6: loyalty.DeleteLoyaltyPointRequest
+	(*GetCustomerTotalPointsRequest)(nil),           // 7: loyalty.GetCustomerTotalPointsRequest
+	(*GetLoyaltyPointResponse)(nil),                 // 8: loyalty.GetLoyaltyPointResponse
+	(*GetLoyaltyPointsResponse)(nil),                // 9: loyalty.GetLoyaltyPointsResponse
+	(*GetCustomerTotalPointsResponse)(nil),          // 10: loyalty.GetCustomerTotalPointsResponse
+	(*CreateVoucherRequest)(nil),                    // 11: loyalty.CreateVoucherRequest
+	(*GetVoucherRequest)(nil),                       // 12: loyalty.GetVoucherRequest
+	(*GetVoucherByCodeRequest)(nil),                 // 13: loyalty.GetVoucherByCodeRequest
+	(*GetActiveVouchersRequest)(nil),                // 14: loyalty.GetActiveVouchersRequest
+	(*GetAllVouchersRequest)(nil),                   // 15: loyalty.GetAllVouchersRequest
+	(*UpdateVoucherRequest)(nil),                    // 16: loyalty.UpdateVoucherRequest
+	(*DeleteVoucherRequest)(nil),                    // 17: loyalty.DeleteVoucherRequest
+	(*GetVoucherResponse)(nil),                      // 18: loyalty.GetVoucherResponse
+	(*GetVouchersResponse)(nil),                     // 19: loyalty.GetVouchersResponse
+	(*CreateCustomerVoucherRequest)(nil),            // 20: loyalty.CreateCustomerVoucherRequest
+	(*GetCustomerVoucherRequest)(nil),               // 21: loyalty.GetCustomerVoucherRequest
+	(*GetCustomerVouchersRequest)(nil),              // 22: loyalty.GetCustomerVouchersRequest
+	(*GetCustomerVouchersByStatusRequest)(nil),      // 23: loyalty.GetCustomerVouchersByStatusRequest
+	(*GetAllCustomerVouchersRequest)(nil),           // 24: loyalty.GetAllCustomerVouchersRequest
+	(*UseCustomerVoucherRequest)(nil),               // 25: loyalty.UseCustomerVoucherRequest
+	(*UpdateCustomerVoucherStatusRequest)(nil),      // 26: loyalty.UpdateCustomerVoucherStatusRequest
+	(*DeleteCustomerVoucherRequest)(nil),            // 27: loyalty.DeleteCustomerVoucherRequest
+	(*GetAvailableVouchersForCustomerRequest)(nil),  // 28: loyalty.GetAvailableVouchersForCustomerRequest
+	(*GetCustomerVoucherResponse)(nil),              // 29: loyalty.GetCustomerVoucherResponse
+	(*GetCustomerVouchersResponse)(nil),             // 30: loyalty.GetCustomerVouchersResponse
+	(*CalculateDiscountAmountRequest)(nil),          // 31: loyalty.CalculateDiscountAmountRequest
+	(*CalculateDiscountAmountResponse)(nil),         // 32: loyalty.CalculateDiscountAmountResponse
+	(*CalculateDiscountAmountResponse_Voucher)(nil), // 33: loyalty.CalculateDiscountAmountResponse_Voucher
+	(*UsingVoucherRequest)(nil),                     // 34: loyalty.UsingVoucherRequest
+	(*UsingVoucherResponse)(nil),                    // 35: loyalty.UsingVoucherResponse
+	(*PaginationRequest)(nil),                       // 36: common.PaginationRequest
+	(*LoyaltyPoint)(nil),                            // 37: common.LoyaltyPoint
+	(*PaginationResponse)(nil),                      // 38: common.PaginationResponse
+	(Voucher_DiscountType)(0),                       // 39: common.Voucher.DiscountType
+	(*Voucher)(nil),                                 // 40: common.Voucher
+	(CustomerVoucher_Status)(0),                     // 41: common.CustomerVoucher.Status
+	(*CustomerVoucher)(nil),                         // 42: common.CustomerVoucher
+	(*emptypb.Empty)(nil),                           // 43: google.protobuf.Empty
 }
 var file_loyalty_loyalty_proto_depIdxs = []int32{
-	31, // 0: loyalty.GetLoyaltyPointsByCustomerRequest.pagination:type_name -> common.PaginationRequest
-	31, // 1: loyalty.GetLoyaltyPointsBySourceRequest.pagination:type_name -> common.PaginationRequest
-	31, // 2: loyalty.GetAllLoyaltyPointsRequest.pagination:type_name -> common.PaginationRequest
-	32, // 3: loyalty.GetLoyaltyPointResponse.loyalty_point:type_name -> common.LoyaltyPoint
-	32, // 4: loyalty.GetLoyaltyPointsResponse.loyalty_points:type_name -> common.LoyaltyPoint
-	33, // 5: loyalty.GetLoyaltyPointsResponse.pagination:type_name -> common.PaginationResponse
-	34, // 6: loyalty.CreateVoucherRequest.discount_type:type_name -> common.Voucher.DiscountType
-	31, // 7: loyalty.GetActiveVouchersRequest.pagination:type_name -> common.PaginationRequest
-	31, // 8: loyalty.GetAllVouchersRequest.pagination:type_name -> common.PaginationRequest
-	34, // 9: loyalty.UpdateVoucherRequest.discount_type:type_name -> common.Voucher.DiscountType
-	35, // 10: loyalty.GetVoucherResponse.voucher:type_name -> common.Voucher
-	35, // 11: loyalty.GetVouchersResponse.vouchers:type_name -> common.Voucher
-	33, // 12: loyalty.GetVouchersResponse.pagination:type_name -> common.PaginationResponse
-	36, // 13: loyalty.CreateCustomerVoucherRequest.status:type_name -> common.CustomerVoucher.Status
-	31, // 14: loyalty.GetCustomerVouchersRequest.pagination:type_name -> common.PaginationRequest
-	36, // 15: loyalty.GetCustomerVouchersByStatusRequest.status:type_name -> common.CustomerVoucher.Status
-	31, // 16: loyalty.GetCustomerVouchersByStatusRequest.pagination:type_name -> common.PaginationRequest
-	31, // 17: loyalty.GetAllCustomerVouchersRequest.pagination:type_name -> common.PaginationRequest
-	36, // 18: loyalty.UpdateCustomerVoucherStatusRequest.status:type_name -> common.CustomerVoucher.Status
-	31, // 19: loyalty.GetAvailableVouchersForCustomerRequest.pagination:type_name -> common.PaginationRequest
-	37, // 20: loyalty.GetCustomerVoucherResponse.customer_voucher:type_name -> common.CustomerVoucher
-	37, // 21: loyalty.GetCustomerVouchersResponse.customer_vouchers:type_name -> common.CustomerVoucher
-	33, // 22: loyalty.GetCustomerVouchersResponse.pagination:type_name -> common.PaginationResponse
-	0,  // 23: loyalty.Loyalty.CreateLoyaltyPoint:input_type -> loyalty.CreateLoyaltyPointRequest
-	1,  // 24: loyalty.Loyalty.GetLoyaltyPoint:input_type -> loyalty.GetLoyaltyPointRequest
-	2,  // 25: loyalty.Loyalty.GetLoyaltyPointsByCustomer:input_type -> loyalty.GetLoyaltyPointsByCustomerRequest
-	3,  // 26: loyalty.Loyalty.GetLoyaltyPointsBySource:input_type -> loyalty.GetLoyaltyPointsBySourceRequest
-	4,  // 27: loyalty.Loyalty.GetAllLoyaltyPoints:input_type -> loyalty.GetAllLoyaltyPointsRequest
-	5,  // 28: loyalty.Loyalty.UpdateLoyaltyPoint:input_type -> loyalty.UpdateLoyaltyPointRequest
-	6,  // 29: loyalty.Loyalty.DeleteLoyaltyPoint:input_type -> loyalty.DeleteLoyaltyPointRequest
-	7,  // 30: loyalty.Loyalty.GetCustomerTotalPoints:input_type -> loyalty.GetCustomerTotalPointsRequest
-	11, // 31: loyalty.Loyalty.CreateVoucher:input_type -> loyalty.CreateVoucherRequest
-	12, // 32: loyalty.Loyalty.GetVoucher:input_type -> loyalty.GetVoucherRequest
-	13, // 33: loyalty.Loyalty.GetVoucherByCode:input_type -> loyalty.GetVoucherByCodeRequest
-	14, // 34: loyalty.Loyalty.GetActiveVouchers:input_type -> loyalty.GetActiveVouchersRequest
-	15, // 35: loyalty.Loyalty.GetAllVouchers:input_type -> loyalty.GetAllVouchersRequest
-	16, // 36: loyalty.Loyalty.UpdateVoucher:input_type -> loyalty.UpdateVoucherRequest
-	17, // 37: loyalty.Loyalty.DeleteVoucher:input_type -> loyalty.DeleteVoucherRequest
-	20, // 38: loyalty.Loyalty.CreateCustomerVoucher:input_type -> loyalty.CreateCustomerVoucherRequest
-	28, // 39: loyalty.Loyalty.GetAvailableVouchersForCustomer:input_type -> loyalty.GetAvailableVouchersForCustomerRequest
-	21, // 40: loyalty.Loyalty.GetCustomerVoucher:input_type -> loyalty.GetCustomerVoucherRequest
-	22, // 41: loyalty.Loyalty.GetCustomerVouchers:input_type -> loyalty.GetCustomerVouchersRequest
-	23, // 42: loyalty.Loyalty.GetCustomerVouchersByStatus:input_type -> loyalty.GetCustomerVouchersByStatusRequest
-	24, // 43: loyalty.Loyalty.GetAllCustomerVouchers:input_type -> loyalty.GetAllCustomerVouchersRequest
-	25, // 44: loyalty.Loyalty.UseCustomerVoucher:input_type -> loyalty.UseCustomerVoucherRequest
-	26, // 45: loyalty.Loyalty.UpdateCustomerVoucherStatus:input_type -> loyalty.UpdateCustomerVoucherStatusRequest
-	27, // 46: loyalty.Loyalty.DeleteCustomerVoucher:input_type -> loyalty.DeleteCustomerVoucherRequest
-	8,  // 47: loyalty.Loyalty.CreateLoyaltyPoint:output_type -> loyalty.GetLoyaltyPointResponse
-	8,  // 48: loyalty.Loyalty.GetLoyaltyPoint:output_type -> loyalty.GetLoyaltyPointResponse
-	9,  // 49: loyalty.Loyalty.GetLoyaltyPointsByCustomer:output_type -> loyalty.GetLoyaltyPointsResponse
-	9,  // 50: loyalty.Loyalty.GetLoyaltyPointsBySource:output_type -> loyalty.GetLoyaltyPointsResponse
-	9,  // 51: loyalty.Loyalty.GetAllLoyaltyPoints:output_type -> loyalty.GetLoyaltyPointsResponse
-	8,  // 52: loyalty.Loyalty.UpdateLoyaltyPoint:output_type -> loyalty.GetLoyaltyPointResponse
-	38, // 53: loyalty.Loyalty.DeleteLoyaltyPoint:output_type -> google.protobuf.Empty
-	10, // 54: loyalty.Loyalty.GetCustomerTotalPoints:output_type -> loyalty.GetCustomerTotalPointsResponse
-	18, // 55: loyalty.Loyalty.CreateVoucher:output_type -> loyalty.GetVoucherResponse
-	18, // 56: loyalty.Loyalty.GetVoucher:output_type -> loyalty.GetVoucherResponse
-	18, // 57: loyalty.Loyalty.GetVoucherByCode:output_type -> loyalty.GetVoucherResponse
-	19, // 58: loyalty.Loyalty.GetActiveVouchers:output_type -> loyalty.GetVouchersResponse
-	19, // 59: loyalty.Loyalty.GetAllVouchers:output_type -> loyalty.GetVouchersResponse
-	18, // 60: loyalty.Loyalty.UpdateVoucher:output_type -> loyalty.GetVoucherResponse
-	38, // 61: loyalty.Loyalty.DeleteVoucher:output_type -> google.protobuf.Empty
-	29, // 62: loyalty.Loyalty.CreateCustomerVoucher:output_type -> loyalty.GetCustomerVoucherResponse
-	19, // 63: loyalty.Loyalty.GetAvailableVouchersForCustomer:output_type -> loyalty.GetVouchersResponse
-	29, // 64: loyalty.Loyalty.GetCustomerVoucher:output_type -> loyalty.GetCustomerVoucherResponse
-	30, // 65: loyalty.Loyalty.GetCustomerVouchers:output_type -> loyalty.GetCustomerVouchersResponse
-	30, // 66: loyalty.Loyalty.GetCustomerVouchersByStatus:output_type -> loyalty.GetCustomerVouchersResponse
-	30, // 67: loyalty.Loyalty.GetAllCustomerVouchers:output_type -> loyalty.GetCustomerVouchersResponse
-	29, // 68: loyalty.Loyalty.UseCustomerVoucher:output_type -> loyalty.GetCustomerVoucherResponse
-	29, // 69: loyalty.Loyalty.UpdateCustomerVoucherStatus:output_type -> loyalty.GetCustomerVoucherResponse
-	38, // 70: loyalty.Loyalty.DeleteCustomerVoucher:output_type -> google.protobuf.Empty
-	47, // [47:71] is the sub-list for method output_type
-	23, // [23:47] is the sub-list for method input_type
-	23, // [23:23] is the sub-list for extension type_name
-	23, // [23:23] is the sub-list for extension extendee
-	0,  // [0:23] is the sub-list for field type_name
+	36, // 0: loyalty.GetLoyaltyPointsByCustomerRequest.pagination:type_name -> common.PaginationRequest
+	36, // 1: loyalty.GetLoyaltyPointsBySourceRequest.pagination:type_name -> common.PaginationRequest
+	36, // 2: loyalty.GetAllLoyaltyPointsRequest.pagination:type_name -> common.PaginationRequest
+	37, // 3: loyalty.GetLoyaltyPointResponse.loyalty_point:type_name -> common.LoyaltyPoint
+	37, // 4: loyalty.GetLoyaltyPointsResponse.loyalty_points:type_name -> common.LoyaltyPoint
+	38, // 5: loyalty.GetLoyaltyPointsResponse.pagination:type_name -> common.PaginationResponse
+	39, // 6: loyalty.CreateVoucherRequest.discount_type:type_name -> common.Voucher.DiscountType
+	36, // 7: loyalty.GetActiveVouchersRequest.pagination:type_name -> common.PaginationRequest
+	36, // 8: loyalty.GetAllVouchersRequest.pagination:type_name -> common.PaginationRequest
+	39, // 9: loyalty.UpdateVoucherRequest.discount_type:type_name -> common.Voucher.DiscountType
+	40, // 10: loyalty.GetVoucherResponse.voucher:type_name -> common.Voucher
+	40, // 11: loyalty.GetVouchersResponse.vouchers:type_name -> common.Voucher
+	38, // 12: loyalty.GetVouchersResponse.pagination:type_name -> common.PaginationResponse
+	41, // 13: loyalty.CreateCustomerVoucherRequest.status:type_name -> common.CustomerVoucher.Status
+	36, // 14: loyalty.GetCustomerVouchersRequest.pagination:type_name -> common.PaginationRequest
+	41, // 15: loyalty.GetCustomerVouchersByStatusRequest.status:type_name -> common.CustomerVoucher.Status
+	36, // 16: loyalty.GetCustomerVouchersByStatusRequest.pagination:type_name -> common.PaginationRequest
+	36, // 17: loyalty.GetAllCustomerVouchersRequest.pagination:type_name -> common.PaginationRequest
+	41, // 18: loyalty.UpdateCustomerVoucherStatusRequest.status:type_name -> common.CustomerVoucher.Status
+	36, // 19: loyalty.GetAvailableVouchersForCustomerRequest.pagination:type_name -> common.PaginationRequest
+	42, // 20: loyalty.GetCustomerVoucherResponse.customer_voucher:type_name -> common.CustomerVoucher
+	42, // 21: loyalty.GetCustomerVouchersResponse.customer_vouchers:type_name -> common.CustomerVoucher
+	38, // 22: loyalty.GetCustomerVouchersResponse.pagination:type_name -> common.PaginationResponse
+	33, // 23: loyalty.CalculateDiscountAmountResponse.vouchers:type_name -> loyalty.CalculateDiscountAmountResponse_Voucher
+	33, // 24: loyalty.UsingVoucherResponse.vouchers:type_name -> loyalty.CalculateDiscountAmountResponse_Voucher
+	0,  // 25: loyalty.Loyalty.CreateLoyaltyPoint:input_type -> loyalty.CreateLoyaltyPointRequest
+	1,  // 26: loyalty.Loyalty.GetLoyaltyPoint:input_type -> loyalty.GetLoyaltyPointRequest
+	2,  // 27: loyalty.Loyalty.GetLoyaltyPointsByCustomer:input_type -> loyalty.GetLoyaltyPointsByCustomerRequest
+	3,  // 28: loyalty.Loyalty.GetLoyaltyPointsBySource:input_type -> loyalty.GetLoyaltyPointsBySourceRequest
+	4,  // 29: loyalty.Loyalty.GetAllLoyaltyPoints:input_type -> loyalty.GetAllLoyaltyPointsRequest
+	5,  // 30: loyalty.Loyalty.UpdateLoyaltyPoint:input_type -> loyalty.UpdateLoyaltyPointRequest
+	6,  // 31: loyalty.Loyalty.DeleteLoyaltyPoint:input_type -> loyalty.DeleteLoyaltyPointRequest
+	7,  // 32: loyalty.Loyalty.GetCustomerTotalPoints:input_type -> loyalty.GetCustomerTotalPointsRequest
+	11, // 33: loyalty.Loyalty.CreateVoucher:input_type -> loyalty.CreateVoucherRequest
+	12, // 34: loyalty.Loyalty.GetVoucher:input_type -> loyalty.GetVoucherRequest
+	13, // 35: loyalty.Loyalty.GetVoucherByCode:input_type -> loyalty.GetVoucherByCodeRequest
+	14, // 36: loyalty.Loyalty.GetActiveVouchers:input_type -> loyalty.GetActiveVouchersRequest
+	15, // 37: loyalty.Loyalty.GetAllVouchers:input_type -> loyalty.GetAllVouchersRequest
+	16, // 38: loyalty.Loyalty.UpdateVoucher:input_type -> loyalty.UpdateVoucherRequest
+	17, // 39: loyalty.Loyalty.DeleteVoucher:input_type -> loyalty.DeleteVoucherRequest
+	20, // 40: loyalty.Loyalty.CreateCustomerVoucher:input_type -> loyalty.CreateCustomerVoucherRequest
+	28, // 41: loyalty.Loyalty.GetAvailableVouchersForCustomer:input_type -> loyalty.GetAvailableVouchersForCustomerRequest
+	21, // 42: loyalty.Loyalty.GetCustomerVoucher:input_type -> loyalty.GetCustomerVoucherRequest
+	22, // 43: loyalty.Loyalty.GetCustomerVouchers:input_type -> loyalty.GetCustomerVouchersRequest
+	23, // 44: loyalty.Loyalty.GetCustomerVouchersByStatus:input_type -> loyalty.GetCustomerVouchersByStatusRequest
+	24, // 45: loyalty.Loyalty.GetAllCustomerVouchers:input_type -> loyalty.GetAllCustomerVouchersRequest
+	25, // 46: loyalty.Loyalty.UseCustomerVoucher:input_type -> loyalty.UseCustomerVoucherRequest
+	26, // 47: loyalty.Loyalty.UpdateCustomerVoucherStatus:input_type -> loyalty.UpdateCustomerVoucherStatusRequest
+	27, // 48: loyalty.Loyalty.DeleteCustomerVoucher:input_type -> loyalty.DeleteCustomerVoucherRequest
+	31, // 49: loyalty.Loyalty.CalculateDiscountAmount:input_type -> loyalty.CalculateDiscountAmountRequest
+	34, // 50: loyalty.Loyalty.UsingVoucher:input_type -> loyalty.UsingVoucherRequest
+	8,  // 51: loyalty.Loyalty.CreateLoyaltyPoint:output_type -> loyalty.GetLoyaltyPointResponse
+	8,  // 52: loyalty.Loyalty.GetLoyaltyPoint:output_type -> loyalty.GetLoyaltyPointResponse
+	9,  // 53: loyalty.Loyalty.GetLoyaltyPointsByCustomer:output_type -> loyalty.GetLoyaltyPointsResponse
+	9,  // 54: loyalty.Loyalty.GetLoyaltyPointsBySource:output_type -> loyalty.GetLoyaltyPointsResponse
+	9,  // 55: loyalty.Loyalty.GetAllLoyaltyPoints:output_type -> loyalty.GetLoyaltyPointsResponse
+	8,  // 56: loyalty.Loyalty.UpdateLoyaltyPoint:output_type -> loyalty.GetLoyaltyPointResponse
+	43, // 57: loyalty.Loyalty.DeleteLoyaltyPoint:output_type -> google.protobuf.Empty
+	10, // 58: loyalty.Loyalty.GetCustomerTotalPoints:output_type -> loyalty.GetCustomerTotalPointsResponse
+	18, // 59: loyalty.Loyalty.CreateVoucher:output_type -> loyalty.GetVoucherResponse
+	18, // 60: loyalty.Loyalty.GetVoucher:output_type -> loyalty.GetVoucherResponse
+	18, // 61: loyalty.Loyalty.GetVoucherByCode:output_type -> loyalty.GetVoucherResponse
+	19, // 62: loyalty.Loyalty.GetActiveVouchers:output_type -> loyalty.GetVouchersResponse
+	19, // 63: loyalty.Loyalty.GetAllVouchers:output_type -> loyalty.GetVouchersResponse
+	18, // 64: loyalty.Loyalty.UpdateVoucher:output_type -> loyalty.GetVoucherResponse
+	43, // 65: loyalty.Loyalty.DeleteVoucher:output_type -> google.protobuf.Empty
+	29, // 66: loyalty.Loyalty.CreateCustomerVoucher:output_type -> loyalty.GetCustomerVoucherResponse
+	19, // 67: loyalty.Loyalty.GetAvailableVouchersForCustomer:output_type -> loyalty.GetVouchersResponse
+	29, // 68: loyalty.Loyalty.GetCustomerVoucher:output_type -> loyalty.GetCustomerVoucherResponse
+	30, // 69: loyalty.Loyalty.GetCustomerVouchers:output_type -> loyalty.GetCustomerVouchersResponse
+	30, // 70: loyalty.Loyalty.GetCustomerVouchersByStatus:output_type -> loyalty.GetCustomerVouchersResponse
+	30, // 71: loyalty.Loyalty.GetAllCustomerVouchers:output_type -> loyalty.GetCustomerVouchersResponse
+	29, // 72: loyalty.Loyalty.UseCustomerVoucher:output_type -> loyalty.GetCustomerVoucherResponse
+	29, // 73: loyalty.Loyalty.UpdateCustomerVoucherStatus:output_type -> loyalty.GetCustomerVoucherResponse
+	43, // 74: loyalty.Loyalty.DeleteCustomerVoucher:output_type -> google.protobuf.Empty
+	32, // 75: loyalty.Loyalty.CalculateDiscountAmount:output_type -> loyalty.CalculateDiscountAmountResponse
+	35, // 76: loyalty.Loyalty.UsingVoucher:output_type -> loyalty.UsingVoucherResponse
+	51, // [51:77] is the sub-list for method output_type
+	25, // [25:51] is the sub-list for method input_type
+	25, // [25:25] is the sub-list for extension type_name
+	25, // [25:25] is the sub-list for extension extendee
+	0,  // [0:25] is the sub-list for field type_name
 }
 
 func init() { file_loyalty_loyalty_proto_init() }
@@ -2006,7 +2361,7 @@ func file_loyalty_loyalty_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_loyalty_loyalty_proto_rawDesc), len(file_loyalty_loyalty_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   31,
+			NumMessages:   36,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

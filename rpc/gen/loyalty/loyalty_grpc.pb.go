@@ -44,6 +44,8 @@ const (
 	Loyalty_UseCustomerVoucher_FullMethodName              = "/loyalty.Loyalty/UseCustomerVoucher"
 	Loyalty_UpdateCustomerVoucherStatus_FullMethodName     = "/loyalty.Loyalty/UpdateCustomerVoucherStatus"
 	Loyalty_DeleteCustomerVoucher_FullMethodName           = "/loyalty.Loyalty/DeleteCustomerVoucher"
+	Loyalty_CalculateDiscountAmount_FullMethodName         = "/loyalty.Loyalty/CalculateDiscountAmount"
+	Loyalty_UsingVoucher_FullMethodName                    = "/loyalty.Loyalty/UsingVoucher"
 )
 
 // LoyaltyClient is the client API for Loyalty service.
@@ -77,6 +79,8 @@ type LoyaltyClient interface {
 	UseCustomerVoucher(ctx context.Context, in *UseCustomerVoucherRequest, opts ...grpc.CallOption) (*GetCustomerVoucherResponse, error)
 	UpdateCustomerVoucherStatus(ctx context.Context, in *UpdateCustomerVoucherStatusRequest, opts ...grpc.CallOption) (*GetCustomerVoucherResponse, error)
 	DeleteCustomerVoucher(ctx context.Context, in *DeleteCustomerVoucherRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	CalculateDiscountAmount(ctx context.Context, in *CalculateDiscountAmountRequest, opts ...grpc.CallOption) (*CalculateDiscountAmountResponse, error)
+	UsingVoucher(ctx context.Context, in *UsingVoucherRequest, opts ...grpc.CallOption) (*UsingVoucherResponse, error)
 }
 
 type loyaltyClient struct {
@@ -327,6 +331,26 @@ func (c *loyaltyClient) DeleteCustomerVoucher(ctx context.Context, in *DeleteCus
 	return out, nil
 }
 
+func (c *loyaltyClient) CalculateDiscountAmount(ctx context.Context, in *CalculateDiscountAmountRequest, opts ...grpc.CallOption) (*CalculateDiscountAmountResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CalculateDiscountAmountResponse)
+	err := c.cc.Invoke(ctx, Loyalty_CalculateDiscountAmount_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *loyaltyClient) UsingVoucher(ctx context.Context, in *UsingVoucherRequest, opts ...grpc.CallOption) (*UsingVoucherResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UsingVoucherResponse)
+	err := c.cc.Invoke(ctx, Loyalty_UsingVoucher_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LoyaltyServer is the server API for Loyalty service.
 // All implementations must embed UnimplementedLoyaltyServer
 // for forward compatibility.
@@ -358,6 +382,8 @@ type LoyaltyServer interface {
 	UseCustomerVoucher(context.Context, *UseCustomerVoucherRequest) (*GetCustomerVoucherResponse, error)
 	UpdateCustomerVoucherStatus(context.Context, *UpdateCustomerVoucherStatusRequest) (*GetCustomerVoucherResponse, error)
 	DeleteCustomerVoucher(context.Context, *DeleteCustomerVoucherRequest) (*emptypb.Empty, error)
+	CalculateDiscountAmount(context.Context, *CalculateDiscountAmountRequest) (*CalculateDiscountAmountResponse, error)
+	UsingVoucher(context.Context, *UsingVoucherRequest) (*UsingVoucherResponse, error)
 	mustEmbedUnimplementedLoyaltyServer()
 }
 
@@ -439,6 +465,12 @@ func (UnimplementedLoyaltyServer) UpdateCustomerVoucherStatus(context.Context, *
 }
 func (UnimplementedLoyaltyServer) DeleteCustomerVoucher(context.Context, *DeleteCustomerVoucherRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteCustomerVoucher not implemented")
+}
+func (UnimplementedLoyaltyServer) CalculateDiscountAmount(context.Context, *CalculateDiscountAmountRequest) (*CalculateDiscountAmountResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CalculateDiscountAmount not implemented")
+}
+func (UnimplementedLoyaltyServer) UsingVoucher(context.Context, *UsingVoucherRequest) (*UsingVoucherResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UsingVoucher not implemented")
 }
 func (UnimplementedLoyaltyServer) mustEmbedUnimplementedLoyaltyServer() {}
 func (UnimplementedLoyaltyServer) testEmbeddedByValue()                 {}
@@ -893,6 +925,42 @@ func _Loyalty_DeleteCustomerVoucher_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Loyalty_CalculateDiscountAmount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CalculateDiscountAmountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LoyaltyServer).CalculateDiscountAmount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Loyalty_CalculateDiscountAmount_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LoyaltyServer).CalculateDiscountAmount(ctx, req.(*CalculateDiscountAmountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Loyalty_UsingVoucher_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UsingVoucherRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LoyaltyServer).UsingVoucher(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Loyalty_UsingVoucher_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LoyaltyServer).UsingVoucher(ctx, req.(*UsingVoucherRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Loyalty_ServiceDesc is the grpc.ServiceDesc for Loyalty service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -995,6 +1063,14 @@ var Loyalty_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteCustomerVoucher",
 			Handler:    _Loyalty_DeleteCustomerVoucher_Handler,
+		},
+		{
+			MethodName: "CalculateDiscountAmount",
+			Handler:    _Loyalty_CalculateDiscountAmount_Handler,
+		},
+		{
+			MethodName: "UsingVoucher",
+			Handler:    _Loyalty_UsingVoucher_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
