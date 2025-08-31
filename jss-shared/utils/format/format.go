@@ -2,8 +2,10 @@ package utils
 
 import (
 	"strconv"
+	"time"
 
 	"github.com/jackc/pgx/v5/pgtype"
+	"github.com/linhhuynhcoding/jss-microservices/jss-shared/consts"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
@@ -76,4 +78,12 @@ func PgDateToStringPointer(pgD pgtype.Date) *string {
 		return &res
 	}
 	return nil
+}
+
+func StringDateToPgDate(dateStr string) pgtype.Date {
+	date, err := time.Parse(consts.DATE_STRING_LAYOUT, dateStr)
+	if err != nil {
+		return pgtype.Date{Valid: false}
+	}
+	return pgtype.Date{Time: date, Valid: true}
 }
