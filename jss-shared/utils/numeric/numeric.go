@@ -41,3 +41,32 @@ func PgToPbTimestamp(pgTs pgtype.Timestamp) *timestamppb.Timestamp {
 	}
 	return timestamppb.New(pgTs.Time)
 }
+
+func PgTextToString(pgT pgtype.Text) string {
+	if pgT.Valid {
+		return pgT.String
+	}
+	return ""
+}
+
+func PgTextToStringPointer(pgT pgtype.Text) *string {
+	if pgT.Valid {
+		return &pgT.String
+	}
+	return nil
+}
+
+func PgDateToString(pgD pgtype.Date) string {
+	if pgD.Valid {
+		return pgD.Time.Format("2006-01-02")
+	}
+	return ""
+}
+
+func PgDateToStringPointer(pgD pgtype.Date) *string {
+	if pgD.Valid {
+		res := pgD.Time.Format("2006-01-02")
+		return &res
+	}
+	return nil
+}
