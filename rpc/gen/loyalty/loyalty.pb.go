@@ -1664,7 +1664,7 @@ type CalculateDiscountAmountRequest struct {
 	Vouchers            []string               `protobuf:"bytes,1,rep,name=vouchers,proto3" json:"vouchers,omitempty"`
 	TotalProductAmount  float64                `protobuf:"fixed64,2,opt,name=total_product_amount,json=totalProductAmount,proto3" json:"total_product_amount,omitempty"`
 	TotalShippingAmount float64                `protobuf:"fixed64,3,opt,name=total_shipping_amount,json=totalShippingAmount,proto3" json:"total_shipping_amount,omitempty"`
-	CustomerId          float64                `protobuf:"fixed64,4,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"` // for validate voucher usage limit
+	CustomerId          int32                  `protobuf:"varint,4,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"` // for validate voucher usage limit
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -1720,7 +1720,7 @@ func (x *CalculateDiscountAmountRequest) GetTotalShippingAmount() float64 {
 	return 0
 }
 
-func (x *CalculateDiscountAmountRequest) GetCustomerId() float64 {
+func (x *CalculateDiscountAmountRequest) GetCustomerId() int32 {
 	if x != nil {
 		return x.CustomerId
 	}
@@ -2120,7 +2120,7 @@ const file_loyalty_loyalty_proto_rawDesc = "" +
 	"\bvouchers\x18\x01 \x03(\tR\bvouchers\x120\n" +
 	"\x14total_product_amount\x18\x02 \x01(\x01R\x12totalProductAmount\x122\n" +
 	"\x15total_shipping_amount\x18\x03 \x01(\x01R\x13totalShippingAmount\x12\x1f\n" +
-	"\vcustomer_id\x18\x04 \x01(\x01R\n" +
+	"\vcustomer_id\x18\x04 \x01(\x05R\n" +
 	"customerId\"\xa3\x01\n" +
 	"\x1fCalculateDiscountAmountResponse\x122\n" +
 	"\x15total_discount_amount\x18\x01 \x01(\x01R\x13totalDiscountAmount\x12L\n" +

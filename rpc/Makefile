@@ -21,7 +21,7 @@ update:
 	go mod tidy 
 	go mod vendor
 
-push:
+push: proto
 	git add .
 	git commit -m 'refactor: update package'
 	git push
