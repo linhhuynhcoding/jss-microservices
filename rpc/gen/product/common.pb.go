@@ -81,6 +81,8 @@ type Product struct {
 	Image           string                 `protobuf:"bytes,12,opt,name=image,proto3" json:"image,omitempty"`
 	CreatedAt       string                 `protobuf:"bytes,13,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"` // ISO8601
 	UpdatedAt       string                 `protobuf:"bytes,14,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	Stock           int32                  `protobuf:"varint,15,opt,name=stock,proto3" json:"stock,omitempty"`
+	BuyTurn         int32                  `protobuf:"varint,16,opt,name=buy_turn,json=buyTurn,proto3" json:"buy_turn,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -211,6 +213,20 @@ func (x *Product) GetUpdatedAt() string {
 		return x.UpdatedAt
 	}
 	return ""
+}
+
+func (x *Product) GetStock() int32 {
+	if x != nil {
+		return x.Stock
+	}
+	return 0
+}
+
+func (x *Product) GetBuyTurn() int32 {
+	if x != nil {
+		return x.BuyTurn
+	}
+	return 0
 }
 
 type ProductCategory struct {
@@ -363,7 +379,7 @@ const file_product_common_proto_rawDesc = "" +
 	"\n" +
 	"\x14product/common.proto\x12\aproduct\"\x1c\n" +
 	"\x04User\x12\x14\n" +
-	"\x05dummy\x18\x01 \x01(\tR\x05dummy\"\xa8\x03\n" +
+	"\x05dummy\x18\x01 \x01(\tR\x05dummy\"\xd9\x03\n" +
 	"\aProduct\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x12\n" +
@@ -385,7 +401,9 @@ const file_product_common_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\r \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\x0e \x01(\tR\tupdatedAt\"5\n" +
+	"updated_at\x18\x0e \x01(\tR\tupdatedAt\x12\x14\n" +
+	"\x05stock\x18\x0f \x01(\x05R\x05stock\x12\x19\n" +
+	"\bbuy_turn\x18\x10 \x01(\x05R\abuyTurn\"5\n" +
 	"\x0fProductCategory\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\"\xb2\x01\n" +

@@ -115,6 +115,8 @@ message CreateProductRequest {
     int32 warranty_period = 8;
     string image = 9;
     int32 gold_type = 10;
+
+    int32 stock = 11;
 }
 
 message GetProductRequest {
@@ -143,6 +145,8 @@ message UpdateProductRequest {
     double selling_price = 10;
     int32 warranty_period = 11;
     string image = 12;
+
+    int32 stock = 13;
 }
 
 message DeleteProductRequest {

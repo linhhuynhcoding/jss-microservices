@@ -122,6 +122,7 @@ type CreateProductRequest struct {
 	WarrantyPeriod int32                  `protobuf:"varint,8,opt,name=warranty_period,json=warrantyPeriod,proto3" json:"warranty_period,omitempty"`
 	Image          string                 `protobuf:"bytes,9,opt,name=image,proto3" json:"image,omitempty"`
 	GoldType       int32                  `protobuf:"varint,10,opt,name=gold_type,json=goldType,proto3" json:"gold_type,omitempty"`
+	Stock          int32                  `protobuf:"varint,11,opt,name=stock,proto3" json:"stock,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -222,6 +223,13 @@ func (x *CreateProductRequest) GetImage() string {
 func (x *CreateProductRequest) GetGoldType() int32 {
 	if x != nil {
 		return x.GoldType
+	}
+	return 0
+}
+
+func (x *CreateProductRequest) GetStock() int32 {
+	if x != nil {
+		return x.Stock
 	}
 	return 0
 }
@@ -380,6 +388,7 @@ type UpdateProductRequest struct {
 	SellingPrice    float64                `protobuf:"fixed64,10,opt,name=selling_price,json=sellingPrice,proto3" json:"selling_price,omitempty"`
 	WarrantyPeriod  int32                  `protobuf:"varint,11,opt,name=warranty_period,json=warrantyPeriod,proto3" json:"warranty_period,omitempty"`
 	Image           string                 `protobuf:"bytes,12,opt,name=image,proto3" json:"image,omitempty"`
+	Stock           int32                  `protobuf:"varint,13,opt,name=stock,proto3" json:"stock,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -496,6 +505,13 @@ func (x *UpdateProductRequest) GetImage() string {
 		return x.Image
 	}
 	return ""
+}
+
+func (x *UpdateProductRequest) GetStock() int32 {
+	if x != nil {
+		return x.Stock
+	}
+	return 0
 }
 
 type DeleteProductRequest struct {
@@ -1278,7 +1294,7 @@ const file_product_product_proto_rawDesc = "" +
 	"\fDummyRequest\x12\x14\n" +
 	"\x05dummy\x18\x01 \x01(\x05R\x05dummy\"%\n" +
 	"\rDummyResponse\x12\x14\n" +
-	"\x05dummy\x18\x01 \x01(\x05R\x05dummy\"\xb2\x02\n" +
+	"\x05dummy\x18\x01 \x01(\x05R\x05dummy\"\xc8\x02\n" +
 	"\x14CreateProductRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x12\n" +
 	"\x04code\x18\x02 \x01(\tR\x04code\x12\x1f\n" +
@@ -1294,14 +1310,15 @@ const file_product_product_proto_rawDesc = "" +
 	"\x0fwarranty_period\x18\b \x01(\x05R\x0ewarrantyPeriod\x12\x14\n" +
 	"\x05image\x18\t \x01(\tR\x05image\x12\x1b\n" +
 	"\tgold_type\x18\n" +
-	" \x01(\x05R\bgoldType\"#\n" +
+	" \x01(\x05R\bgoldType\x12\x14\n" +
+	"\x05stock\x18\v \x01(\x05R\x05stock\"#\n" +
 	"\x11GetProductRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\"?\n" +
 	"\x13ListProductsRequest\x12\x12\n" +
 	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x14\n" +
 	"\x05limit\x18\x02 \x01(\x05R\x05limit\"D\n" +
 	"\x14ListProductsResponse\x12,\n" +
-	"\bproducts\x18\x01 \x03(\v2\x10.product.ProductR\bproducts\"\xf7\x02\n" +
+	"\bproducts\x18\x01 \x03(\v2\x10.product.ProductR\bproducts\"\x8d\x03\n" +
 	"\x14UpdateProductRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x12\n" +
@@ -1319,7 +1336,8 @@ const file_product_product_proto_rawDesc = "" +
 	"\rselling_price\x18\n" +
 	" \x01(\x01R\fsellingPrice\x12'\n" +
 	"\x0fwarranty_period\x18\v \x01(\x05R\x0ewarrantyPeriod\x12\x14\n" +
-	"\x05image\x18\f \x01(\tR\x05image\"&\n" +
+	"\x05image\x18\f \x01(\tR\x05image\x12\x14\n" +
+	"\x05stock\x18\r \x01(\x05R\x05stock\"&\n" +
 	"\x14DeleteProductRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\"1\n" +
 	"\x15DeleteProductResponse\x12\x18\n" +
