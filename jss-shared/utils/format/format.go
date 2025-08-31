@@ -30,6 +30,16 @@ func Int32(val int32) pgtype.Int4 {
 	}
 }
 
+func Int(val *int32) pgtype.Int4 {
+	if val == nil {
+		return pgtype.Int4{Valid: false}
+	}
+	return pgtype.Int4{
+		Int32: *val,
+		Valid: true,
+	}
+}
+
 func ToPgTimestamp(ts *timestamppb.Timestamp) pgtype.Timestamp {
 	if ts == nil {
 		return pgtype.Timestamp{Valid: false}
