@@ -1784,6 +1784,7 @@ type CalculateDiscountAmountResponse_Voucher struct {
 	Code           string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
 	Title          string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
 	DiscountAmount float64                `protobuf:"fixed64,3,opt,name=discount_amount,json=discountAmount,proto3" json:"discount_amount,omitempty"`
+	Id             int32                  `protobuf:"varint,4,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -1835,6 +1836,13 @@ func (x *CalculateDiscountAmountResponse_Voucher) GetTitle() string {
 func (x *CalculateDiscountAmountResponse_Voucher) GetDiscountAmount() float64 {
 	if x != nil {
 		return x.DiscountAmount
+	}
+	return 0
+}
+
+func (x *CalculateDiscountAmountResponse_Voucher) GetId() int32 {
+	if x != nil {
+		return x.Id
 	}
 	return 0
 }
@@ -2124,11 +2132,12 @@ const file_loyalty_loyalty_proto_rawDesc = "" +
 	"customerId\"\xa3\x01\n" +
 	"\x1fCalculateDiscountAmountResponse\x122\n" +
 	"\x15total_discount_amount\x18\x01 \x01(\x01R\x13totalDiscountAmount\x12L\n" +
-	"\bvouchers\x18\x02 \x03(\v20.loyalty.CalculateDiscountAmountResponse_VoucherR\bvouchers\"|\n" +
+	"\bvouchers\x18\x02 \x03(\v20.loyalty.CalculateDiscountAmountResponse_VoucherR\bvouchers\"\x8c\x01\n" +
 	"'CalculateDiscountAmountResponse_Voucher\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\tR\x04code\x12\x14\n" +
 	"\x05title\x18\x02 \x01(\tR\x05title\x12'\n" +
-	"\x0fdiscount_amount\x18\x03 \x01(\x01R\x0ediscountAmount\"\xd3\x01\n" +
+	"\x0fdiscount_amount\x18\x03 \x01(\x01R\x0ediscountAmount\x12\x0e\n" +
+	"\x02id\x18\x04 \x01(\x05R\x02id\"\xd3\x01\n" +
 	"\x13UsingVoucherRequest\x12\x1a\n" +
 	"\bvouchers\x18\x01 \x03(\tR\bvouchers\x120\n" +
 	"\x14total_product_amount\x18\x02 \x01(\x01R\x12totalProductAmount\x122\n" +
