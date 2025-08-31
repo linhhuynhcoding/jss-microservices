@@ -268,7 +268,7 @@ message CalculateDiscountAmountRequest {
   repeated string vouchers = 1;
   double total_product_amount = 2;
   double total_shipping_amount = 3;
-  double customer_id = 4; // for validate voucher usage limit
+  int32 customer_id = 4; // for validate voucher usage limit
 }
 
 message CalculateDiscountAmountResponse {
