@@ -24,7 +24,7 @@ message PaginationRequest {
     json_schema: {
       title: "Pagination Request"
       description: "Pagination parameters for list requests"
-      required: ["limit", "offset"]
+      required: ["limit", "page"]
     }
   };
 
@@ -165,6 +165,8 @@ message Voucher {
     description: "When the voucher was created"
     read_only: true
   }];
+
+  optional int32 used_number = 10;
 }
 
 // Customer Voucher entity

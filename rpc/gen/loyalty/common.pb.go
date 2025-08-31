@@ -349,6 +349,7 @@ type Voucher struct {
 	EndDate       string                 `protobuf:"bytes,7,opt,name=end_date,json=endDate,proto3" json:"end_date,omitempty"`
 	UsageLimit    *int32                 `protobuf:"varint,8,opt,name=usage_limit,json=usageLimit,proto3,oneof" json:"usage_limit,omitempty"`
 	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UsedNumber    *int32                 `protobuf:"varint,10,opt,name=used_number,json=usedNumber,proto3,oneof" json:"used_number,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -446,6 +447,13 @@ func (x *Voucher) GetCreatedAt() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *Voucher) GetUsedNumber() int32 {
+	if x != nil && x.UsedNumber != nil {
+		return *x.UsedNumber
+	}
+	return 0
+}
+
 // Customer Voucher entity
 type CustomerVoucher struct {
 	state      protoimpl.MessageState `protogen:"open.v1"`
@@ -536,11 +544,11 @@ var File_loyalty_common_proto protoreflect.FileDescriptor
 
 const file_loyalty_common_proto_rawDesc = "" +
 	"\n" +
-	"\x14loyalty/common.proto\x12\x06common\x1a\x1fgoogle/protobuf/timestamp.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\"\xeb\x01\n" +
+	"\x14loyalty/common.proto\x12\x06common\x1a\x1fgoogle/protobuf/timestamp.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\"\xe9\x01\n" +
 	"\x11PaginationRequest\x12R\n" +
 	"\x05limit\x18\x01 \x01(\x05B<\x92A92!Maximum number of items to return:\x0210Y\x00\x00\x00\x00\x00\x00Y@i\x00\x00\x00\x00\x00\x00\xf0?R\x05limit\x12-\n" +
-	"\x04page\x18\x02 \x01(\x05B\x19\x92A\x162\x11Page, default = 1:\x010R\x04page:S\x92AP\n" +
-	"N*\x12Pagination Request2'Pagination parameters for list requests\xd2\x01\x05limit\xd2\x01\x06offset\"\xc5\x02\n" +
+	"\x04page\x18\x02 \x01(\x05B\x19\x92A\x162\x11Page, default = 1:\x010R\x04page:Q\x92AN\n" +
+	"L*\x12Pagination Request2'Pagination parameters for list requests\xd2\x01\x05limit\xd2\x01\x04page\"\xc5\x02\n" +
 	"\x12PaginationResponse\x12:\n" +
 	"\x05total\x18\x01 \x01(\x05B$\x92A!2\x1fTotal number of items availableR\x05total\x12;\n" +
 	"\x05limit\x18\x02 \x01(\x05B%\x92A\"2 Maximum number of items returnedR\x05limit\x12*\n" +
@@ -557,7 +565,7 @@ const file_loyalty_common_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampB#\x92A 2\x1cWhen the points were created@\x01R\tcreatedAt:[\x92AX\n" +
 	"V*\rLoyalty Point2%A loyalty point record for a customer\xd2\x01\vcustomer_id\xd2\x01\x06points\xd2\x01\x06sourceB\x0f\n" +
-	"\r_reference_id\"\xfd\a\n" +
+	"\r_reference_id\"\xb3\b\n" +
 	"\aVoucher\x128\n" +
 	"\x02id\x18\x01 \x01(\x05B(\x92A%2!Unique identifier for the voucher@\x01R\x02id\x12.\n" +
 	"\x04code\x18\x02 \x01(\tB\x1a\x92A\x172\x13Unique voucher codex2R\x04code\x12F\n" +
@@ -570,7 +578,10 @@ const file_loyalty_common_proto_rawDesc = "" +
 	"\vusage_limit\x18\b \x01(\x05BA\x92A>20Maximum number of times this voucher can be used:\x011i\x00\x00\x00\x00\x00\x00\xf0?H\x01R\n" +
 	"usageLimit\x88\x01\x01\x12^\n" +
 	"\n" +
-	"created_at\x18\t \x01(\v2\x1a.google.protobuf.TimestampB#\x92A 2\x1cWhen the voucher was created@\x01R\tcreatedAt\"b\n" +
+	"created_at\x18\t \x01(\v2\x1a.google.protobuf.TimestampB#\x92A 2\x1cWhen the voucher was created@\x01R\tcreatedAt\x12$\n" +
+	"\vused_number\x18\n" +
+	" \x01(\x05H\x02R\n" +
+	"usedNumber\x88\x01\x01\"b\n" +
 	"\fDiscountType\x12\x1d\n" +
 	"\x19DISCOUNT_TYPE_UNSPECIFIED\x10\x00\x12\x0e\n" +
 	"\n" +
@@ -580,7 +591,8 @@ const file_loyalty_common_proto_rawDesc = "" +
 	"]*\aVoucher2\x12A discount voucher\xd2\x01\x04code\xd2\x01\rdiscount_type\xd2\x01\x0ediscount_value\xd2\x01\n" +
 	"start_date\xd2\x01\bend_dateB\x0e\n" +
 	"\f_descriptionB\x0e\n" +
-	"\f_usage_limit\"\xd2\x05\n" +
+	"\f_usage_limitB\x0e\n" +
+	"\f_used_number\"\xd2\x05\n" +
 	"\x0fCustomerVoucher\x12H\n" +
 	"\x02id\x18\x01 \x01(\x05B8\x92A521Unique identifier for the customer voucher record@\x01R\x02id\x12M\n" +
 	"\vcustomer_id\x18\x02 \x01(\x05B,\x92A)2'ID of the customer who owns the voucherR\n" +
