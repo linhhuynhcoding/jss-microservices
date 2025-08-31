@@ -8,6 +8,7 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/linhhuynhcoding/jss-microservices/loyalty/config"
+	"github.com/linhhuynhcoding/jss-microservices/loyalty/internal/handler"
 	"github.com/linhhuynhcoding/jss-microservices/loyalty/internal/repository"
 	"github.com/linhhuynhcoding/jss-microservices/loyalty/internal/service"
 	"github.com/linhhuynhcoding/jss-microservices/rpc/gen/loyalty"
@@ -25,8 +26,16 @@ func main() {
 	cfg := config.NewConfig()
 	log, _ := zap.NewProduction()
 
-	go NewServer(ctx, cfg, log)
-	NewGatewayServer(ctx, cfg, log)
+	{
+		orderCreatedConsumer := handler.NewOrderCreatedConsumer(log, cfg)
+		go orderCreatedConsumer.ConsumeOrderCreated(ctx)
+	}
+	{
+		go NewServer(ctx, cfg, log)
+	}
+	{
+		NewGatewayServer(ctx, cfg, log)
+	}
 }
 
 func NewServer(

@@ -11,6 +11,19 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+const countUsageRecordsByVoucherId = `-- name: CountUsageRecordsByVoucherId :one
+SELECT COUNT(*)
+FROM usage_records
+WHERE voucher_id = $1
+`
+
+func (q *Queries) CountUsageRecordsByVoucherId(ctx context.Context, voucherID int32) (int64, error) {
+	row := q.db.QueryRow(ctx, countUsageRecordsByVoucherId, voucherID)
+	var count int64
+	err := row.Scan(&count)
+	return count, err
+}
+
 const createCustomerVoucher = `-- name: CreateCustomerVoucher :one
 INSERT INTO customer_vouchers (customer_id, voucher_id, status, used_at)
 VALUES ($1, $2, $3, $4)
@@ -625,6 +638,47 @@ func (q *Queries) GetLoyaltyPointsBySource(ctx context.Context, arg GetLoyaltyPo
 			&i.Source,
 			&i.ReferenceID,
 			&i.CreatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const getUsageRecordsByVoucherId = `-- name: GetUsageRecordsByVoucherId :many
+SELECT u.id, u.customer_id, u.voucher_id, u.order_id, u.status, u.created_at, u.updated_at
+FROM usage_records U
+WHERE u.voucher_id = $1
+LIMIT $2 OFFSET $3
+`
+
+type GetUsageRecordsByVoucherIdParams struct {
+	VoucherID int32 `json:"voucher_id"`
+	Limit     int32 `json:"limit"`
+	Offset    int32 `json:"offset"`
+}
+
+func (q *Queries) GetUsageRecordsByVoucherId(ctx context.Context, arg GetUsageRecordsByVoucherIdParams) ([]UsageRecord, error) {
+	rows, err := q.db.Query(ctx, getUsageRecordsByVoucherId, arg.VoucherID, arg.Limit, arg.Offset)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []UsageRecord{}
+	for rows.Next() {
+		var i UsageRecord
+		if err := rows.Scan(
+			&i.ID,
+			&i.CustomerID,
+			&i.VoucherID,
+			&i.OrderID,
+			&i.Status,
+			&i.CreatedAt,
+			&i.UpdatedAt,
 		); err != nil {
 			return nil, err
 		}
