@@ -42,7 +42,7 @@ func main() {
 	if cfg.RabbitMQURL != "" {
 		subscriberName := cfg.SubscriberName
 		if subscriberName == "" {
-			subscriberName = "notification-service"
+			subscriberName = "noti.notification.create"
 		}
 		keys := cfg.BindingKeys
 		if len(keys) == 0 {
@@ -50,12 +50,13 @@ func main() {
 		}
 
 		subCfg := mqconfig.RabbitMQConfig{
-			ConnStr:        cfg.RabbitMQURL,   // amqp://guest:guest@rabbitmq:5672/
-			SubscriberName: subscriberName,    // tên consumer/queue
+			ConnStr:        cfg.RabbitMQURL,
+			ExchangeName:   cfg.ExchangeName,    // "notifications"
 			ExchangeType:   "topic",
-			ExchangeName:   cfg.ExchangeName,  // ví dụ: notification_exchange
-			SubscribeKeys:  keys,              // ví dụ: ["notification.create"]
-		}
+			SubscriberName: cfg.SubscriberName,  // "noti.notification.create"
+			SubscribeKeys:  cfg.BindingKeys,    
+		}	
+
 
 		var err error
 		sub, err = mq.NewSubscriber(subCfg, logg)
@@ -66,35 +67,43 @@ func main() {
 		// Consume nhận []byte (envelope), tự giải mã rồi xử lý
 		go func() {
 			err := sub.Consume(func(b []byte) error {
-				var env events.EventEnvelope
-				if err := proto.Unmarshal(b, &env); err != nil {
-					// lỗi không phục hồi → drop (không requeue)
+			var env events.EventEnvelope
+			if err := proto.Unmarshal(b, &env); err != nil {
 					logg.Warn("drop: unmarshal envelope failed", zap.Error(err))
-					return nil
-				}
-				var msg notificationpb.CreateNotificationRequest
-				if err := proto.Unmarshal(env.Payload, &msg); err != nil {
-					// lỗi không phục hồi → drop
+					return nil // ACK: lỗi không phục hồi
+			}
+
+			var msg notificationpb.CreateNotificationRequest
+			if err := proto.Unmarshal(env.Payload, &msg); err != nil {
 					logg.Warn("drop: unmarshal payload failed", zap.Error(err))
-					return nil
-				}
+					return nil // ACK
+			}
 
-				// svc.Create(ctx, userIdStr, role, title, message)
-				if _, err := svc.Create(context.Background(), msg.UserId, "", msg.Title, msg.Message); err != nil {
-					low := strings.ToLower(err.Error())
-					if strings.Contains(low, "invalid user id") || strings.Contains(low, "invalid id") {
-						// không phục hồi → drop
-						logg.Warn("drop: invalid user id", zap.String("userId", msg.UserId))
-						return nil
-					}
-					// lỗi tạm (DB/network) → trả err để lib quyết định Nack(requeue)
-					logg.Error("create notification failed (will requeue)", zap.Error(err))
-					return err
-				}
+			// GỌI BUSINESS
+			_, err := svc.Create(context.Background(), msg.UserId, "", msg.Title, msg.Message)
+			if err == nil {
+					return nil // ACK
+			}
 
-				// ok → ack
-				return nil
+			low := strings.ToLower(err.Error())
+
+			// ❌ LỖI KHÔNG PHỤC HỒI → ACK (KHÔNG requeue)
+			if strings.Contains(low, "invalid user id") ||
+				strings.Contains(low, "invalid id") ||
+				strings.Contains(low, "validation") ||
+				strings.Contains(low, "duplicate key") || // ví dụ DuplicateKey Mongo
+				strings.Contains(low, "already exists") ||
+				strings.Contains(low, "bad request") ||
+				strings.Contains(low, "parse") {
+					logg.Warn("drop: permanent error", zap.String("userId", msg.UserId), zap.Error(err))
+					return nil // ACK & drop
+			}
+
+    // ✅ LỖI TẠM THỜI → TRẢ ERR để requeue (tạm thời)
+    logg.Error("create notification failed (will requeue)", zap.Error(err))
+    return err
 			})
+
 			if err != nil {
 				logg.Fatal("mq subscriber exited", zap.Error(err))
 			}

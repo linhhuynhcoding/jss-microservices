@@ -19,7 +19,6 @@ services:
     networks:
       - microservice-network
 
-  # service khởi tạo bucket tự động
   minio-init:
     image: minio/mc:latest
     depends_on:
@@ -28,9 +27,7 @@ services:
     entrypoint: >
       /bin/sh -c "
         mc alias set myminio http://minio:9000 minio minio123 &&
-        # tạo bucket loki nếu chưa tồn tại
         mc mb --ignore-existing myminio/loki &&
-        # tạo bucket tempo
         mc mb --ignore-existing myminio/tempo &&
         echo 'Buckets created'; exit 0
       "
@@ -79,8 +76,8 @@ services:
       - tempo_data:/var/tempo
     command: -config.file=/etc/tempo/tempo.yaml
     ports:
-      - "4317:4317" # OTLP gRPC
-      - "3200:3200" # HTTP API for Tempo
+      - "4317:4317"
+      - "3200:3200"
     networks: [microservice-network]
     depends_on:
       minio-init:
@@ -106,21 +103,25 @@ services:
     networks: [microservice-network]
 
   rabbitmq:
-    image: rabbitmq:3-management
+    image: rabbitmq:3.13-management
     container_name: rabbitmq
-    restart: always
-    ports: ["5672:5672", "15672:15672"]
-    environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
-    networks: [microservice-network]
+      - ./mq/definitions.json:/etc/rabbitmq/definitions.json:ro
+    environment:
+      # Load exchange/queue/binding/users từ file definitions.json
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: >
+        -rabbitmq_management load_definitions "/etc/rabbitmq/definitions.json"
     healthcheck:
-      test: ["CMD", "rabbitmq-diagnostics", "check_port_connectivity"]
-      interval: 5s
-      timeout: 3s
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
       retries: 5
+    networks:
+      - microservice-network
 
   notification-service:
     build:
@@ -128,20 +129,22 @@ services:
       dockerfile: Dockerfile
     container_name: notification-service
     env_file:
-      - ./notification-service/.env.example # ghi các biến môi trường mặc định
+      - ./notification-service/.env.example
+    environment:
+      - RABBITMQ_URL=amqp://noti:noti123@rabbitmq:5672/
+      - SUBSCRIBER_NAME=noti.notification.create
+
     ports:
-      - "50002:50002" # gRPC
-      - "8082:8082" # REST Gateway
+      - "50002:50002"
+      - "8082:8082"
     depends_on:
       rabbitmq:
         condition: service_healthy
-      # mongo: # nếu bạn sử dụng MongoDB nội bộ cho notification
-      #   condition: service_healthy
       minio:
         condition: service_healthy
     networks:
       - microservice-network
-  # SEED: chạy đúng 1 lần, chờ mongo healthy rồi exit 0
+
   seed:
     build:
       context: ./auth-service
