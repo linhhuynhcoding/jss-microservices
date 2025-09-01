@@ -8,36 +8,36 @@ services:
       - POSTGRES_PASSWORD=secret
       - POSTGRES_DB=jss_product
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U root -d jss_product"]
+      test: [ "CMD-SHELL", "pg_isready -U root -d jss_product" ]
       interval: 5s
       timeout: 5s
       retries: 5
     ports:
       - "9999:5432"
     networks:
-      - jss-network    
+      - jss-network
     volumes:
-      - ./product-postgres-volume/:/var/lib/postgresql/data
+      - ./data-product-postgres/:/var/lib/postgresql/data
   product-redis:
     image: redis:7-alpine
-  
+
   product-migrate:
     build: ./product-customer-service
-    command: ["/app/migrate", "-path", "./db/migration", "-database", "postgresql://root:secret@product-postgres:5432/jss_product?sslmode=disable", "-verbose", "up"]
+    command: [ "/app/migrate", "-path", "./db/migration", "-database", "postgresql://root:secret@product-postgres:5432/jss_product?sslmode=disable", "-verbose", "up" ]
     depends_on:
       - product-postgres
     networks:
-      - jss-network    
+      - jss-network
 
   product-seed:
     build: ./product-customer-service
-    command: ["/app/scripts/seed/seed"]
+    command: [ "/app/scripts/seed/seed" ]
     environment:
       - DB_SOURCE=postgresql://root:secret@product-postgres:5432/jss_product?sslmode=disable
     depends_on:
       - product-migrate
     networks:
-      - jss-network    
+      - jss-network
 
   product-service:
     build:
@@ -55,7 +55,7 @@ services:
       - product-postgres
       - product-redis
     networks:
-      - jss-network    
+      - jss-network
     # entrypoint:
     #   [
     #     "/app/wait-for.sh",
