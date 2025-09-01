@@ -1,0 +1,120 @@
+syntax = "proto3";
+
+package order;
+
+// The order service defines APIs for creating and managing orders.  An order
+// references a customer and a list of products along with voucher codes that
+// may be applied at checkout.  Orders are created by staff members and the
+// resulting document is stored in the order service's MongoDB database.  All
+// prices use double precision floating point values.  Pagination support is
+// available for listing orders.
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "loyalty/common.proto";
+
+// go_package tells protoc where to place the generated Go code.  This path
+// aligns with the other generated packages in the repository.
+option go_package = "github.com/linhhuynhcoding/jss-microservices/rpc/gen/order";
+
+// A single line item within an order.  Each item references a product by
+// its identifier and records the quantity purchased along with the unit
+// selling price at the time of purchase.  The unit price is recorded to
+// allow historical reporting should the product price change later.
+message OrderItem {
+  int32 product_id = 1;          // ID of the product being purchased
+  int32 quantity = 2;            // Quantity purchased
+  double unit_price = 3;         // Selling price per unit
+}
+
+// Request to create a new order.  A staff member creates an order for a
+// customer by providing the customer's identifier, the list of items being
+// purchased and any voucher codes that should be applied.  Shipping cost
+// defaults to zero if omitted.
+message CreateOrderRequest {
+  int32 customer_id = 1;                        // The customer placing the order
+  repeated OrderItem items = 2;                 // List of products and quantities
+  repeated string voucher_codes = 3;            // Voucher codes to apply
+  double shipping_cost = 4;                     // Optional shipping cost
+}
+
+// Response message containing the created order.  The full order is returned
+// so the client can display details including calculated totals and voucher
+// discounts.
+message CreateOrderResponse {
+  Order order = 1;                              // The newly created order
+}
+
+// Request for retrieving a single order by its identifier.  Both staff and
+// managers can fetch orders; staff may only retrieve orders they created.
+message GetOrderRequest {
+  int32 order_id = 1;                           // The unique identifier of the order
+}
+
+// Request for retrieving a paginated list of orders.  Pagination parameters
+// follow the common pattern used in other services.  Page numbers are zero
+// based (page=0 returns the first page).
+message ListOrdersRequest {
+  int32 page = 1;                               // Page number starting from 0
+  int32 limit = 2;                              // Number of orders to return per page
+}
+
+// Response containing a list of orders and the total count.  Pagination
+// metadata is included via the common PaginationResponse defined in the
+// loyalty service.
+message ListOrdersResponse {
+  repeated Order orders = 1;                    // The orders returned for this page
+  common.PaginationResponse pagination = 2;     // Pagination metadata
+}
+
+// An order entity.  Orders are stored in MongoDB and referenced by a
+// sequential integer order_id in addition to Mongo's ObjectID.  Staff_id
+// identifies the user who created the order.  Voucher codes applied are
+// persisted along with the calculated totals.  The created_at field records
+// when the order was placed.
+message Order {
+  int32 order_id = 1;                           // Sequential order identifier
+  int32 customer_id = 2;                        // ID of the customer for the order
+  string staff_id = 3;                          // Mongo ID of the staff user who created the order
+  repeated OrderItem items = 4;                 // List of items purchased
+  repeated string voucher_codes = 5;            // Voucher codes applied
+  double total_price = 6;                       // Total price before discounts and shipping
+  double discount_amount = 7;                   // Total discount amount from vouchers
+  double final_price = 8;                       // Final price after discounts and shipping
+  double shipping_cost = 9;                     // Shipping cost applied to the order
+  google.protobuf.Timestamp created_at = 10;    // Timestamp when the order was created
+}
+
+// Order service definition.  This service exposes RPCs for creating
+// orders, retrieving a specific order and listing orders.  The HTTP
+// annotations expose REST endpoints via the gRPC‑Gateway.  Clients must
+// include an Authorization header with a Bearer token; the service will
+// validate the token by calling the auth-service before processing
+// requests.
+service OrderService {
+  // Create a new order.  The returned order includes calculated totals
+  // and voucher discounts.  Requires authentication; the caller's user ID
+  // and role are derived from the Authorization header and recorded as
+  // the staff_id on the order.
+  rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse) {
+    option (google.api.http) = {
+      post: "/v1/orders"
+      body: "*"
+    };
+  }
+
+  // Retrieve an order by its ID.  Staff are restricted to orders they
+  // created; managers and admins may retrieve any order.
+  rpc GetOrder(GetOrderRequest) returns (Order) {
+    option (google.api.http) = {
+      get: "/v1/orders/{order_id}"
+    };
+  }
+
+  // List orders with pagination support.  Staff only see their own orders.
+  rpc ListOrders(ListOrdersRequest) returns (ListOrdersResponse) {
+    option (google.api.http) = {
+      get: "/v1/orders"
+    };
+  }
+}
