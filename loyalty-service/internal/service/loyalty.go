@@ -8,8 +8,8 @@ import (
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	db "github.com/linhhuynhcoding/jss-microservices/loyalty/internal/repository"
 	utils "github.com/linhhuynhcoding/jss-microservices/jss-shared/utils/format"
+	db "github.com/linhhuynhcoding/jss-microservices/loyalty/internal/repository"
 	api "github.com/linhhuynhcoding/jss-microservices/rpc/gen/loyalty"
 )
 
@@ -76,10 +76,20 @@ func (s *Service) GetLoyaltyPointsByCustomer(ctx context.Context, req *api.GetLo
 		return nil, status.Error(codes.InvalidArgument, "customer_id must be positive")
 	}
 
+	var (
+		limit int32 = 10
+		page  int32 = 1
+	)
+
+	if req.Pagination != nil {
+		limit = req.Pagination.Limit
+		page = req.Pagination.Page
+	}
+
 	params := db.GetLoyaltyPointsByCustomerParams{
 		CustomerID: req.CustomerId,
-		Limit:      req.Pagination.Limit,
-		Offset:     req.Pagination.Page * req.Pagination.Limit,
+		Limit:      limit,
+		Offset:     (page - 1) * limit,
 	}
 
 	loyaltyPoints, err := s.queries.GetLoyaltyPointsByCustomer(ctx, params)
@@ -97,9 +107,9 @@ func (s *Service) GetLoyaltyPointsByCustomer(ctx context.Context, req *api.GetLo
 		LoyaltyPoints: apiLoyaltyPoints,
 		Pagination: &api.PaginationResponse{
 			Total:   int32(len(loyaltyPoints)), // This should ideally be a separate count query
-			Limit:   req.Pagination.Limit,
-			Page:    req.Pagination.Page,
-			HasNext: len(loyaltyPoints) == int(req.Pagination.Limit),
+			Limit:   limit,
+			Page:    page,
+			HasNext: len(loyaltyPoints) == int(limit),
 		},
 	}
 
@@ -113,10 +123,20 @@ func (s *Service) GetLoyaltyPointsBySource(ctx context.Context, req *api.GetLoya
 		return nil, status.Error(codes.InvalidArgument, "source is required")
 	}
 
+	var (
+		limit int32 = 10
+		page  int32 = 1
+	)
+
+	if req.Pagination != nil {
+		limit = req.Pagination.Limit
+		page = req.Pagination.Page
+	}
+
 	params := db.GetLoyaltyPointsBySourceParams{
 		Source: req.Source,
-		Limit:  req.Pagination.Limit,
-		Offset: req.Pagination.Page * req.Pagination.Limit,
+		Limit:  limit,
+		Offset: (page - 1) * limit,
 	}
 
 	loyaltyPoints, err := s.queries.GetLoyaltyPointsBySource(ctx, params)
@@ -134,9 +154,9 @@ func (s *Service) GetLoyaltyPointsBySource(ctx context.Context, req *api.GetLoya
 		LoyaltyPoints: apiLoyaltyPoints,
 		Pagination: &api.PaginationResponse{
 			Total:   int32(len(loyaltyPoints)),
-			Limit:   req.Pagination.Limit,
-			Page:    req.Pagination.Page,
-			HasNext: len(loyaltyPoints) == int(req.Pagination.Limit),
+			Limit:   limit,
+			Page:    page,
+			HasNext: len(loyaltyPoints) == int(limit),
 		},
 	}
 
@@ -146,9 +166,19 @@ func (s *Service) GetLoyaltyPointsBySource(ctx context.Context, req *api.GetLoya
 func (s *Service) GetAllLoyaltyPoints(ctx context.Context, req *api.GetAllLoyaltyPointsRequest) (*api.GetLoyaltyPointsResponse, error) {
 	s.logger.Info("Getting all loyalty points")
 
+	var (
+		limit int32 = 10
+		page  int32 = 1
+	)
+
+	if req.Pagination != nil {
+		limit = req.Pagination.Limit
+		page = req.Pagination.Page
+	}
+
 	params := db.GetAllLoyaltyPointsParams{
-		Limit:  req.Pagination.Limit,
-		Offset: req.Pagination.Page * req.Pagination.Limit,
+		Limit:  limit,
+		Offset: (page - 1) * limit,
 	}
 
 	loyaltyPoints, err := s.queries.GetAllLoyaltyPoints(ctx, params)
@@ -166,9 +196,9 @@ func (s *Service) GetAllLoyaltyPoints(ctx context.Context, req *api.GetAllLoyalt
 		LoyaltyPoints: apiLoyaltyPoints,
 		Pagination: &api.PaginationResponse{
 			Total:   int32(len(loyaltyPoints)),
-			Limit:   req.Pagination.Limit,
-			Page:    req.Pagination.Page,
-			HasNext: len(loyaltyPoints) == int(req.Pagination.Limit),
+			Limit:   limit,
+			Page:    page,
+			HasNext: len(loyaltyPoints) == int(limit),
 		},
 	}
 

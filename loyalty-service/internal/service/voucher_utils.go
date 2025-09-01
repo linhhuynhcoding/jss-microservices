@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"fmt"
+	"slices"
 
 	utils "github.com/linhhuynhcoding/jss-microservices/jss-shared/utils/format"
 	db "github.com/linhhuynhcoding/jss-microservices/loyalty/internal/repository"
@@ -16,6 +17,7 @@ func (s *Service) calculateDiscountAmount(
 ) ([]*api.CalculateDiscountAmountResponse_Voucher, float64) {
 	totalDiscountAmount := float64(0)
 	vouchersResp := make([]*api.CalculateDiscountAmountResponse_Voucher, 0)
+	s.logger.Info("vouchers", zap.Any("vouchers", vouchers))
 
 	for _, voucher := range vouchers {
 		discountAmount := float64(0)
@@ -56,19 +58,20 @@ func (s *Service) validateVoucher(
 		logger.Error("failed to get customer vouchers")
 		return nil, fmt.Errorf("failed to get customer vouchers: %w", err)
 	}
-	for _, voucher := range voucherIds {
-		for _, custVoucher := range custVouchers {
-			if custVoucher.Code != voucher {
-				logger.Error("invalid voucher code", zap.String("voucher", voucher))
-				return nil, fmt.Errorf("invalid voucher code: %s", voucher)
-			}
-			voucherDb, err := s.queries.GetVoucherByCode(ctx, voucher)
-			if err != nil {
-				logger.Error("failed to get voucher", zap.String("voucher", voucher))
-				return nil, fmt.Errorf("failed to get voucher: %w", err)
-			}
-			vouchers = append(vouchers, voucherDb)
+	voucherMapCode := make(map[string]db.GetCustomerVouchersRow)
+	for _, custVoucher := range custVouchers {
+		if slices.Contains(voucherIds, custVoucher.Code) {
+			voucherMapCode[custVoucher.Code] = custVoucher
 		}
+	}
+
+	for code := range voucherMapCode {
+		voucherDb, err := s.queries.GetVoucherByCode(ctx, code)
+		if err != nil {
+			logger.Error("failed to get voucher", zap.String("voucher", code))
+			return nil, fmt.Errorf("failed to get voucher: %w", err)
+		}
+		vouchers = append(vouchers, voucherDb)
 	}
 
 	return vouchers, nil

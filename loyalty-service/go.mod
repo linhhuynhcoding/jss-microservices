@@ -6,7 +6,7 @@ require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.2
 	github.com/jackc/pgx/v5 v5.7.5
 	github.com/linhhuynhcoding/jss-microservices/jss-shared v0.0.0-20250901074331-6b02731ca599
-	github.com/linhhuynhcoding/jss-microservices/mq v0.0.0-20250901074713-b384ddfd38ba
+	github.com/linhhuynhcoding/jss-microservices/mq v0.0.0-20250901080750-ae80f5212865
 	github.com/linhhuynhcoding/jss-microservices/rpc v0.0.0-20250831142025-139c50b44c93
 	github.com/spf13/viper v1.20.1
 	go.uber.org/zap v1.27.0

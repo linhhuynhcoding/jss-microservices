@@ -102,9 +102,19 @@ func (s *Service) GetVoucherByCode(ctx context.Context, req *api.GetVoucherByCod
 func (s *Service) GetActiveVouchers(ctx context.Context, req *api.GetActiveVouchersRequest) (*api.GetVouchersResponse, error) {
 	s.logger.Info("Getting active vouchers")
 
+	var (
+		limit int32 = 10
+		page  int32 = 1
+	)
+
+	if req.Pagination != nil {
+		limit = req.Pagination.Limit
+		page = req.Pagination.Page
+	}
+
 	params := db.GetActiveVouchersParams{
-		Limit:  req.Pagination.Limit,
-		Offset: req.Pagination.Page * req.Pagination.Limit,
+		Limit:  limit,
+		Offset: (page - 1) * limit,
 	}
 
 	vouchers, err := s.queries.GetActiveVouchers(ctx, params)
@@ -122,9 +132,9 @@ func (s *Service) GetActiveVouchers(ctx context.Context, req *api.GetActiveVouch
 		Vouchers: apiVouchers,
 		Pagination: &api.PaginationResponse{
 			Total:   int32(len(vouchers)),
-			Limit:   req.Pagination.Limit,
-			Page:    req.Pagination.Page,
-			HasNext: len(vouchers) == int(req.Pagination.Limit),
+			Limit:   limit,
+			Page:    page,
+			HasNext: len(vouchers) == int(limit),
 		},
 	}
 
@@ -134,9 +144,18 @@ func (s *Service) GetActiveVouchers(ctx context.Context, req *api.GetActiveVouch
 func (s *Service) GetAllVouchers(ctx context.Context, req *api.GetAllVouchersRequest) (*api.GetVouchersResponse, error) {
 	s.logger.Info("Getting all vouchers")
 
+	var (
+		limit int32 = 10
+		page  int32 = 1
+	)
+	if req.Pagination != nil {
+		limit = req.Pagination.Limit
+		page = req.Pagination.Page
+	}
+
 	params := db.GetAllVouchersParams{
-		Limit:  req.Pagination.Limit,
-		Offset: req.Pagination.Page * req.Pagination.Limit,
+		Limit:  limit,
+		Offset: (page - 1) * limit,
 	}
 
 	vouchers, err := s.queries.GetAllVouchers(ctx, params)
@@ -154,9 +173,9 @@ func (s *Service) GetAllVouchers(ctx context.Context, req *api.GetAllVouchersReq
 		Vouchers: apiVouchers,
 		Pagination: &api.PaginationResponse{
 			Total:   int32(len(vouchers)),
-			Limit:   req.Pagination.Limit,
-			Page:    req.Pagination.Page,
-			HasNext: len(vouchers) == int(req.Pagination.Limit),
+			Limit:   limit,
+			Page:    page,
+			HasNext: len(vouchers) == int(limit),
 		},
 	}
 
@@ -278,11 +297,19 @@ func (s *Service) GetCustomerVouchers(ctx context.Context, req *api.GetCustomerV
 	if req.CustomerId <= 0 {
 		return nil, status.Error(codes.InvalidArgument, "customer_id must be positive")
 	}
+	var (
+		limit int32 = 10
+		page  int32 = 1
+	)
+	if req.Pagination != nil {
+		limit = req.Pagination.Limit
+		page = req.Pagination.Page
+	}
 
 	params := db.GetCustomerVouchersParams{
 		CustomerID: req.CustomerId,
-		Limit:      req.Pagination.Limit,
-		Offset:     req.Pagination.Page * req.Pagination.Limit,
+		Limit:      limit,
+		Offset:     (page - 1) * limit,
 	}
 
 	customerVouchers, err := s.queries.GetCustomerVouchers(ctx, params)
@@ -300,9 +327,9 @@ func (s *Service) GetCustomerVouchers(ctx context.Context, req *api.GetCustomerV
 		CustomerVouchers: apiCustomerVouchers,
 		Pagination: &api.PaginationResponse{
 			Total:   int32(len(customerVouchers)),
-			Limit:   req.Pagination.Limit,
-			Page:    req.Pagination.Page,
-			HasNext: len(customerVouchers) == int(req.Pagination.Limit),
+			Limit:   limit,
+			Page:    page,
+			HasNext: len(customerVouchers) == int(limit),
 		},
 	}
 
@@ -318,11 +345,20 @@ func (s *Service) GetCustomerVouchersByStatus(ctx context.Context, req *api.GetC
 		return nil, status.Error(codes.InvalidArgument, "customer_id must be positive")
 	}
 
+	var (
+		limit int32 = 10
+		page  int32 = 1
+	)
+	if req.Pagination != nil {
+		limit = req.Pagination.Limit
+		page = req.Pagination.Page
+	}
+
 	params := db.GetCustomerVouchersByStatusParams{
 		CustomerID: req.CustomerId,
 		Status:     utils.StringToPgText(ConvertAPICustomerVoucherStatusToDBString(&req.Status)),
-		Limit:      req.Pagination.Limit,
-		Offset:     req.Pagination.Page * req.Pagination.Limit,
+		Limit:      limit,
+		Offset:     (page - 1) * limit,
 	}
 
 	customerVouchers, err := s.queries.GetCustomerVouchersByStatus(ctx, params)
@@ -340,9 +376,9 @@ func (s *Service) GetCustomerVouchersByStatus(ctx context.Context, req *api.GetC
 		CustomerVouchers: apiCustomerVouchers,
 		Pagination: &api.PaginationResponse{
 			Total:   int32(len(customerVouchers)),
-			Limit:   req.Pagination.Limit,
-			Page:    req.Pagination.Page,
-			HasNext: len(customerVouchers) == int(req.Pagination.Limit),
+			Limit:   limit,
+			Page:    page,
+			HasNext: len(customerVouchers) == int(limit),
 		},
 	}
 
@@ -352,9 +388,18 @@ func (s *Service) GetCustomerVouchersByStatus(ctx context.Context, req *api.GetC
 func (s *Service) GetAllCustomerVouchers(ctx context.Context, req *api.GetAllCustomerVouchersRequest) (*api.GetCustomerVouchersResponse, error) {
 	s.logger.Info("Getting all customer vouchers")
 
+	var (
+		limit int32 = 10
+		page  int32 = 1
+	)
+	if req.Pagination != nil {
+		limit = req.Pagination.Limit
+		page = req.Pagination.Page
+	}
+
 	params := db.GetAllCustomerVouchersParams{
-		Limit:  req.Pagination.Limit,
-		Offset: req.Pagination.Page * req.Pagination.Limit,
+		Limit:  limit,
+		Offset: (page - 1) * limit,
 	}
 
 	customerVouchers, err := s.queries.GetAllCustomerVouchers(ctx, params)
@@ -372,9 +417,9 @@ func (s *Service) GetAllCustomerVouchers(ctx context.Context, req *api.GetAllCus
 		CustomerVouchers: apiCustomerVouchers,
 		Pagination: &api.PaginationResponse{
 			Total:   int32(len(customerVouchers)),
-			Limit:   req.Pagination.Limit,
-			Page:    req.Pagination.Page,
-			HasNext: len(customerVouchers) == int(req.Pagination.Limit),
+			Limit:   limit,
+			Page:    page,
+			HasNext: len(customerVouchers) == int(limit),
 		},
 	}
 
@@ -388,10 +433,19 @@ func (s *Service) GetAvailableVouchersForCustomer(ctx context.Context, req *api.
 		return nil, status.Error(codes.InvalidArgument, "customer_id must be positive")
 	}
 
+	var (
+		limit int32 = 10
+		page  int32 = 1
+	)
+	if req.Pagination != nil {
+		limit = req.Pagination.Limit
+		page = req.Pagination.Page
+	}
+
 	params := db.GetAvailableVouchersForCustomerParams{
 		CustomerID: req.CustomerId,
-		Limit:      req.Pagination.Limit,
-		Offset:     req.Pagination.Page * req.Pagination.Limit,
+		Limit:      limit,
+		Offset:     (page - 1) * limit,
 	}
 
 	vouchers, err := s.queries.GetAvailableVouchersForCustomer(ctx, params)
@@ -409,9 +463,9 @@ func (s *Service) GetAvailableVouchersForCustomer(ctx context.Context, req *api.
 		Vouchers: apiVouchers,
 		Pagination: &api.PaginationResponse{
 			Total:   int32(len(vouchers)),
-			Limit:   req.Pagination.Limit,
-			Page:    req.Pagination.Page,
-			HasNext: len(vouchers) == int(req.Pagination.Limit),
+			Limit:   limit,
+			Page:    page,
+			HasNext: len(vouchers) == int(limit),
 		},
 	}
 
