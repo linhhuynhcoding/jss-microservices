@@ -7,6 +7,7 @@ import (
 	"github.com/linhhuynhcoding/jss-microservices/auth-service/internal/domain"
 	"github.com/linhhuynhcoding/jss-microservices/auth-service/internal/dto"
 	"github.com/linhhuynhcoding/jss-microservices/auth-service/internal/repository"
+	"github.com/linhhuynhcoding/jss-microservices/auth-service/pkg/config"
 	"github.com/linhhuynhcoding/jss-microservices/auth-service/pkg/hashing"
 	"github.com/linhhuynhcoding/jss-microservices/auth-service/pkg/token"
 	"github.com/linhhuynhcoding/jss-microservices/mq"
@@ -52,6 +53,7 @@ func NewAuthService(
 }
 
 func (s *AuthService) Login(ctx context.Context, req dto.LoginRequest) (*dto.TokenResponse, error) {
+	cfg := config.Load()
 	user, err := s.userRepo.FindByEmail(ctx, req.Email)
 	if err != nil || user == nil {
 		return nil, ErrEmailNotFound
@@ -73,8 +75,8 @@ func (s *AuthService) Login(ctx context.Context, req dto.LoginRequest) (*dto.Tok
 		return nil, err
 	}
 	pubCfg := mqconfig.RabbitMQConfig{
-		ConnStr:       "amqp://guest:guest@rabbitmq:5672/",
-		ExchangeName:  "notification_exchange", // nếu dùng exchange
+		ConnStr:       cfg.RabbitMQURL,
+		ExchangeName:  "notifications", // nếu dùng exchange
 		ExchangeType:  "topic",          // (nếu cần)
 		PublisherName: "auth-service",
 	}
