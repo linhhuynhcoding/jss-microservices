@@ -20,5 +20,6 @@ down-app:
 rm-v:
 	rm -rf ./data-product-postgres	
 	rm -rf ./data-market-postgres
+	rm -rf ./data-loyalty-postgres
 
 PHOYE: run-app

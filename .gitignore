@@ -3,3 +3,4 @@ vendor/
 config.yaml
 data-market-postgres/
 data-product-postgres/
+data-loyalty-postgres/

@@ -26,6 +26,8 @@ func main() {
 	cfg := config.NewConfig()
 	log, _ := zap.NewProduction()
 
+	log.Info("config", zap.Any("cfg", cfg))
+
 	{
 		orderCreatedConsumer := handler.NewOrderCreatedConsumer(log, cfg)
 		go orderCreatedConsumer.ConsumeOrderCreated(ctx)

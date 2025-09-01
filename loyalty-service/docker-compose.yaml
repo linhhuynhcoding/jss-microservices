@@ -13,7 +13,7 @@ services:
       timeout: 5s
       retries: 5
     ports:
-      - "9999:5432"
+      - "9996:5432"
     networks:
       - jss-network
     volumes:

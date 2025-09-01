@@ -33,14 +33,14 @@ func NewPublisher(
 
 	conn, err := amqp.Dial(cfg.ConnStr)
 	if err != nil {
-		logger.Fatal("Failed to connect mq", zap.Error(err))
+		logger.Error("Failed to connect mq", zap.Error(err))
 		defer cancel()
 		return nil, err
 	}
 
 	ch, err := conn.Channel()
 	if err != nil {
-		logger.Fatal("Failed to init mq channel", zap.Error(err))
+		logger.Error("Failed to init mq channel", zap.Error(err))
 		defer cancel()
 		return nil, err
 	}
@@ -55,7 +55,7 @@ func NewPublisher(
 		nil,                        // arguments
 	)
 	if err != nil {
-		logger.Fatal("Failed to init mq exchange", zap.Error(err))
+		logger.Error("Failed to init mq exchange", zap.Error(err))
 		defer cancel()
 		return nil, err
 	}
@@ -109,7 +109,7 @@ func (p *Publisher) SendMessage(event proto.Message, topic string) error {
 			Body:        []byte(body),
 		})
 	if err != nil {
-		p.logger.Fatal("failed to sent message", zap.Error(err))
+		p.logger.Error("failed to sent message", zap.Error(err))
 	}
 	p.logger.Info("Sent message sucessfully", zap.Any("topic", topic))
 	return nil

@@ -31,7 +31,7 @@ CREATE TABLE "usage_records" (
   "customer_id" int NOT NULL,
   "voucher_id" int NOT NULL,
   "order_id" int NOT NULL,
-  "status" varchar(20) DEFAULT "pending", -- "pending", "used"
+  "status" varchar(20) DEFAULT 'pending', -- "pending", "used"
   "created_at" timestamp,
   "updated_at" timestamp,
 
