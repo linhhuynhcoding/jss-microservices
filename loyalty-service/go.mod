@@ -5,7 +5,7 @@ go 1.24.5
 require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.2
 	github.com/jackc/pgx/v5 v5.7.5
-	github.com/linhhuynhcoding/jss-microservices/jss-shared v0.0.0-20250831103607-3d2009b61909
+	github.com/linhhuynhcoding/jss-microservices/jss-shared v0.0.0-20250901074331-6b02731ca599
 	github.com/linhhuynhcoding/jss-microservices/mq v0.0.0-20250831144630-bb17052b4b04
 	github.com/linhhuynhcoding/jss-microservices/rpc v0.0.0-20250831142025-139c50b44c93
 	go.uber.org/zap v1.27.0
