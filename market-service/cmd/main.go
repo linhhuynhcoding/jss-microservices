@@ -24,6 +24,7 @@ func main() {
 	ctx := context.Background()
 	cfg := config.NewConfig()
 	log, _ := zap.NewProduction()
+	log.Info("Config", zap.Any("cfg", cfg))
 
 	go NewServer(ctx, cfg, log)
 	NewGatewayServer(ctx, cfg, log)
@@ -40,6 +41,7 @@ func NewServer(
 	connPool, err := pgxpool.New(ctx, cfg.DBSource)
 	if err != nil {
 		log.Fatal("cannot connect to db")
+		panic(err)
 	}
 	store := repository.NewStore(connPool)
 

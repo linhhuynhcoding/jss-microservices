@@ -140,6 +140,7 @@ message CreateVoucherRequest {
   string start_date = 5;
   string end_date = 6;
   optional int32 usage_limit = 7;
+  string target = 8; // CUSTOMER OR ALL
 }
 
 message GetVoucherRequest {
@@ -261,6 +262,38 @@ message GetCustomerVoucherResponse {
 message GetCustomerVouchersResponse {
   repeated common.CustomerVoucher customer_vouchers = 1;
   common.PaginationResponse pagination = 2;
+}
+
+message CalculateDiscountAmountRequest {
+  repeated string vouchers = 1;
+  double total_product_amount = 2;
+  double total_shipping_amount = 3;
+  int32 customer_id = 4; // for validate voucher usage limit
+}
+
+message CalculateDiscountAmountResponse {
+  double total_discount_amount = 1;
+  repeated CalculateDiscountAmountResponse_Voucher vouchers = 2;
+}
+
+message CalculateDiscountAmountResponse_Voucher {
+  string code = 1;
+  string title = 2;
+  double discount_amount = 3;
+  int32 id = 4;
+}
+
+message UsingVoucherRequest {
+  repeated string vouchers = 1;
+  double total_product_amount = 2;
+  double total_shipping_amount = 3;
+  int32 customer_id = 4;
+  int32 order_id = 5;
+}
+
+message UsingVoucherResponse {
+  double total_discount_amount = 1;
+  repeated CalculateDiscountAmountResponse_Voucher vouchers = 2;
 }
 
 // ===== SERVICE DEFINITION =====
@@ -537,6 +570,28 @@ service Loyalty {
       tags: "Customer Vouchers";
       summary: "Assign voucher to customer";
       description: "Assigns a voucher to a customer";
+    };
+  }
+
+  rpc CalculateDiscountAmount(CalculateDiscountAmountRequest) returns (CalculateDiscountAmountResponse) {
+    option (google.api.http) = {
+      post: "/v1/calculate-discount-amount"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Customer Vouchers";
+      summary: "Calculate discount amount";
+    };
+  }
+
+  rpc UsingVoucher(UsingVoucherRequest) returns (UsingVoucherResponse) {
+    option (google.api.http) = {
+      post: "/v1/using-voucher"
+      body: "*"
+    };
+      option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: "Using Vouchers";
+      summary: "Using vouchers, calculate discount amount";
     };
   }
 }

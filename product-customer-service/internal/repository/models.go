@@ -18,11 +18,23 @@ type Customer struct {
 	UpdatedAt pgtype.Timestamp `json:"updated_at"`
 }
 
+type OrderRecord struct {
+	CustomerID int32            `json:"customer_id"`
+	ProductID  int32            `json:"product_id"`
+	OrderID    int32            `json:"order_id"`
+	Quantity   int32            `json:"quantity"`
+	Status     string           `json:"status"`
+	CreatedAt  pgtype.Timestamp `json:"created_at"`
+	UpdatedAt  pgtype.Timestamp `json:"updated_at"`
+}
+
 type Product struct {
 	ID              int32            `json:"id"`
-	Name            string           `json:"name"`
+	Name            pgtype.Text      `json:"name"`
 	Code            string           `json:"code"`
-	CategoryID      int32            `json:"category_id"`
+	CategoryID      pgtype.Int4      `json:"category_id"`
+	Stock           pgtype.Int4      `json:"stock"`
+	BuyTurn         pgtype.Int4      `json:"buy_turn"`
 	Weight          pgtype.Numeric   `json:"weight"`
 	GoldPriceAtTime pgtype.Numeric   `json:"gold_price_at_time"`
 	LaborCost       pgtype.Numeric   `json:"labor_cost"`
@@ -30,7 +42,7 @@ type Product struct {
 	MarkupRate      pgtype.Numeric   `json:"markup_rate"`
 	SellingPrice    pgtype.Numeric   `json:"selling_price"`
 	WarrantyPeriod  pgtype.Int4      `json:"warranty_period"`
-	Image           string           `json:"image"`
+	Image           pgtype.Text      `json:"image"`
 	CreatedAt       pgtype.Timestamp `json:"created_at"`
 	UpdatedAt       pgtype.Timestamp `json:"updated_at"`
 }

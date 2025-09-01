@@ -32,6 +32,7 @@ type AuthService struct {
 	hashingSvc  *hashing.HashingService
 	tokenSvc    *token.TokenService
 	log         *zap.Logger 
+	log         *zap.Logger 
 }
 
 func NewAuthService(
@@ -49,6 +50,7 @@ func NewAuthService(
 		hashingSvc:  hashingSvc,
 		tokenSvc:    tokenSvc,
 		log:         log,
+	} 
 	} 
 }
 
@@ -136,6 +138,8 @@ func (s *AuthService) RefreshToken(
 	}
 
 	return s.generateTokens(ctx, userObjID, oldRT.DeviceID, primitive.NilObjectID, user.Role)
+
+}
 
 }
 func (s *AuthService) Logout(ctx context.Context, rt string) error {

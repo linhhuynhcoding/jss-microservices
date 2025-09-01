@@ -87,6 +87,20 @@ service ProductCustomer {
             delete: "/v1/customers/{id}"
         };
     }
+
+    rpc UploadFile(UploadFileRequest) returns (UploadFileResponse) {
+        option (google.api.http) = {
+        post: "/v1/upload"
+        body: "*"
+        };
+    }
+
+    rpc PurchaseProduct(PurchaseProductRequest) returns (PurchaseProductResponse) {
+        option (google.api.http) = {
+        post: "/v1/purchase"
+        body: "*"
+        };
+    }
 } 
 
 message DummyRequest {
@@ -102,13 +116,14 @@ message CreateProductRequest {
     string code = 2;
     int32 category_id = 3;
     double weight = 4;
-    double gold_price_at_time = 5;
-    double labor_cost = 6;
-    double stone_cost = 7;
-    double markup_rate = 8;
-    double selling_price = 9;
-    int32 warranty_period = 10;
-    string image = 11;
+    double labor_cost = 5;
+    double stone_cost = 6;
+    double markup_rate = 7;
+    int32 warranty_period = 8;
+    string image = 9;
+    int32 gold_type = 10;
+
+    int32 stock = 11;
 }
 
 message GetProductRequest {
@@ -137,6 +152,8 @@ message UpdateProductRequest {
     double selling_price = 10;
     int32 warranty_period = 11;
     string image = 12;
+
+    int32 stock = 13;
 }
 
 message DeleteProductRequest {
@@ -196,3 +213,35 @@ message DeleteCustomerResponse {
 message CustomerResponse {
     Customer customer = 1;
 }
+
+message UploadFileRequest {
+  bytes file_data = 1;
+  string filename = 2;
+  string content_type = 3;
+  int64 file_size = 4;
+}
+
+message UploadFileResponse {
+  string message = 1;
+  string file_id = 2;
+  string filename = 3;
+  int64 file_size = 4;
+  string file_url = 5;
+}
+
+message PurchaseProductRequest {
+    int32 customer_id = 1;
+    repeated PurchaseProductRequest_Product products = 2;
+    int32 order_id = 3;
+}
+
+message PurchaseProductRequest_Product {
+    int32 product_id = 1;
+    int32 quantity = 2;
+}
+
+message PurchaseProductResponse {
+    repeated Product products = 1;
+    Customer customer = 2;
+}
+

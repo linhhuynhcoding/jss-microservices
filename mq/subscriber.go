@@ -30,14 +30,14 @@ func NewSubscriber(
 
 	conn, err := amqp.Dial(cfg.ConnStr)
 	if err != nil {
-		logger.Fatal("Failed to connect mq", zap.Error(err))
+		logger.Error("Failed to connect mq", zap.Error(err))
 		defer cancel()
 		return nil, err
 	}
 
 	ch, err := conn.Channel()
 	if err != nil {
-		logger.Fatal("Failed to init mq channel", zap.Error(err))
+		logger.Error("Failed to init mq channel", zap.Error(err))
 		defer cancel()
 		return nil, err
 	}
@@ -52,7 +52,7 @@ func NewSubscriber(
 		nil,              // arguments
 	)
 	if err != nil {
-		logger.Fatal("Failed to init mq exchange", zap.Error(err))
+		logger.Error("Failed to init mq exchange", zap.Error(err))
 		defer cancel()
 		return nil, err
 	}
@@ -66,7 +66,7 @@ func NewSubscriber(
 		nil,   // arguments
 	)
 	if err != nil {
-		logger.Fatal("Failed to init mq queue", zap.Error(err))
+		logger.Error("Failed to init mq queue", zap.Error(err))
 		defer cancel()
 		return nil, err
 	}

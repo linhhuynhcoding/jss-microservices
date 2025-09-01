@@ -23,6 +23,9 @@ message Product {
     string image = 12;
     string created_at = 13; // ISO8601
     string updated_at = 14;
+
+    int32 stock = 15;
+    int32 buy_turn = 16;
 }
 
 message ProductCategory {

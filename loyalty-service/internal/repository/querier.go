@@ -9,6 +9,7 @@ import (
 )
 
 type Querier interface {
+	CountUsageRecordsByVoucherId(ctx context.Context, voucherID int32) (int64, error)
 	CreateCustomerVoucher(ctx context.Context, arg CreateCustomerVoucherParams) (CustomerVoucher, error)
 	CreateLoyaltyPoint(ctx context.Context, arg CreateLoyaltyPointParams) (LoyaltyPoint, error)
 	CreateVoucher(ctx context.Context, arg CreateVoucherParams) (Voucher, error)
@@ -27,11 +28,13 @@ type Querier interface {
 	GetLoyaltyPoint(ctx context.Context, id int32) (LoyaltyPoint, error)
 	GetLoyaltyPointsByCustomer(ctx context.Context, arg GetLoyaltyPointsByCustomerParams) ([]LoyaltyPoint, error)
 	GetLoyaltyPointsBySource(ctx context.Context, arg GetLoyaltyPointsBySourceParams) ([]LoyaltyPoint, error)
+	GetUsageRecordsByVoucherId(ctx context.Context, arg GetUsageRecordsByVoucherIdParams) ([]UsageRecord, error)
 	GetVoucher(ctx context.Context, id int32) (Voucher, error)
 	GetVoucherByCode(ctx context.Context, code string) (Voucher, error)
 	UpdateCustomerVoucherStatus(ctx context.Context, arg UpdateCustomerVoucherStatusParams) (CustomerVoucher, error)
 	UpdateLoyaltyPoints(ctx context.Context, arg UpdateLoyaltyPointsParams) (LoyaltyPoint, error)
 	UpdateVoucher(ctx context.Context, arg UpdateVoucherParams) (Voucher, error)
+	UpsertUsageRecord(ctx context.Context, arg UpsertUsageRecordParams) (UsageRecord, error)
 	UseCustomerVoucher(ctx context.Context, arg UseCustomerVoucherParams) (CustomerVoucher, error)
 }
 

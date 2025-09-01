@@ -111,20 +111,20 @@ func (x *DummyResponse) GetDummy() int32 {
 }
 
 type CreateProductRequest struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	Name            string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Code            string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
-	CategoryId      int32                  `protobuf:"varint,3,opt,name=category_id,json=categoryId,proto3" json:"category_id,omitempty"`
-	Weight          float64                `protobuf:"fixed64,4,opt,name=weight,proto3" json:"weight,omitempty"`
-	GoldPriceAtTime float64                `protobuf:"fixed64,5,opt,name=gold_price_at_time,json=goldPriceAtTime,proto3" json:"gold_price_at_time,omitempty"`
-	LaborCost       float64                `protobuf:"fixed64,6,opt,name=labor_cost,json=laborCost,proto3" json:"labor_cost,omitempty"`
-	StoneCost       float64                `protobuf:"fixed64,7,opt,name=stone_cost,json=stoneCost,proto3" json:"stone_cost,omitempty"`
-	MarkupRate      float64                `protobuf:"fixed64,8,opt,name=markup_rate,json=markupRate,proto3" json:"markup_rate,omitempty"`
-	SellingPrice    float64                `protobuf:"fixed64,9,opt,name=selling_price,json=sellingPrice,proto3" json:"selling_price,omitempty"`
-	WarrantyPeriod  int32                  `protobuf:"varint,10,opt,name=warranty_period,json=warrantyPeriod,proto3" json:"warranty_period,omitempty"`
-	Image           string                 `protobuf:"bytes,11,opt,name=image,proto3" json:"image,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Name           string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Code           string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
+	CategoryId     int32                  `protobuf:"varint,3,opt,name=category_id,json=categoryId,proto3" json:"category_id,omitempty"`
+	Weight         float64                `protobuf:"fixed64,4,opt,name=weight,proto3" json:"weight,omitempty"`
+	LaborCost      float64                `protobuf:"fixed64,5,opt,name=labor_cost,json=laborCost,proto3" json:"labor_cost,omitempty"`
+	StoneCost      float64                `protobuf:"fixed64,6,opt,name=stone_cost,json=stoneCost,proto3" json:"stone_cost,omitempty"`
+	MarkupRate     float64                `protobuf:"fixed64,7,opt,name=markup_rate,json=markupRate,proto3" json:"markup_rate,omitempty"`
+	WarrantyPeriod int32                  `protobuf:"varint,8,opt,name=warranty_period,json=warrantyPeriod,proto3" json:"warranty_period,omitempty"`
+	Image          string                 `protobuf:"bytes,9,opt,name=image,proto3" json:"image,omitempty"`
+	GoldType       int32                  `protobuf:"varint,10,opt,name=gold_type,json=goldType,proto3" json:"gold_type,omitempty"`
+	Stock          int32                  `protobuf:"varint,11,opt,name=stock,proto3" json:"stock,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *CreateProductRequest) Reset() {
@@ -185,13 +185,6 @@ func (x *CreateProductRequest) GetWeight() float64 {
 	return 0
 }
 
-func (x *CreateProductRequest) GetGoldPriceAtTime() float64 {
-	if x != nil {
-		return x.GoldPriceAtTime
-	}
-	return 0
-}
-
 func (x *CreateProductRequest) GetLaborCost() float64 {
 	if x != nil {
 		return x.LaborCost
@@ -213,13 +206,6 @@ func (x *CreateProductRequest) GetMarkupRate() float64 {
 	return 0
 }
 
-func (x *CreateProductRequest) GetSellingPrice() float64 {
-	if x != nil {
-		return x.SellingPrice
-	}
-	return 0
-}
-
 func (x *CreateProductRequest) GetWarrantyPeriod() int32 {
 	if x != nil {
 		return x.WarrantyPeriod
@@ -232,6 +218,20 @@ func (x *CreateProductRequest) GetImage() string {
 		return x.Image
 	}
 	return ""
+}
+
+func (x *CreateProductRequest) GetGoldType() int32 {
+	if x != nil {
+		return x.GoldType
+	}
+	return 0
+}
+
+func (x *CreateProductRequest) GetStock() int32 {
+	if x != nil {
+		return x.Stock
+	}
+	return 0
 }
 
 type GetProductRequest struct {
@@ -388,6 +388,7 @@ type UpdateProductRequest struct {
 	SellingPrice    float64                `protobuf:"fixed64,10,opt,name=selling_price,json=sellingPrice,proto3" json:"selling_price,omitempty"`
 	WarrantyPeriod  int32                  `protobuf:"varint,11,opt,name=warranty_period,json=warrantyPeriod,proto3" json:"warranty_period,omitempty"`
 	Image           string                 `protobuf:"bytes,12,opt,name=image,proto3" json:"image,omitempty"`
+	Stock           int32                  `protobuf:"varint,13,opt,name=stock,proto3" json:"stock,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -504,6 +505,13 @@ func (x *UpdateProductRequest) GetImage() string {
 		return x.Image
 	}
 	return ""
+}
+
+func (x *UpdateProductRequest) GetStock() int32 {
+	if x != nil {
+		return x.Stock
+	}
+	return 0
 }
 
 type DeleteProductRequest struct {
@@ -1134,6 +1142,314 @@ func (x *CustomerResponse) GetCustomer() *Customer {
 	return nil
 }
 
+type UploadFileRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	FileData      []byte                 `protobuf:"bytes,1,opt,name=file_data,json=fileData,proto3" json:"file_data,omitempty"`
+	Filename      string                 `protobuf:"bytes,2,opt,name=filename,proto3" json:"filename,omitempty"`
+	ContentType   string                 `protobuf:"bytes,3,opt,name=content_type,json=contentType,proto3" json:"content_type,omitempty"`
+	FileSize      int64                  `protobuf:"varint,4,opt,name=file_size,json=fileSize,proto3" json:"file_size,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UploadFileRequest) Reset() {
+	*x = UploadFileRequest{}
+	mi := &file_product_product_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UploadFileRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UploadFileRequest) ProtoMessage() {}
+
+func (x *UploadFileRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_product_product_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UploadFileRequest.ProtoReflect.Descriptor instead.
+func (*UploadFileRequest) Descriptor() ([]byte, []int) {
+	return file_product_product_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *UploadFileRequest) GetFileData() []byte {
+	if x != nil {
+		return x.FileData
+	}
+	return nil
+}
+
+func (x *UploadFileRequest) GetFilename() string {
+	if x != nil {
+		return x.Filename
+	}
+	return ""
+}
+
+func (x *UploadFileRequest) GetContentType() string {
+	if x != nil {
+		return x.ContentType
+	}
+	return ""
+}
+
+func (x *UploadFileRequest) GetFileSize() int64 {
+	if x != nil {
+		return x.FileSize
+	}
+	return 0
+}
+
+type UploadFileResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	FileId        string                 `protobuf:"bytes,2,opt,name=file_id,json=fileId,proto3" json:"file_id,omitempty"`
+	Filename      string                 `protobuf:"bytes,3,opt,name=filename,proto3" json:"filename,omitempty"`
+	FileSize      int64                  `protobuf:"varint,4,opt,name=file_size,json=fileSize,proto3" json:"file_size,omitempty"`
+	FileUrl       string                 `protobuf:"bytes,5,opt,name=file_url,json=fileUrl,proto3" json:"file_url,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UploadFileResponse) Reset() {
+	*x = UploadFileResponse{}
+	mi := &file_product_product_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UploadFileResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UploadFileResponse) ProtoMessage() {}
+
+func (x *UploadFileResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_product_product_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UploadFileResponse.ProtoReflect.Descriptor instead.
+func (*UploadFileResponse) Descriptor() ([]byte, []int) {
+	return file_product_product_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *UploadFileResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *UploadFileResponse) GetFileId() string {
+	if x != nil {
+		return x.FileId
+	}
+	return ""
+}
+
+func (x *UploadFileResponse) GetFilename() string {
+	if x != nil {
+		return x.Filename
+	}
+	return ""
+}
+
+func (x *UploadFileResponse) GetFileSize() int64 {
+	if x != nil {
+		return x.FileSize
+	}
+	return 0
+}
+
+func (x *UploadFileResponse) GetFileUrl() string {
+	if x != nil {
+		return x.FileUrl
+	}
+	return ""
+}
+
+type PurchaseProductRequest struct {
+	state         protoimpl.MessageState            `protogen:"open.v1"`
+	CustomerId    int32                             `protobuf:"varint,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	Products      []*PurchaseProductRequest_Product `protobuf:"bytes,2,rep,name=products,proto3" json:"products,omitempty"`
+	OrderId       int32                             `protobuf:"varint,3,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PurchaseProductRequest) Reset() {
+	*x = PurchaseProductRequest{}
+	mi := &file_product_product_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PurchaseProductRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PurchaseProductRequest) ProtoMessage() {}
+
+func (x *PurchaseProductRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_product_product_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PurchaseProductRequest.ProtoReflect.Descriptor instead.
+func (*PurchaseProductRequest) Descriptor() ([]byte, []int) {
+	return file_product_product_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *PurchaseProductRequest) GetCustomerId() int32 {
+	if x != nil {
+		return x.CustomerId
+	}
+	return 0
+}
+
+func (x *PurchaseProductRequest) GetProducts() []*PurchaseProductRequest_Product {
+	if x != nil {
+		return x.Products
+	}
+	return nil
+}
+
+func (x *PurchaseProductRequest) GetOrderId() int32 {
+	if x != nil {
+		return x.OrderId
+	}
+	return 0
+}
+
+type PurchaseProductRequest_Product struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ProductId     int32                  `protobuf:"varint,1,opt,name=product_id,json=productId,proto3" json:"product_id,omitempty"`
+	Quantity      int32                  `protobuf:"varint,2,opt,name=quantity,proto3" json:"quantity,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PurchaseProductRequest_Product) Reset() {
+	*x = PurchaseProductRequest_Product{}
+	mi := &file_product_product_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PurchaseProductRequest_Product) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PurchaseProductRequest_Product) ProtoMessage() {}
+
+func (x *PurchaseProductRequest_Product) ProtoReflect() protoreflect.Message {
+	mi := &file_product_product_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PurchaseProductRequest_Product.ProtoReflect.Descriptor instead.
+func (*PurchaseProductRequest_Product) Descriptor() ([]byte, []int) {
+	return file_product_product_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *PurchaseProductRequest_Product) GetProductId() int32 {
+	if x != nil {
+		return x.ProductId
+	}
+	return 0
+}
+
+func (x *PurchaseProductRequest_Product) GetQuantity() int32 {
+	if x != nil {
+		return x.Quantity
+	}
+	return 0
+}
+
+type PurchaseProductResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Products      []*Product             `protobuf:"bytes,1,rep,name=products,proto3" json:"products,omitempty"`
+	Customer      *Customer              `protobuf:"bytes,2,opt,name=customer,proto3" json:"customer,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PurchaseProductResponse) Reset() {
+	*x = PurchaseProductResponse{}
+	mi := &file_product_product_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PurchaseProductResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PurchaseProductResponse) ProtoMessage() {}
+
+func (x *PurchaseProductResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_product_product_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PurchaseProductResponse.ProtoReflect.Descriptor instead.
+func (*PurchaseProductResponse) Descriptor() ([]byte, []int) {
+	return file_product_product_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *PurchaseProductResponse) GetProducts() []*Product {
+	if x != nil {
+		return x.Products
+	}
+	return nil
+}
+
+func (x *PurchaseProductResponse) GetCustomer() *Customer {
+	if x != nil {
+		return x.Customer
+	}
+	return nil
+}
+
 var File_product_product_proto protoreflect.FileDescriptor
 
 const file_product_product_proto_rawDesc = "" +
@@ -1142,31 +1458,31 @@ const file_product_product_proto_rawDesc = "" +
 	"\fDummyRequest\x12\x14\n" +
 	"\x05dummy\x18\x01 \x01(\x05R\x05dummy\"%\n" +
 	"\rDummyResponse\x12\x14\n" +
-	"\x05dummy\x18\x01 \x01(\x05R\x05dummy\"\xe7\x02\n" +
+	"\x05dummy\x18\x01 \x01(\x05R\x05dummy\"\xc8\x02\n" +
 	"\x14CreateProductRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x12\n" +
 	"\x04code\x18\x02 \x01(\tR\x04code\x12\x1f\n" +
 	"\vcategory_id\x18\x03 \x01(\x05R\n" +
 	"categoryId\x12\x16\n" +
-	"\x06weight\x18\x04 \x01(\x01R\x06weight\x12+\n" +
-	"\x12gold_price_at_time\x18\x05 \x01(\x01R\x0fgoldPriceAtTime\x12\x1d\n" +
+	"\x06weight\x18\x04 \x01(\x01R\x06weight\x12\x1d\n" +
 	"\n" +
-	"labor_cost\x18\x06 \x01(\x01R\tlaborCost\x12\x1d\n" +
+	"labor_cost\x18\x05 \x01(\x01R\tlaborCost\x12\x1d\n" +
 	"\n" +
-	"stone_cost\x18\a \x01(\x01R\tstoneCost\x12\x1f\n" +
-	"\vmarkup_rate\x18\b \x01(\x01R\n" +
-	"markupRate\x12#\n" +
-	"\rselling_price\x18\t \x01(\x01R\fsellingPrice\x12'\n" +
-	"\x0fwarranty_period\x18\n" +
-	" \x01(\x05R\x0ewarrantyPeriod\x12\x14\n" +
-	"\x05image\x18\v \x01(\tR\x05image\"#\n" +
+	"stone_cost\x18\x06 \x01(\x01R\tstoneCost\x12\x1f\n" +
+	"\vmarkup_rate\x18\a \x01(\x01R\n" +
+	"markupRate\x12'\n" +
+	"\x0fwarranty_period\x18\b \x01(\x05R\x0ewarrantyPeriod\x12\x14\n" +
+	"\x05image\x18\t \x01(\tR\x05image\x12\x1b\n" +
+	"\tgold_type\x18\n" +
+	" \x01(\x05R\bgoldType\x12\x14\n" +
+	"\x05stock\x18\v \x01(\x05R\x05stock\"#\n" +
 	"\x11GetProductRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\"?\n" +
 	"\x13ListProductsRequest\x12\x12\n" +
 	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x14\n" +
 	"\x05limit\x18\x02 \x01(\x05R\x05limit\"D\n" +
 	"\x14ListProductsResponse\x12,\n" +
-	"\bproducts\x18\x01 \x03(\v2\x10.product.ProductR\bproducts\"\xf7\x02\n" +
+	"\bproducts\x18\x01 \x03(\v2\x10.product.ProductR\bproducts\"\x8d\x03\n" +
 	"\x14UpdateProductRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x12\n" +
@@ -1184,7 +1500,8 @@ const file_product_product_proto_rawDesc = "" +
 	"\rselling_price\x18\n" +
 	" \x01(\x01R\fsellingPrice\x12'\n" +
 	"\x0fwarranty_period\x18\v \x01(\x05R\x0ewarrantyPeriod\x12\x14\n" +
-	"\x05image\x18\f \x01(\tR\x05image\"&\n" +
+	"\x05image\x18\f \x01(\tR\x05image\x12\x14\n" +
+	"\x05stock\x18\r \x01(\x05R\x05stock\"&\n" +
 	"\x14DeleteProductRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\"1\n" +
 	"\x15DeleteProductResponse\x12\x18\n" +
@@ -1219,7 +1536,30 @@ const file_product_product_proto_rawDesc = "" +
 	"\x16DeleteCustomerResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\"A\n" +
 	"\x10CustomerResponse\x12-\n" +
-	"\bcustomer\x18\x01 \x01(\v2\x11.product.CustomerR\bcustomer2\xec\t\n" +
+	"\bcustomer\x18\x01 \x01(\v2\x11.product.CustomerR\bcustomer\"\x8c\x01\n" +
+	"\x11UploadFileRequest\x12\x1b\n" +
+	"\tfile_data\x18\x01 \x01(\fR\bfileData\x12\x1a\n" +
+	"\bfilename\x18\x02 \x01(\tR\bfilename\x12!\n" +
+	"\fcontent_type\x18\x03 \x01(\tR\vcontentType\x12\x1b\n" +
+	"\tfile_size\x18\x04 \x01(\x03R\bfileSize\"\x9b\x01\n" +
+	"\x12UploadFileResponse\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\x12\x17\n" +
+	"\afile_id\x18\x02 \x01(\tR\x06fileId\x12\x1a\n" +
+	"\bfilename\x18\x03 \x01(\tR\bfilename\x12\x1b\n" +
+	"\tfile_size\x18\x04 \x01(\x03R\bfileSize\x12\x19\n" +
+	"\bfile_url\x18\x05 \x01(\tR\afileUrl\"\x99\x01\n" +
+	"\x16PurchaseProductRequest\x12\x1f\n" +
+	"\vcustomer_id\x18\x01 \x01(\x05R\n" +
+	"customerId\x12C\n" +
+	"\bproducts\x18\x02 \x03(\v2'.product.PurchaseProductRequest_ProductR\bproducts\x12\x19\n" +
+	"\border_id\x18\x03 \x01(\x05R\aorderId\"[\n" +
+	"\x1ePurchaseProductRequest_Product\x12\x1d\n" +
+	"\n" +
+	"product_id\x18\x01 \x01(\x05R\tproductId\x12\x1a\n" +
+	"\bquantity\x18\x02 \x01(\x05R\bquantity\"v\n" +
+	"\x17PurchaseProductResponse\x12,\n" +
+	"\bproducts\x18\x01 \x03(\v2\x10.product.ProductR\bproducts\x12-\n" +
+	"\bcustomer\x18\x02 \x01(\v2\x11.product.CustomerR\bcustomer2\xb9\v\n" +
 	"\x0fProductCustomer\x12L\n" +
 	"\x05Dummy\x12\x15.product.DummyRequest\x1a\x16.product.DummyResponse\"\x14\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/v1/dummy\x12a\n" +
 	"\rCreateProduct\x12\x1d.product.CreateProductRequest\x1a\x18.product.ProductResponse\"\x17\x82\xd3\xe4\x93\x02\x11:\x01*\"\f/v1/products\x12]\n" +
@@ -1233,7 +1573,11 @@ const file_product_product_proto_rawDesc = "" +
 	"\vGetCustomer\x12\x1b.product.GetCustomerRequest\x1a\x19.product.CustomerResponse\"\x1a\x82\xd3\xe4\x93\x02\x14\x12\x12/v1/customers/{id}\x12e\n" +
 	"\rListCustomers\x12\x1d.product.ListCustomersRequest\x1a\x1e.product.ListCustomersResponse\"\x15\x82\xd3\xe4\x93\x02\x0f\x12\r/v1/customers\x12j\n" +
 	"\x0eUpdateCustomer\x12\x1e.product.UpdateCustomerRequest\x1a\x19.product.CustomerResponse\"\x1d\x82\xd3\xe4\x93\x02\x17:\x01*2\x12/v1/customers/{id}\x12m\n" +
-	"\x0eDeleteCustomer\x12\x1e.product.DeleteCustomerRequest\x1a\x1f.product.DeleteCustomerResponse\"\x1a\x82\xd3\xe4\x93\x02\x14*\x12/v1/customers/{id}B>Z<github.com/linhhuynhcoding/jss-microservices/rpc/gen/productb\x06proto3"
+	"\x0eDeleteCustomer\x12\x1e.product.DeleteCustomerRequest\x1a\x1f.product.DeleteCustomerResponse\"\x1a\x82\xd3\xe4\x93\x02\x14*\x12/v1/customers/{id}\x12\\\n" +
+	"\n" +
+	"UploadFile\x12\x1a.product.UploadFileRequest\x1a\x1b.product.UploadFileResponse\"\x15\x82\xd3\xe4\x93\x02\x0f:\x01*\"\n" +
+	"/v1/upload\x12m\n" +
+	"\x0fPurchaseProduct\x12\x1f.product.PurchaseProductRequest\x1a .product.PurchaseProductResponse\"\x17\x82\xd3\xe4\x93\x02\x11:\x01*\"\f/v1/purchaseB>Z<github.com/linhhuynhcoding/jss-microservices/rpc/gen/productb\x06proto3"
 
 var (
 	file_product_product_proto_rawDescOnce sync.Once
@@ -1247,67 +1591,79 @@ func file_product_product_proto_rawDescGZIP() []byte {
 	return file_product_product_proto_rawDescData
 }
 
-var file_product_product_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
+var file_product_product_proto_msgTypes = make([]protoimpl.MessageInfo, 25)
 var file_product_product_proto_goTypes = []any{
-	(*DummyRequest)(nil),                  // 0: product.DummyRequest
-	(*DummyResponse)(nil),                 // 1: product.DummyResponse
-	(*CreateProductRequest)(nil),          // 2: product.CreateProductRequest
-	(*GetProductRequest)(nil),             // 3: product.GetProductRequest
-	(*ListProductsRequest)(nil),           // 4: product.ListProductsRequest
-	(*ListProductsResponse)(nil),          // 5: product.ListProductsResponse
-	(*UpdateProductRequest)(nil),          // 6: product.UpdateProductRequest
-	(*DeleteProductRequest)(nil),          // 7: product.DeleteProductRequest
-	(*DeleteProductResponse)(nil),         // 8: product.DeleteProductResponse
-	(*ProductResponse)(nil),               // 9: product.ProductResponse
-	(*ListProductCategoriesRequest)(nil),  // 10: product.ListProductCategoriesRequest
-	(*ListProductCategoriesResponse)(nil), // 11: product.ListProductCategoriesResponse
-	(*CreateCustomerRequest)(nil),         // 12: product.CreateCustomerRequest
-	(*GetCustomerRequest)(nil),            // 13: product.GetCustomerRequest
-	(*ListCustomersRequest)(nil),          // 14: product.ListCustomersRequest
-	(*ListCustomersResponse)(nil),         // 15: product.ListCustomersResponse
-	(*UpdateCustomerRequest)(nil),         // 16: product.UpdateCustomerRequest
-	(*DeleteCustomerRequest)(nil),         // 17: product.DeleteCustomerRequest
-	(*DeleteCustomerResponse)(nil),        // 18: product.DeleteCustomerResponse
-	(*CustomerResponse)(nil),              // 19: product.CustomerResponse
-	(*Product)(nil),                       // 20: product.Product
-	(*ProductCategory)(nil),               // 21: product.ProductCategory
-	(*Customer)(nil),                      // 22: product.Customer
+	(*DummyRequest)(nil),                   // 0: product.DummyRequest
+	(*DummyResponse)(nil),                  // 1: product.DummyResponse
+	(*CreateProductRequest)(nil),           // 2: product.CreateProductRequest
+	(*GetProductRequest)(nil),              // 3: product.GetProductRequest
+	(*ListProductsRequest)(nil),            // 4: product.ListProductsRequest
+	(*ListProductsResponse)(nil),           // 5: product.ListProductsResponse
+	(*UpdateProductRequest)(nil),           // 6: product.UpdateProductRequest
+	(*DeleteProductRequest)(nil),           // 7: product.DeleteProductRequest
+	(*DeleteProductResponse)(nil),          // 8: product.DeleteProductResponse
+	(*ProductResponse)(nil),                // 9: product.ProductResponse
+	(*ListProductCategoriesRequest)(nil),   // 10: product.ListProductCategoriesRequest
+	(*ListProductCategoriesResponse)(nil),  // 11: product.ListProductCategoriesResponse
+	(*CreateCustomerRequest)(nil),          // 12: product.CreateCustomerRequest
+	(*GetCustomerRequest)(nil),             // 13: product.GetCustomerRequest
+	(*ListCustomersRequest)(nil),           // 14: product.ListCustomersRequest
+	(*ListCustomersResponse)(nil),          // 15: product.ListCustomersResponse
+	(*UpdateCustomerRequest)(nil),          // 16: product.UpdateCustomerRequest
+	(*DeleteCustomerRequest)(nil),          // 17: product.DeleteCustomerRequest
+	(*DeleteCustomerResponse)(nil),         // 18: product.DeleteCustomerResponse
+	(*CustomerResponse)(nil),               // 19: product.CustomerResponse
+	(*UploadFileRequest)(nil),              // 20: product.UploadFileRequest
+	(*UploadFileResponse)(nil),             // 21: product.UploadFileResponse
+	(*PurchaseProductRequest)(nil),         // 22: product.PurchaseProductRequest
+	(*PurchaseProductRequest_Product)(nil), // 23: product.PurchaseProductRequest_Product
+	(*PurchaseProductResponse)(nil),        // 24: product.PurchaseProductResponse
+	(*Product)(nil),                        // 25: product.Product
+	(*ProductCategory)(nil),                // 26: product.ProductCategory
+	(*Customer)(nil),                       // 27: product.Customer
 }
 var file_product_product_proto_depIdxs = []int32{
-	20, // 0: product.ListProductsResponse.products:type_name -> product.Product
-	20, // 1: product.ProductResponse.product:type_name -> product.Product
-	21, // 2: product.ListProductCategoriesResponse.categories:type_name -> product.ProductCategory
-	22, // 3: product.ListCustomersResponse.customers:type_name -> product.Customer
-	22, // 4: product.CustomerResponse.customer:type_name -> product.Customer
-	0,  // 5: product.ProductCustomer.Dummy:input_type -> product.DummyRequest
-	2,  // 6: product.ProductCustomer.CreateProduct:input_type -> product.CreateProductRequest
-	3,  // 7: product.ProductCustomer.GetProduct:input_type -> product.GetProductRequest
-	4,  // 8: product.ProductCustomer.ListProducts:input_type -> product.ListProductsRequest
-	6,  // 9: product.ProductCustomer.UpdateProduct:input_type -> product.UpdateProductRequest
-	7,  // 10: product.ProductCustomer.DeleteProduct:input_type -> product.DeleteProductRequest
-	10, // 11: product.ProductCustomer.ListProductCategories:input_type -> product.ListProductCategoriesRequest
-	12, // 12: product.ProductCustomer.CreateCustomer:input_type -> product.CreateCustomerRequest
-	13, // 13: product.ProductCustomer.GetCustomer:input_type -> product.GetCustomerRequest
-	14, // 14: product.ProductCustomer.ListCustomers:input_type -> product.ListCustomersRequest
-	16, // 15: product.ProductCustomer.UpdateCustomer:input_type -> product.UpdateCustomerRequest
-	17, // 16: product.ProductCustomer.DeleteCustomer:input_type -> product.DeleteCustomerRequest
-	1,  // 17: product.ProductCustomer.Dummy:output_type -> product.DummyResponse
-	9,  // 18: product.ProductCustomer.CreateProduct:output_type -> product.ProductResponse
-	9,  // 19: product.ProductCustomer.GetProduct:output_type -> product.ProductResponse
-	5,  // 20: product.ProductCustomer.ListProducts:output_type -> product.ListProductsResponse
-	9,  // 21: product.ProductCustomer.UpdateProduct:output_type -> product.ProductResponse
-	8,  // 22: product.ProductCustomer.DeleteProduct:output_type -> product.DeleteProductResponse
-	11, // 23: product.ProductCustomer.ListProductCategories:output_type -> product.ListProductCategoriesResponse
-	19, // 24: product.ProductCustomer.CreateCustomer:output_type -> product.CustomerResponse
-	19, // 25: product.ProductCustomer.GetCustomer:output_type -> product.CustomerResponse
-	15, // 26: product.ProductCustomer.ListCustomers:output_type -> product.ListCustomersResponse
-	19, // 27: product.ProductCustomer.UpdateCustomer:output_type -> product.CustomerResponse
-	18, // 28: product.ProductCustomer.DeleteCustomer:output_type -> product.DeleteCustomerResponse
-	17, // [17:29] is the sub-list for method output_type
-	5,  // [5:17] is the sub-list for method input_type
-	5,  // [5:5] is the sub-list for extension type_name
-	5,  // [5:5] is the sub-list for extension extendee
-	0,  // [0:5] is the sub-list for field type_name
+	25, // 0: product.ListProductsResponse.products:type_name -> product.Product
+	25, // 1: product.ProductResponse.product:type_name -> product.Product
+	26, // 2: product.ListProductCategoriesResponse.categories:type_name -> product.ProductCategory
+	27, // 3: product.ListCustomersResponse.customers:type_name -> product.Customer
+	27, // 4: product.CustomerResponse.customer:type_name -> product.Customer
+	23, // 5: product.PurchaseProductRequest.products:type_name -> product.PurchaseProductRequest_Product
+	25, // 6: product.PurchaseProductResponse.products:type_name -> product.Product
+	27, // 7: product.PurchaseProductResponse.customer:type_name -> product.Customer
+	0,  // 8: product.ProductCustomer.Dummy:input_type -> product.DummyRequest
+	2,  // 9: product.ProductCustomer.CreateProduct:input_type -> product.CreateProductRequest
+	3,  // 10: product.ProductCustomer.GetProduct:input_type -> product.GetProductRequest
+	4,  // 11: product.ProductCustomer.ListProducts:input_type -> product.ListProductsRequest
+	6,  // 12: product.ProductCustomer.UpdateProduct:input_type -> product.UpdateProductRequest
+	7,  // 13: product.ProductCustomer.DeleteProduct:input_type -> product.DeleteProductRequest
+	10, // 14: product.ProductCustomer.ListProductCategories:input_type -> product.ListProductCategoriesRequest
+	12, // 15: product.ProductCustomer.CreateCustomer:input_type -> product.CreateCustomerRequest
+	13, // 16: product.ProductCustomer.GetCustomer:input_type -> product.GetCustomerRequest
+	14, // 17: product.ProductCustomer.ListCustomers:input_type -> product.ListCustomersRequest
+	16, // 18: product.ProductCustomer.UpdateCustomer:input_type -> product.UpdateCustomerRequest
+	17, // 19: product.ProductCustomer.DeleteCustomer:input_type -> product.DeleteCustomerRequest
+	20, // 20: product.ProductCustomer.UploadFile:input_type -> product.UploadFileRequest
+	22, // 21: product.ProductCustomer.PurchaseProduct:input_type -> product.PurchaseProductRequest
+	1,  // 22: product.ProductCustomer.Dummy:output_type -> product.DummyResponse
+	9,  // 23: product.ProductCustomer.CreateProduct:output_type -> product.ProductResponse
+	9,  // 24: product.ProductCustomer.GetProduct:output_type -> product.ProductResponse
+	5,  // 25: product.ProductCustomer.ListProducts:output_type -> product.ListProductsResponse
+	9,  // 26: product.ProductCustomer.UpdateProduct:output_type -> product.ProductResponse
+	8,  // 27: product.ProductCustomer.DeleteProduct:output_type -> product.DeleteProductResponse
+	11, // 28: product.ProductCustomer.ListProductCategories:output_type -> product.ListProductCategoriesResponse
+	19, // 29: product.ProductCustomer.CreateCustomer:output_type -> product.CustomerResponse
+	19, // 30: product.ProductCustomer.GetCustomer:output_type -> product.CustomerResponse
+	15, // 31: product.ProductCustomer.ListCustomers:output_type -> product.ListCustomersResponse
+	19, // 32: product.ProductCustomer.UpdateCustomer:output_type -> product.CustomerResponse
+	18, // 33: product.ProductCustomer.DeleteCustomer:output_type -> product.DeleteCustomerResponse
+	21, // 34: product.ProductCustomer.UploadFile:output_type -> product.UploadFileResponse
+	24, // 35: product.ProductCustomer.PurchaseProduct:output_type -> product.PurchaseProductResponse
+	22, // [22:36] is the sub-list for method output_type
+	8,  // [8:22] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_product_product_proto_init() }
@@ -1322,7 +1678,7 @@ func file_product_product_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_product_product_proto_rawDesc), len(file_product_product_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   20,
+			NumMessages:   25,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

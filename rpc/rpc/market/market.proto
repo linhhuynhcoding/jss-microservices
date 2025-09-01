@@ -69,12 +69,12 @@ message GoldPrice {
     max_length: 50;
   }];
 
-  string buy_price = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+  float buy_price = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "Buy price in decimal format";
     pattern: "^[0-9]+(\\.[0-9]{1,2})?$";
   }];
 
-  string sell_price = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+  float sell_price = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "Sell price in decimal format";
     pattern: "^[0-9]+(\\.[0-9]{1,2})?$";
   }];
@@ -90,8 +90,8 @@ message CreateGoldPriceRequest {
 
   google.protobuf.Timestamp date = 1;
   string gold_type = 2;
-  string buy_price = 3;
-  string sell_price = 4;
+  float buy_price = 3;
+  float sell_price = 4;
 }
 
 message CreateGoldPriceResponse {
@@ -180,8 +180,8 @@ message UpdateGoldPriceRequest {
   int64 id = 1;
   google.protobuf.Timestamp date = 2;
   string gold_type = 3;
-  string buy_price = 4;
-  string sell_price = 5;
+  float buy_price = 4;
+  float sell_price = 5;
 }
 
 message UpdateGoldPriceResponse {
@@ -229,7 +229,7 @@ message BuybackPolicy {
     max_length: 100;
   }];
 
-  string buyback_rate = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+  float buyback_rate = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "Buyback rate as percentage (e.g., 95.50)";
     pattern: "^[0-9]+(\\.[0-9]{1,2})?$";
   }];
@@ -253,7 +253,7 @@ message CreateBuybackPolicyRequest {
   };
 
   string product_type = 1;
-  string buyback_rate = 2;
+  float buyback_rate = 2;
   string description = 3;
 }
 
@@ -342,7 +342,7 @@ message UpdateBuybackPolicyRequest {
 
   int64 id = 1;
   string product_type = 2;
-  string buyback_rate = 3;
+  float buyback_rate = 3;
   string description = 4;
 }
 
