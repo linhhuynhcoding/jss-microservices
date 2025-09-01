@@ -26,7 +26,6 @@ type LoyaltyPoint struct {
 }
 
 type UsageRecord struct {
-	ID         int32            `json:"id"`
 	CustomerID int32            `json:"customer_id"`
 	VoucherID  int32            `json:"voucher_id"`
 	OrderID    int32            `json:"order_id"`

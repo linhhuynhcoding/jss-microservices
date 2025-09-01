@@ -25,7 +25,7 @@ ON CONFLICT (customer_id, voucher_id, order_id)
 DO UPDATE SET
     status = EXCLUDED.status,
     updated_at = EXCLUDED.updated_at
-RETURNING id, customer_id, voucher_id, order_id, status, created_at, updated_at
+RETURNING customer_id, voucher_id, order_id, status, created_at, updated_at
 `
 
 type UpsertUsageRecordParams struct {
@@ -48,7 +48,6 @@ func (q *Queries) UpsertUsageRecord(ctx context.Context, arg UpsertUsageRecordPa
 	)
 	var i UsageRecord
 	err := row.Scan(
-		&i.ID,
 		&i.CustomerID,
 		&i.VoucherID,
 		&i.OrderID,

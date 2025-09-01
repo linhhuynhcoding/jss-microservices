@@ -650,7 +650,7 @@ func (q *Queries) GetLoyaltyPointsBySource(ctx context.Context, arg GetLoyaltyPo
 }
 
 const getUsageRecordsByVoucherId = `-- name: GetUsageRecordsByVoucherId :many
-SELECT u.id, u.customer_id, u.voucher_id, u.order_id, u.status, u.created_at, u.updated_at
+SELECT u.customer_id, u.voucher_id, u.order_id, u.status, u.created_at, u.updated_at
 FROM usage_records U
 WHERE u.voucher_id = $1
 LIMIT $2 OFFSET $3
@@ -672,7 +672,6 @@ func (q *Queries) GetUsageRecordsByVoucherId(ctx context.Context, arg GetUsageRe
 	for rows.Next() {
 		var i UsageRecord
 		if err := rows.Scan(
-			&i.ID,
 			&i.CustomerID,
 			&i.VoucherID,
 			&i.OrderID,

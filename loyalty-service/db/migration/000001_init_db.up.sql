@@ -33,13 +33,11 @@ CREATE TABLE "usage_records" (
   "order_id" int NOT NULL,
   "status" varchar(20) DEFAULT "pending", -- "pending", "used"
   "created_at" timestamp,
-  "updated_at" timestamp
+  "updated_at" timestamp,
 
-  ("customer_id", "voucher_id", "order_id")
+  PRIMARY KEY ("customer_id", "voucher_id", "order_id")
 );
 
 ALTER TABLE "customer_vouchers" ADD FOREIGN KEY ("voucher_id") REFERENCES "vouchers" ("id");
-
-ALTER TABLE "usage_records" ADD FOREIGN KEY ("customer_id") REFERENCES "customer_vouchers" ("id");
 ALTER TABLE "usage_records" ADD FOREIGN KEY ("voucher_id") REFERENCES "vouchers" ("id");
 
