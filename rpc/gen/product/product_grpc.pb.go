@@ -32,6 +32,7 @@ const (
 	ProductCustomer_UpdateCustomer_FullMethodName        = "/product.ProductCustomer/UpdateCustomer"
 	ProductCustomer_DeleteCustomer_FullMethodName        = "/product.ProductCustomer/DeleteCustomer"
 	ProductCustomer_UploadFile_FullMethodName            = "/product.ProductCustomer/UploadFile"
+	ProductCustomer_PurchaseProduct_FullMethodName       = "/product.ProductCustomer/PurchaseProduct"
 )
 
 // ProductCustomerClient is the client API for ProductCustomer service.
@@ -54,6 +55,7 @@ type ProductCustomerClient interface {
 	UpdateCustomer(ctx context.Context, in *UpdateCustomerRequest, opts ...grpc.CallOption) (*CustomerResponse, error)
 	DeleteCustomer(ctx context.Context, in *DeleteCustomerRequest, opts ...grpc.CallOption) (*DeleteCustomerResponse, error)
 	UploadFile(ctx context.Context, in *UploadFileRequest, opts ...grpc.CallOption) (*UploadFileResponse, error)
+	PurchaseProduct(ctx context.Context, in *PurchaseProductRequest, opts ...grpc.CallOption) (*PurchaseProductResponse, error)
 }
 
 type productCustomerClient struct {
@@ -194,6 +196,16 @@ func (c *productCustomerClient) UploadFile(ctx context.Context, in *UploadFileRe
 	return out, nil
 }
 
+func (c *productCustomerClient) PurchaseProduct(ctx context.Context, in *PurchaseProductRequest, opts ...grpc.CallOption) (*PurchaseProductResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PurchaseProductResponse)
+	err := c.cc.Invoke(ctx, ProductCustomer_PurchaseProduct_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ProductCustomerServer is the server API for ProductCustomer service.
 // All implementations must embed UnimplementedProductCustomerServer
 // for forward compatibility.
@@ -214,6 +226,7 @@ type ProductCustomerServer interface {
 	UpdateCustomer(context.Context, *UpdateCustomerRequest) (*CustomerResponse, error)
 	DeleteCustomer(context.Context, *DeleteCustomerRequest) (*DeleteCustomerResponse, error)
 	UploadFile(context.Context, *UploadFileRequest) (*UploadFileResponse, error)
+	PurchaseProduct(context.Context, *PurchaseProductRequest) (*PurchaseProductResponse, error)
 	mustEmbedUnimplementedProductCustomerServer()
 }
 
@@ -262,6 +275,9 @@ func (UnimplementedProductCustomerServer) DeleteCustomer(context.Context, *Delet
 }
 func (UnimplementedProductCustomerServer) UploadFile(context.Context, *UploadFileRequest) (*UploadFileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UploadFile not implemented")
+}
+func (UnimplementedProductCustomerServer) PurchaseProduct(context.Context, *PurchaseProductRequest) (*PurchaseProductResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PurchaseProduct not implemented")
 }
 func (UnimplementedProductCustomerServer) mustEmbedUnimplementedProductCustomerServer() {}
 func (UnimplementedProductCustomerServer) testEmbeddedByValue()                         {}
@@ -518,6 +534,24 @@ func _ProductCustomer_UploadFile_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ProductCustomer_PurchaseProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PurchaseProductRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductCustomerServer).PurchaseProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ProductCustomer_PurchaseProduct_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductCustomerServer).PurchaseProduct(ctx, req.(*PurchaseProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ProductCustomer_ServiceDesc is the grpc.ServiceDesc for ProductCustomer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -576,6 +610,10 @@ var ProductCustomer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UploadFile",
 			Handler:    _ProductCustomer_UploadFile_Handler,
+		},
+		{
+			MethodName: "PurchaseProduct",
+			Handler:    _ProductCustomer_PurchaseProduct_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
