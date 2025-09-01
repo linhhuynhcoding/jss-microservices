@@ -32,7 +32,6 @@ type AuthService struct {
 	hashingSvc  *hashing.HashingService
 	tokenSvc    *token.TokenService
 	log         *zap.Logger 
-	log         *zap.Logger 
 }
 
 func NewAuthService(
@@ -51,7 +50,7 @@ func NewAuthService(
 		tokenSvc:    tokenSvc,
 		log:         log,
 	} 
-	} 
+	
 }
 
 func (s *AuthService) Login(ctx context.Context, req dto.LoginRequest) (*dto.TokenResponse, error) {
@@ -141,7 +140,7 @@ func (s *AuthService) RefreshToken(
 
 }
 
-}
+
 func (s *AuthService) Logout(ctx context.Context, rt string) error {
 	deleted, err := s.refreshRepo.Delete(ctx, rt)
 	if err != nil || deleted == nil {
