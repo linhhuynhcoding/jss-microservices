@@ -105,6 +105,44 @@ services:
               key_claim_name: iss
               secret_is_base64: false
               claims_to_verify: [exp]
+
+  # Order service exposes endpoints for creating, retrieving and listing orders.
+  - name: order-service
+    url: http://order-service:8083
+    routes:
+      - name: create-order
+        paths: [/v1/orders]
+        strip_path: false
+        methods: [POST, OPTIONS]
+        plugins:
+          - name: jwt
+            config:
+              key_claim_name: iss
+              secret_is_base64: false
+              claims_to_verify: [exp]
+      - name: get-order
+        # Use a regex path to capture numeric order IDs at the end of the path
+        paths:
+          - "~/v1/orders/([0-9]+)$"
+        strip_path: false
+        methods: [GET, OPTIONS]
+        regex_priority: 200
+        plugins:
+          - name: jwt
+            config:
+              key_claim_name: iss
+              secret_is_base64: false
+              claims_to_verify: [exp]
+      - name: list-orders
+        paths: [/v1/orders]
+        strip_path: false
+        methods: [GET, OPTIONS]
+        plugins:
+          - name: jwt
+            config:
+              key_claim_name: iss
+              secret_is_base64: false
+              claims_to_verify: [exp]
 plugins:
   - name: cors
     config:
