@@ -20,10 +20,9 @@ ORDER BY date DESC
 LIMIT $2 OFFSET $3;
 
 -- name: GetLatestGoldPrices :many
-SELECT DISTINCT ON (gold_type) *
+SELECT DISTINCT ON (gold_id) *
 FROM gold_prices
-ORDER BY gold_type, date DESC
-LIMIT $1 OFFSET $2;
+ORDER BY gold_id, date DESC;
 
 -- name: UpdateGoldPrice :one
 UPDATE gold_prices
@@ -41,3 +40,8 @@ SELECT COUNT(*) FROM gold_prices;
 -- name: CountGoldPricesByType :one
 SELECT COUNT(*) FROM gold_prices
 WHERE gold_type = $1;
+
+-- name: UpsertPrice :one
+INSERT INTO gold_prices (date, gold_id, gold_type, buy_price, sell_price)
+	VALUES ($1, $2, $3, $4, $5)
+RETURNING *;

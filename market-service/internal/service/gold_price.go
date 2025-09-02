@@ -8,8 +8,8 @@ import (
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/emptypb"
 
+	utils "github.com/linhhuynhcoding/jss-microservices/jss-shared/utils/format"
 	db "github.com/linhhuynhcoding/jss-microservices/market/internal/repository"
-	utils "github.com/linhhuynhcoding/jss-microservices/market/internal/utils/numeric"
 	api "github.com/linhhuynhcoding/jss-microservices/rpc/gen/market"
 )
 
@@ -31,13 +31,7 @@ func (s *Service) CreateGoldPrice(ctx context.Context, req *api.CreateGoldPriceR
 
 	s.logger.Info("Gold price created successfully", zap.Any("gold_price", gp))
 	return &api.CreateGoldPriceResponse{
-		GoldPrice: &api.GoldPrice{
-			Id:        int64(gp.ID),
-			GoldType:  gp.GoldType,
-			BuyPrice:  float32(utils.NumericToFloat64(gp.BuyPrice)),
-			SellPrice: float32(utils.NumericToFloat64(gp.SellPrice)),
-			Date:      utils.PgToPbTimestamp(gp.Date),
-		},
+		GoldPrice: s.dbGoldPrice2PbGoldPrice(&gp),
 	}, nil
 }
 
@@ -52,13 +46,7 @@ func (s *Service) GetGoldPrice(ctx context.Context, req *api.GetGoldPriceRequest
 
 	s.logger.Info("Gold price retrieved", zap.Any("gold_price", gp))
 	return &api.GetGoldPriceResponse{
-		GoldPrice: &api.GoldPrice{
-			Id:        int64(gp.ID),
-			GoldType:  gp.GoldType,
-			BuyPrice:  float32(utils.NumericToFloat64(gp.BuyPrice)),
-			SellPrice: float32(utils.NumericToFloat64(gp.SellPrice)),
-			Date:      utils.PgToPbTimestamp(gp.Date),
-		},
+		GoldPrice: s.dbGoldPrice2PbGoldPrice(&gp),
 	}, nil
 }
 
@@ -79,13 +67,7 @@ func (s *Service) ListGoldPrices(ctx context.Context, req *api.ListGoldPricesReq
 
 	var results []*api.GoldPrice
 	for _, gp := range gps {
-		results = append(results, &api.GoldPrice{
-			Id:        int64(gp.ID),
-			GoldType:  gp.GoldType,
-			BuyPrice:  float32(utils.NumericToFloat64(gp.BuyPrice)),
-			SellPrice: float32(utils.NumericToFloat64(gp.SellPrice)),
-			Date:      utils.PgToPbTimestamp(gp.Date),
-		})
+		results = append(results, s.dbGoldPrice2PbGoldPrice(&gp))
 	}
 
 	s.logger.Info("Gold prices listed", zap.Int("count", len(results)))
@@ -109,13 +91,7 @@ func (s *Service) UpdateGoldPrice(ctx context.Context, req *api.UpdateGoldPriceR
 
 	s.logger.Info("Gold price updated", zap.Any("gold_price", gp))
 	return &api.UpdateGoldPriceResponse{
-		GoldPrice: &api.GoldPrice{
-			Id:        int64(gp.ID),
-			GoldType:  gp.GoldType,
-			BuyPrice:  float32(utils.NumericToFloat64(gp.BuyPrice)),
-			SellPrice: float32(utils.NumericToFloat64(gp.SellPrice)),
-			Date:      utils.PgToPbTimestamp(gp.Date),
-		},
+		GoldPrice: s.dbGoldPrice2PbGoldPrice(&gp),
 	}, nil
 }
 
@@ -130,4 +106,23 @@ func (s *Service) DeleteGoldPrice(ctx context.Context, req *api.DeleteGoldPriceR
 
 	s.logger.Info("Gold price deleted", zap.Int64("id", req.Id))
 	return &emptypb.Empty{}, nil
+}
+
+func (s *Service) GetLatestGoldPrice(ctx context.Context, req *api.GetLatestGoldPriceRequest) (*api.GetLatestGoldPriceResponse, error) {
+	s.logger.Info("GetLatestGoldPrice called", zap.Any("req", req))
+
+	gps, err := s.queries.GetLatestGoldPrices(ctx)
+	if err != nil {
+		s.logger.Error("failed to get latest gold prices", zap.Error(err))
+		return nil, status.Errorf(codes.Internal, "failed to get latest gold prices: %v", err)
+	}
+
+	var results []*api.GoldPrice
+	for _, gp := range gps {
+		results = append(results, s.dbGoldPrice2PbGoldPrice(&gp))
+	}
+
+	return &api.GetLatestGoldPriceResponse{
+		GoldPrices: results,
+	}, nil
 }

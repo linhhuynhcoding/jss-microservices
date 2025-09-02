@@ -8,9 +8,11 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/linhhuynhcoding/jss-microservices/market/config"
+	"github.com/linhhuynhcoding/jss-microservices/market/internal/handler"
 	"github.com/linhhuynhcoding/jss-microservices/market/internal/repository"
 	"github.com/linhhuynhcoding/jss-microservices/market/internal/service"
 	"github.com/linhhuynhcoding/jss-microservices/rpc/gen/market"
+	"github.com/robfig/cron/v3"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -25,16 +27,6 @@ func main() {
 	cfg := config.NewConfig()
 	log, _ := zap.NewProduction()
 	log.Info("Config", zap.Any("cfg", cfg))
-
-	go NewServer(ctx, cfg, log)
-	NewGatewayServer(ctx, cfg, log)
-}
-
-func NewServer(
-	ctx context.Context,
-	cfg config.Config,
-	log *zap.Logger,
-) {
 	// ------------------------------------------------------------
 	// 		INIT DB
 	// ------------------------------------------------------------
@@ -45,6 +37,24 @@ func NewServer(
 	}
 	store := repository.NewStore(connPool)
 
+	{
+		goldPriceCrawler := handler.NewGoldPriceCrawler(ctx, log, cfg, store)
+		go RunCronJob(ctx, log, "0 */10 * * * *", goldPriceCrawler.Handle)
+	}
+	{
+		go NewServer(ctx, cfg, log, store)
+	}
+	{
+		NewGatewayServer(ctx, cfg, log)
+	}
+}
+
+func NewServer(
+	ctx context.Context,
+	cfg config.Config,
+	log *zap.Logger,
+	store repository.Store,
+) {
 	// ------------------------------------------------------------
 	// 		START SERVER
 	// ------------------------------------------------------------
@@ -79,4 +89,27 @@ func NewGatewayServer(
 	if err := http.ListenAndServe(":8080", mux); err != nil {
 		log.Fatal("failed to serve: %v", zap.Error(err))
 	}
+}
+
+func RunCronJob(
+	ctx context.Context,
+	logger *zap.Logger,
+	schedule string,
+	f func(context.Context) error,
+) {
+	// Cron
+	c := cron.New(cron.WithSeconds()) // cho phép định nghĩa theo giây nếu muốn
+	// Chạy job mỗi x phút
+	_, err := c.AddFunc(schedule, func() {
+		_ = f(ctx)
+	})
+	if err != nil {
+		logger.Error("Failed to schedule cron", zap.Error(err))
+	}
+
+	c.Start()
+	logger.Info("Cron job started.")
+
+	// Giữ app chạy
+	select {}
 }

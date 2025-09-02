@@ -5,11 +5,13 @@ go 1.24.5
 require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.1
 	github.com/jackc/pgx/v5 v5.7.5
-	github.com/linhhuynhcoding/jss-microservices/rpc v0.0.0-20250830084047-7095670368fa
+	github.com/linhhuynhcoding/jss-microservices/jss-shared v0.0.0-20250901141604-8ee201cc0acb
+	github.com/linhhuynhcoding/jss-microservices/rpc v0.0.0-20250902043637-23d3102a8547
+	github.com/robfig/cron/v3 v3.0.1
 	github.com/spf13/viper v1.20.1
 	go.uber.org/zap v1.27.0
 	google.golang.org/grpc v1.74.2
-	google.golang.org/protobuf v1.36.7
+	google.golang.org/protobuf v1.36.8
 )
 
 require (

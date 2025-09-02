@@ -45,8 +45,8 @@ services:
       dockerfile: Dockerfile
     container_name: loyalty-service
     ports:
-      - "8003:8080"
-      - "50003:50051"
+      - "8004:8080"
+      - "50004:50051"
     environment:
       - DB_SOURCE=postgresql://root:secret@loyalty-postgres:5432/jss_loyalty?sslmode=disable
       - REDIS_ADDRESS=redis:6379
