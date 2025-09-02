@@ -45,8 +45,8 @@ services:
       dockerfile: Dockerfile
     container_name: product-service
     ports:
-      - "8001:8001"
-      - "50001:50001"
+      - "8002:8001"
+      - "50002:50001"
     environment:
       - DB_SOURCE=postgresql://root:secret@product-postgres:5432/jss_product?sslmode=disable
       - REDIS_ADDRESS=redis:6379

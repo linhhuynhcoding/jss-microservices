@@ -22,6 +22,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	Market_CreateGoldPrice_FullMethodName     = "/market.Market/CreateGoldPrice"
 	Market_GetGoldPrice_FullMethodName        = "/market.Market/GetGoldPrice"
+	Market_GetLatestGoldPrice_FullMethodName  = "/market.Market/GetLatestGoldPrice"
 	Market_ListGoldPrices_FullMethodName      = "/market.Market/ListGoldPrices"
 	Market_UpdateGoldPrice_FullMethodName     = "/market.Market/UpdateGoldPrice"
 	Market_DeleteGoldPrice_FullMethodName     = "/market.Market/DeleteGoldPrice"
@@ -40,6 +41,8 @@ type MarketClient interface {
 	CreateGoldPrice(ctx context.Context, in *CreateGoldPriceRequest, opts ...grpc.CallOption) (*CreateGoldPriceResponse, error)
 	// Get a gold price record by ID
 	GetGoldPrice(ctx context.Context, in *GetGoldPriceRequest, opts ...grpc.CallOption) (*GetGoldPriceResponse, error)
+	// Get a lastest gold price
+	GetLatestGoldPrice(ctx context.Context, in *GetLatestGoldPriceRequest, opts ...grpc.CallOption) (*GetLatestGoldPriceResponse, error)
 	// List gold price records with pagination
 	ListGoldPrices(ctx context.Context, in *ListGoldPricesRequest, opts ...grpc.CallOption) (*ListGoldPricesResponse, error)
 	// Update an existing gold price record
@@ -80,6 +83,16 @@ func (c *marketClient) GetGoldPrice(ctx context.Context, in *GetGoldPriceRequest
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetGoldPriceResponse)
 	err := c.cc.Invoke(ctx, Market_GetGoldPrice_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *marketClient) GetLatestGoldPrice(ctx context.Context, in *GetLatestGoldPriceRequest, opts ...grpc.CallOption) (*GetLatestGoldPriceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetLatestGoldPriceResponse)
+	err := c.cc.Invoke(ctx, Market_GetLatestGoldPrice_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -174,6 +187,8 @@ type MarketServer interface {
 	CreateGoldPrice(context.Context, *CreateGoldPriceRequest) (*CreateGoldPriceResponse, error)
 	// Get a gold price record by ID
 	GetGoldPrice(context.Context, *GetGoldPriceRequest) (*GetGoldPriceResponse, error)
+	// Get a lastest gold price
+	GetLatestGoldPrice(context.Context, *GetLatestGoldPriceRequest) (*GetLatestGoldPriceResponse, error)
 	// List gold price records with pagination
 	ListGoldPrices(context.Context, *ListGoldPricesRequest) (*ListGoldPricesResponse, error)
 	// Update an existing gold price record
@@ -205,6 +220,9 @@ func (UnimplementedMarketServer) CreateGoldPrice(context.Context, *CreateGoldPri
 }
 func (UnimplementedMarketServer) GetGoldPrice(context.Context, *GetGoldPriceRequest) (*GetGoldPriceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetGoldPrice not implemented")
+}
+func (UnimplementedMarketServer) GetLatestGoldPrice(context.Context, *GetLatestGoldPriceRequest) (*GetLatestGoldPriceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLatestGoldPrice not implemented")
 }
 func (UnimplementedMarketServer) ListGoldPrices(context.Context, *ListGoldPricesRequest) (*ListGoldPricesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListGoldPrices not implemented")
@@ -283,6 +301,24 @@ func _Market_GetGoldPrice_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MarketServer).GetGoldPrice(ctx, req.(*GetGoldPriceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Market_GetLatestGoldPrice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetLatestGoldPriceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarketServer).GetLatestGoldPrice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Market_GetLatestGoldPrice_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarketServer).GetLatestGoldPrice(ctx, req.(*GetLatestGoldPriceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -445,6 +481,10 @@ var Market_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetGoldPrice",
 			Handler:    _Market_GetGoldPrice_Handler,
+		},
+		{
+			MethodName: "GetLatestGoldPrice",
+			Handler:    _Market_GetLatestGoldPrice_Handler,
 		},
 		{
 			MethodName: "ListGoldPrices",

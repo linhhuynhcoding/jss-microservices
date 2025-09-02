@@ -129,6 +129,13 @@ message GetGoldPriceResponse {
   GoldPrice gold_price = 1;
 }
 
+message GetLatestGoldPriceRequest {
+}
+
+message GetLatestGoldPriceResponse {
+  repeated GoldPrice gold_prices = 1;
+}
+
 message ListGoldPricesRequest {
   option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
     json_schema: {
@@ -401,6 +408,19 @@ service Market {
       tags: "Gold Prices";
     };
   }
+
+    // Get a lastest gold price 
+  rpc GetLatestGoldPrice(GetLatestGoldPriceRequest) returns (GetLatestGoldPriceResponse) {
+    option (google.api.http) = {
+      get: "/v1/latest-gold-prices"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Get gold price";
+      description: "Retrieves a gold price record";
+      tags: "Gold Prices";
+    };
+  }
+  
 
   // List gold price records with pagination
   rpc ListGoldPrices(ListGoldPricesRequest) returns (ListGoldPricesResponse) {
