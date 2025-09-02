@@ -22,15 +22,8 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OrderServiceClient interface {
-	// Create a new order.  The returned order includes calculated totals
-	// and voucher discounts.  Requires authentication; the caller's user ID
-	// and role are derived from the Authorization header and recorded as
-	// the staff_id on the order.
 	CreateOrder(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*CreateOrderResponse, error)
-	// Retrieve an order by its ID.  Staff are restricted to orders they
-	// created; managers and admins may retrieve any order.
 	GetOrder(ctx context.Context, in *GetOrderRequest, opts ...grpc.CallOption) (*Order, error)
-	// List orders with pagination support.  Staff only see their own orders.
 	ListOrders(ctx context.Context, in *ListOrdersRequest, opts ...grpc.CallOption) (*ListOrdersResponse, error)
 }
 
@@ -73,15 +66,8 @@ func (c *orderServiceClient) ListOrders(ctx context.Context, in *ListOrdersReque
 // All implementations must embed UnimplementedOrderServiceServer
 // for forward compatibility
 type OrderServiceServer interface {
-	// Create a new order.  The returned order includes calculated totals
-	// and voucher discounts.  Requires authentication; the caller's user ID
-	// and role are derived from the Authorization header and recorded as
-	// the staff_id on the order.
 	CreateOrder(context.Context, *CreateOrderRequest) (*CreateOrderResponse, error)
-	// Retrieve an order by its ID.  Staff are restricted to orders they
-	// created; managers and admins may retrieve any order.
 	GetOrder(context.Context, *GetOrderRequest) (*Order, error)
-	// List orders with pagination support.  Staff only see their own orders.
 	ListOrders(context.Context, *ListOrdersRequest) (*ListOrdersResponse, error)
 	mustEmbedUnimplementedOrderServiceServer()
 }
