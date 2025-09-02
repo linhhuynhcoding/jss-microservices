@@ -301,6 +301,86 @@ func (x *GetGoldPriceResponse) GetGoldPrice() *GoldPrice {
 	return nil
 }
 
+type GetLatestGoldPriceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetLatestGoldPriceRequest) Reset() {
+	*x = GetLatestGoldPriceRequest{}
+	mi := &file_market_market_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetLatestGoldPriceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetLatestGoldPriceRequest) ProtoMessage() {}
+
+func (x *GetLatestGoldPriceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_market_market_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetLatestGoldPriceRequest.ProtoReflect.Descriptor instead.
+func (*GetLatestGoldPriceRequest) Descriptor() ([]byte, []int) {
+	return file_market_market_proto_rawDescGZIP(), []int{5}
+}
+
+type GetLatestGoldPriceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	GoldPrices    []*GoldPrice           `protobuf:"bytes,1,rep,name=gold_prices,json=goldPrices,proto3" json:"gold_prices,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetLatestGoldPriceResponse) Reset() {
+	*x = GetLatestGoldPriceResponse{}
+	mi := &file_market_market_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetLatestGoldPriceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetLatestGoldPriceResponse) ProtoMessage() {}
+
+func (x *GetLatestGoldPriceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_market_market_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetLatestGoldPriceResponse.ProtoReflect.Descriptor instead.
+func (*GetLatestGoldPriceResponse) Descriptor() ([]byte, []int) {
+	return file_market_market_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *GetLatestGoldPriceResponse) GetGoldPrices() []*GoldPrice {
+	if x != nil {
+		return x.GoldPrices
+	}
+	return nil
+}
+
 type ListGoldPricesRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Limit         int32                  `protobuf:"varint,1,opt,name=limit,proto3" json:"limit,omitempty"`
@@ -312,7 +392,7 @@ type ListGoldPricesRequest struct {
 
 func (x *ListGoldPricesRequest) Reset() {
 	*x = ListGoldPricesRequest{}
-	mi := &file_market_market_proto_msgTypes[5]
+	mi := &file_market_market_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -324,7 +404,7 @@ func (x *ListGoldPricesRequest) String() string {
 func (*ListGoldPricesRequest) ProtoMessage() {}
 
 func (x *ListGoldPricesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_market_market_proto_msgTypes[5]
+	mi := &file_market_market_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -337,7 +417,7 @@ func (x *ListGoldPricesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListGoldPricesRequest.ProtoReflect.Descriptor instead.
 func (*ListGoldPricesRequest) Descriptor() ([]byte, []int) {
-	return file_market_market_proto_rawDescGZIP(), []int{5}
+	return file_market_market_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *ListGoldPricesRequest) GetLimit() int32 {
@@ -371,7 +451,7 @@ type ListGoldPricesResponse struct {
 
 func (x *ListGoldPricesResponse) Reset() {
 	*x = ListGoldPricesResponse{}
-	mi := &file_market_market_proto_msgTypes[6]
+	mi := &file_market_market_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -383,7 +463,7 @@ func (x *ListGoldPricesResponse) String() string {
 func (*ListGoldPricesResponse) ProtoMessage() {}
 
 func (x *ListGoldPricesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_market_market_proto_msgTypes[6]
+	mi := &file_market_market_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -396,7 +476,7 @@ func (x *ListGoldPricesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListGoldPricesResponse.ProtoReflect.Descriptor instead.
 func (*ListGoldPricesResponse) Descriptor() ([]byte, []int) {
-	return file_market_market_proto_rawDescGZIP(), []int{6}
+	return file_market_market_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *ListGoldPricesResponse) GetGoldPrices() []*GoldPrice {
@@ -426,7 +506,7 @@ type UpdateGoldPriceRequest struct {
 
 func (x *UpdateGoldPriceRequest) Reset() {
 	*x = UpdateGoldPriceRequest{}
-	mi := &file_market_market_proto_msgTypes[7]
+	mi := &file_market_market_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -438,7 +518,7 @@ func (x *UpdateGoldPriceRequest) String() string {
 func (*UpdateGoldPriceRequest) ProtoMessage() {}
 
 func (x *UpdateGoldPriceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_market_market_proto_msgTypes[7]
+	mi := &file_market_market_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -451,7 +531,7 @@ func (x *UpdateGoldPriceRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateGoldPriceRequest.ProtoReflect.Descriptor instead.
 func (*UpdateGoldPriceRequest) Descriptor() ([]byte, []int) {
-	return file_market_market_proto_rawDescGZIP(), []int{7}
+	return file_market_market_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *UpdateGoldPriceRequest) GetId() int64 {
@@ -498,7 +578,7 @@ type UpdateGoldPriceResponse struct {
 
 func (x *UpdateGoldPriceResponse) Reset() {
 	*x = UpdateGoldPriceResponse{}
-	mi := &file_market_market_proto_msgTypes[8]
+	mi := &file_market_market_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -510,7 +590,7 @@ func (x *UpdateGoldPriceResponse) String() string {
 func (*UpdateGoldPriceResponse) ProtoMessage() {}
 
 func (x *UpdateGoldPriceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_market_market_proto_msgTypes[8]
+	mi := &file_market_market_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -523,7 +603,7 @@ func (x *UpdateGoldPriceResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateGoldPriceResponse.ProtoReflect.Descriptor instead.
 func (*UpdateGoldPriceResponse) Descriptor() ([]byte, []int) {
-	return file_market_market_proto_rawDescGZIP(), []int{8}
+	return file_market_market_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *UpdateGoldPriceResponse) GetGoldPrice() *GoldPrice {
@@ -542,7 +622,7 @@ type DeleteGoldPriceRequest struct {
 
 func (x *DeleteGoldPriceRequest) Reset() {
 	*x = DeleteGoldPriceRequest{}
-	mi := &file_market_market_proto_msgTypes[9]
+	mi := &file_market_market_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -554,7 +634,7 @@ func (x *DeleteGoldPriceRequest) String() string {
 func (*DeleteGoldPriceRequest) ProtoMessage() {}
 
 func (x *DeleteGoldPriceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_market_market_proto_msgTypes[9]
+	mi := &file_market_market_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -567,7 +647,7 @@ func (x *DeleteGoldPriceRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteGoldPriceRequest.ProtoReflect.Descriptor instead.
 func (*DeleteGoldPriceRequest) Descriptor() ([]byte, []int) {
-	return file_market_market_proto_rawDescGZIP(), []int{9}
+	return file_market_market_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *DeleteGoldPriceRequest) GetId() int64 {
@@ -590,7 +670,7 @@ type BuybackPolicy struct {
 
 func (x *BuybackPolicy) Reset() {
 	*x = BuybackPolicy{}
-	mi := &file_market_market_proto_msgTypes[10]
+	mi := &file_market_market_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -602,7 +682,7 @@ func (x *BuybackPolicy) String() string {
 func (*BuybackPolicy) ProtoMessage() {}
 
 func (x *BuybackPolicy) ProtoReflect() protoreflect.Message {
-	mi := &file_market_market_proto_msgTypes[10]
+	mi := &file_market_market_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -615,7 +695,7 @@ func (x *BuybackPolicy) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BuybackPolicy.ProtoReflect.Descriptor instead.
 func (*BuybackPolicy) Descriptor() ([]byte, []int) {
-	return file_market_market_proto_rawDescGZIP(), []int{10}
+	return file_market_market_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *BuybackPolicy) GetId() int64 {
@@ -664,7 +744,7 @@ type CreateBuybackPolicyRequest struct {
 
 func (x *CreateBuybackPolicyRequest) Reset() {
 	*x = CreateBuybackPolicyRequest{}
-	mi := &file_market_market_proto_msgTypes[11]
+	mi := &file_market_market_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -676,7 +756,7 @@ func (x *CreateBuybackPolicyRequest) String() string {
 func (*CreateBuybackPolicyRequest) ProtoMessage() {}
 
 func (x *CreateBuybackPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_market_market_proto_msgTypes[11]
+	mi := &file_market_market_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -689,7 +769,7 @@ func (x *CreateBuybackPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateBuybackPolicyRequest.ProtoReflect.Descriptor instead.
 func (*CreateBuybackPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_market_market_proto_rawDescGZIP(), []int{11}
+	return file_market_market_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *CreateBuybackPolicyRequest) GetProductType() string {
@@ -722,7 +802,7 @@ type CreateBuybackPolicyResponse struct {
 
 func (x *CreateBuybackPolicyResponse) Reset() {
 	*x = CreateBuybackPolicyResponse{}
-	mi := &file_market_market_proto_msgTypes[12]
+	mi := &file_market_market_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -734,7 +814,7 @@ func (x *CreateBuybackPolicyResponse) String() string {
 func (*CreateBuybackPolicyResponse) ProtoMessage() {}
 
 func (x *CreateBuybackPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_market_market_proto_msgTypes[12]
+	mi := &file_market_market_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -747,7 +827,7 @@ func (x *CreateBuybackPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateBuybackPolicyResponse.ProtoReflect.Descriptor instead.
 func (*CreateBuybackPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_market_market_proto_rawDescGZIP(), []int{12}
+	return file_market_market_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *CreateBuybackPolicyResponse) GetBuybackPolicy() *BuybackPolicy {
@@ -766,7 +846,7 @@ type GetBuybackPolicyRequest struct {
 
 func (x *GetBuybackPolicyRequest) Reset() {
 	*x = GetBuybackPolicyRequest{}
-	mi := &file_market_market_proto_msgTypes[13]
+	mi := &file_market_market_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -778,7 +858,7 @@ func (x *GetBuybackPolicyRequest) String() string {
 func (*GetBuybackPolicyRequest) ProtoMessage() {}
 
 func (x *GetBuybackPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_market_market_proto_msgTypes[13]
+	mi := &file_market_market_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -791,7 +871,7 @@ func (x *GetBuybackPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetBuybackPolicyRequest.ProtoReflect.Descriptor instead.
 func (*GetBuybackPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_market_market_proto_rawDescGZIP(), []int{13}
+	return file_market_market_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *GetBuybackPolicyRequest) GetId() int64 {
@@ -810,7 +890,7 @@ type GetBuybackPolicyResponse struct {
 
 func (x *GetBuybackPolicyResponse) Reset() {
 	*x = GetBuybackPolicyResponse{}
-	mi := &file_market_market_proto_msgTypes[14]
+	mi := &file_market_market_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -822,7 +902,7 @@ func (x *GetBuybackPolicyResponse) String() string {
 func (*GetBuybackPolicyResponse) ProtoMessage() {}
 
 func (x *GetBuybackPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_market_market_proto_msgTypes[14]
+	mi := &file_market_market_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -835,7 +915,7 @@ func (x *GetBuybackPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetBuybackPolicyResponse.ProtoReflect.Descriptor instead.
 func (*GetBuybackPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_market_market_proto_rawDescGZIP(), []int{14}
+	return file_market_market_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *GetBuybackPolicyResponse) GetBuybackPolicy() *BuybackPolicy {
@@ -856,7 +936,7 @@ type ListBuybackPoliciesRequest struct {
 
 func (x *ListBuybackPoliciesRequest) Reset() {
 	*x = ListBuybackPoliciesRequest{}
-	mi := &file_market_market_proto_msgTypes[15]
+	mi := &file_market_market_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -868,7 +948,7 @@ func (x *ListBuybackPoliciesRequest) String() string {
 func (*ListBuybackPoliciesRequest) ProtoMessage() {}
 
 func (x *ListBuybackPoliciesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_market_market_proto_msgTypes[15]
+	mi := &file_market_market_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -881,7 +961,7 @@ func (x *ListBuybackPoliciesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListBuybackPoliciesRequest.ProtoReflect.Descriptor instead.
 func (*ListBuybackPoliciesRequest) Descriptor() ([]byte, []int) {
-	return file_market_market_proto_rawDescGZIP(), []int{15}
+	return file_market_market_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *ListBuybackPoliciesRequest) GetLimit() int32 {
@@ -915,7 +995,7 @@ type ListBuybackPoliciesResponse struct {
 
 func (x *ListBuybackPoliciesResponse) Reset() {
 	*x = ListBuybackPoliciesResponse{}
-	mi := &file_market_market_proto_msgTypes[16]
+	mi := &file_market_market_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -927,7 +1007,7 @@ func (x *ListBuybackPoliciesResponse) String() string {
 func (*ListBuybackPoliciesResponse) ProtoMessage() {}
 
 func (x *ListBuybackPoliciesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_market_market_proto_msgTypes[16]
+	mi := &file_market_market_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -940,7 +1020,7 @@ func (x *ListBuybackPoliciesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListBuybackPoliciesResponse.ProtoReflect.Descriptor instead.
 func (*ListBuybackPoliciesResponse) Descriptor() ([]byte, []int) {
-	return file_market_market_proto_rawDescGZIP(), []int{16}
+	return file_market_market_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *ListBuybackPoliciesResponse) GetBuybackPolicies() []*BuybackPolicy {
@@ -969,7 +1049,7 @@ type UpdateBuybackPolicyRequest struct {
 
 func (x *UpdateBuybackPolicyRequest) Reset() {
 	*x = UpdateBuybackPolicyRequest{}
-	mi := &file_market_market_proto_msgTypes[17]
+	mi := &file_market_market_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -981,7 +1061,7 @@ func (x *UpdateBuybackPolicyRequest) String() string {
 func (*UpdateBuybackPolicyRequest) ProtoMessage() {}
 
 func (x *UpdateBuybackPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_market_market_proto_msgTypes[17]
+	mi := &file_market_market_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -994,7 +1074,7 @@ func (x *UpdateBuybackPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateBuybackPolicyRequest.ProtoReflect.Descriptor instead.
 func (*UpdateBuybackPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_market_market_proto_rawDescGZIP(), []int{17}
+	return file_market_market_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *UpdateBuybackPolicyRequest) GetId() int64 {
@@ -1034,7 +1114,7 @@ type UpdateBuybackPolicyResponse struct {
 
 func (x *UpdateBuybackPolicyResponse) Reset() {
 	*x = UpdateBuybackPolicyResponse{}
-	mi := &file_market_market_proto_msgTypes[18]
+	mi := &file_market_market_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1046,7 +1126,7 @@ func (x *UpdateBuybackPolicyResponse) String() string {
 func (*UpdateBuybackPolicyResponse) ProtoMessage() {}
 
 func (x *UpdateBuybackPolicyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_market_market_proto_msgTypes[18]
+	mi := &file_market_market_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1059,7 +1139,7 @@ func (x *UpdateBuybackPolicyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateBuybackPolicyResponse.ProtoReflect.Descriptor instead.
 func (*UpdateBuybackPolicyResponse) Descriptor() ([]byte, []int) {
-	return file_market_market_proto_rawDescGZIP(), []int{18}
+	return file_market_market_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *UpdateBuybackPolicyResponse) GetBuybackPolicy() *BuybackPolicy {
@@ -1078,7 +1158,7 @@ type DeleteBuybackPolicyRequest struct {
 
 func (x *DeleteBuybackPolicyRequest) Reset() {
 	*x = DeleteBuybackPolicyRequest{}
-	mi := &file_market_market_proto_msgTypes[19]
+	mi := &file_market_market_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1090,7 +1170,7 @@ func (x *DeleteBuybackPolicyRequest) String() string {
 func (*DeleteBuybackPolicyRequest) ProtoMessage() {}
 
 func (x *DeleteBuybackPolicyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_market_market_proto_msgTypes[19]
+	mi := &file_market_market_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1103,7 +1183,7 @@ func (x *DeleteBuybackPolicyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteBuybackPolicyRequest.ProtoReflect.Descriptor instead.
 func (*DeleteBuybackPolicyRequest) Descriptor() ([]byte, []int) {
-	return file_market_market_proto_rawDescGZIP(), []int{19}
+	return file_market_market_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *DeleteBuybackPolicyRequest) GetId() int64 {
@@ -1145,7 +1225,11 @@ const file_market_market_proto_rawDesc = "" +
 	"\x14GetGoldPriceResponse\x120\n" +
 	"\n" +
 	"gold_price\x18\x01 \x01(\v2\x11.market.GoldPriceR\tgoldPrice:S\x92AP\n" +
-	"N*\x17Get Gold Price Response23Response containing the requested gold price record\"\xbf\x02\n" +
+	"N*\x17Get Gold Price Response23Response containing the requested gold price record\"\x1b\n" +
+	"\x19GetLatestGoldPriceRequest\"P\n" +
+	"\x1aGetLatestGoldPriceResponse\x122\n" +
+	"\vgold_prices\x18\x01 \x03(\v2\x11.market.GoldPriceR\n" +
+	"goldPrices\"\xbf\x02\n" +
 	"\x15ListGoldPricesRequest\x12T\n" +
 	"\x05limit\x18\x01 \x01(\x05B>\x92A;2#Maximum number of records to return:\x0210Y\x00\x00\x00\x00\x00\x00Y@i\x00\x00\x00\x00\x00\x00\xf0?R\x05limit\x129\n" +
 	"\x06offset\x18\x02 \x01(\x05B!\x92A\x1e2\x19Number of records to skip:\x010R\x06offset\x12@\n" +
@@ -1215,12 +1299,14 @@ const file_market_market_proto_rawDesc = "" +
 	"P*\x1eUpdate Buyback Policy Response2.Response containing the updated buyback policy\"\x9f\x01\n" +
 	"\x1aDeleteBuybackPolicyRequest\x127\n" +
 	"\x02id\x18\x01 \x01(\x03B'\x92A$2\"ID of the buyback policy to deleteR\x02id:H\x92AE\n" +
-	"C*\x1dDelete Buyback Policy Request2\"Request to delete a buyback policy2\xe8\x0f\n" +
+	"C*\x1dDelete Buyback Policy Request2\"Request to delete a buyback policy2\xa5\x11\n" +
 	"\x06Market\x12\xb2\x01\n" +
 	"\x0fCreateGoldPrice\x12\x1e.market.CreateGoldPriceRequest\x1a\x1f.market.CreateGoldPriceResponse\"^\x92AA\n" +
 	"\vGold Prices\x12\x11Create gold price\x1a\x1fCreates a new gold price record\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/v1/gold-prices\x12\xac\x01\n" +
 	"\fGetGoldPrice\x12\x1b.market.GetGoldPriceRequest\x1a\x1c.market.GetGoldPriceResponse\"a\x92AB\n" +
-	"\vGold Prices\x12\x0eGet gold price\x1a#Retrieves a gold price record by ID\x82\xd3\xe4\x93\x02\x16\x12\x14/v1/gold-prices/{id}\x12\xcb\x01\n" +
+	"\vGold Prices\x12\x0eGet gold price\x1a#Retrieves a gold price record by ID\x82\xd3\xe4\x93\x02\x16\x12\x14/v1/gold-prices/{id}\x12\xba\x01\n" +
+	"\x12GetLatestGoldPrice\x12!.market.GetLatestGoldPriceRequest\x1a\".market.GetLatestGoldPriceResponse\"]\x92A<\n" +
+	"\vGold Prices\x12\x0eGet gold price\x1a\x1dRetrieves a gold price record\x82\xd3\xe4\x93\x02\x18\x12\x16/v1/latest-gold-prices\x12\xcb\x01\n" +
 	"\x0eListGoldPrices\x12\x1d.market.ListGoldPricesRequest\x1a\x1e.market.ListGoldPricesResponse\"z\x92A`\n" +
 	"\vGold Prices\x12\x10List gold prices\x1a?Lists gold price records with pagination and optional filtering\x82\xd3\xe4\x93\x02\x11\x12\x0f/v1/gold-prices\x12\xbd\x01\n" +
 	"\x0fUpdateGoldPrice\x12\x1e.market.UpdateGoldPriceRequest\x1a\x1f.market.UpdateGoldPriceResponse\"i\x92AG\n" +
@@ -1257,69 +1343,74 @@ func file_market_market_proto_rawDescGZIP() []byte {
 	return file_market_market_proto_rawDescData
 }
 
-var file_market_market_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
+var file_market_market_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
 var file_market_market_proto_goTypes = []any{
 	(*GoldPrice)(nil),                   // 0: market.GoldPrice
 	(*CreateGoldPriceRequest)(nil),      // 1: market.CreateGoldPriceRequest
 	(*CreateGoldPriceResponse)(nil),     // 2: market.CreateGoldPriceResponse
 	(*GetGoldPriceRequest)(nil),         // 3: market.GetGoldPriceRequest
 	(*GetGoldPriceResponse)(nil),        // 4: market.GetGoldPriceResponse
-	(*ListGoldPricesRequest)(nil),       // 5: market.ListGoldPricesRequest
-	(*ListGoldPricesResponse)(nil),      // 6: market.ListGoldPricesResponse
-	(*UpdateGoldPriceRequest)(nil),      // 7: market.UpdateGoldPriceRequest
-	(*UpdateGoldPriceResponse)(nil),     // 8: market.UpdateGoldPriceResponse
-	(*DeleteGoldPriceRequest)(nil),      // 9: market.DeleteGoldPriceRequest
-	(*BuybackPolicy)(nil),               // 10: market.BuybackPolicy
-	(*CreateBuybackPolicyRequest)(nil),  // 11: market.CreateBuybackPolicyRequest
-	(*CreateBuybackPolicyResponse)(nil), // 12: market.CreateBuybackPolicyResponse
-	(*GetBuybackPolicyRequest)(nil),     // 13: market.GetBuybackPolicyRequest
-	(*GetBuybackPolicyResponse)(nil),    // 14: market.GetBuybackPolicyResponse
-	(*ListBuybackPoliciesRequest)(nil),  // 15: market.ListBuybackPoliciesRequest
-	(*ListBuybackPoliciesResponse)(nil), // 16: market.ListBuybackPoliciesResponse
-	(*UpdateBuybackPolicyRequest)(nil),  // 17: market.UpdateBuybackPolicyRequest
-	(*UpdateBuybackPolicyResponse)(nil), // 18: market.UpdateBuybackPolicyResponse
-	(*DeleteBuybackPolicyRequest)(nil),  // 19: market.DeleteBuybackPolicyRequest
-	(*timestamppb.Timestamp)(nil),       // 20: google.protobuf.Timestamp
-	(*emptypb.Empty)(nil),               // 21: google.protobuf.Empty
+	(*GetLatestGoldPriceRequest)(nil),   // 5: market.GetLatestGoldPriceRequest
+	(*GetLatestGoldPriceResponse)(nil),  // 6: market.GetLatestGoldPriceResponse
+	(*ListGoldPricesRequest)(nil),       // 7: market.ListGoldPricesRequest
+	(*ListGoldPricesResponse)(nil),      // 8: market.ListGoldPricesResponse
+	(*UpdateGoldPriceRequest)(nil),      // 9: market.UpdateGoldPriceRequest
+	(*UpdateGoldPriceResponse)(nil),     // 10: market.UpdateGoldPriceResponse
+	(*DeleteGoldPriceRequest)(nil),      // 11: market.DeleteGoldPriceRequest
+	(*BuybackPolicy)(nil),               // 12: market.BuybackPolicy
+	(*CreateBuybackPolicyRequest)(nil),  // 13: market.CreateBuybackPolicyRequest
+	(*CreateBuybackPolicyResponse)(nil), // 14: market.CreateBuybackPolicyResponse
+	(*GetBuybackPolicyRequest)(nil),     // 15: market.GetBuybackPolicyRequest
+	(*GetBuybackPolicyResponse)(nil),    // 16: market.GetBuybackPolicyResponse
+	(*ListBuybackPoliciesRequest)(nil),  // 17: market.ListBuybackPoliciesRequest
+	(*ListBuybackPoliciesResponse)(nil), // 18: market.ListBuybackPoliciesResponse
+	(*UpdateBuybackPolicyRequest)(nil),  // 19: market.UpdateBuybackPolicyRequest
+	(*UpdateBuybackPolicyResponse)(nil), // 20: market.UpdateBuybackPolicyResponse
+	(*DeleteBuybackPolicyRequest)(nil),  // 21: market.DeleteBuybackPolicyRequest
+	(*timestamppb.Timestamp)(nil),       // 22: google.protobuf.Timestamp
+	(*emptypb.Empty)(nil),               // 23: google.protobuf.Empty
 }
 var file_market_market_proto_depIdxs = []int32{
-	20, // 0: market.GoldPrice.date:type_name -> google.protobuf.Timestamp
-	20, // 1: market.CreateGoldPriceRequest.date:type_name -> google.protobuf.Timestamp
+	22, // 0: market.GoldPrice.date:type_name -> google.protobuf.Timestamp
+	22, // 1: market.CreateGoldPriceRequest.date:type_name -> google.protobuf.Timestamp
 	0,  // 2: market.CreateGoldPriceResponse.gold_price:type_name -> market.GoldPrice
 	0,  // 3: market.GetGoldPriceResponse.gold_price:type_name -> market.GoldPrice
-	0,  // 4: market.ListGoldPricesResponse.gold_prices:type_name -> market.GoldPrice
-	20, // 5: market.UpdateGoldPriceRequest.date:type_name -> google.protobuf.Timestamp
-	0,  // 6: market.UpdateGoldPriceResponse.gold_price:type_name -> market.GoldPrice
-	20, // 7: market.BuybackPolicy.created_at:type_name -> google.protobuf.Timestamp
-	10, // 8: market.CreateBuybackPolicyResponse.buyback_policy:type_name -> market.BuybackPolicy
-	10, // 9: market.GetBuybackPolicyResponse.buyback_policy:type_name -> market.BuybackPolicy
-	10, // 10: market.ListBuybackPoliciesResponse.buyback_policies:type_name -> market.BuybackPolicy
-	10, // 11: market.UpdateBuybackPolicyResponse.buyback_policy:type_name -> market.BuybackPolicy
-	1,  // 12: market.Market.CreateGoldPrice:input_type -> market.CreateGoldPriceRequest
-	3,  // 13: market.Market.GetGoldPrice:input_type -> market.GetGoldPriceRequest
-	5,  // 14: market.Market.ListGoldPrices:input_type -> market.ListGoldPricesRequest
-	7,  // 15: market.Market.UpdateGoldPrice:input_type -> market.UpdateGoldPriceRequest
-	9,  // 16: market.Market.DeleteGoldPrice:input_type -> market.DeleteGoldPriceRequest
-	11, // 17: market.Market.CreateBuybackPolicy:input_type -> market.CreateBuybackPolicyRequest
-	13, // 18: market.Market.GetBuybackPolicy:input_type -> market.GetBuybackPolicyRequest
-	15, // 19: market.Market.ListBuybackPolicies:input_type -> market.ListBuybackPoliciesRequest
-	17, // 20: market.Market.UpdateBuybackPolicy:input_type -> market.UpdateBuybackPolicyRequest
-	19, // 21: market.Market.DeleteBuybackPolicy:input_type -> market.DeleteBuybackPolicyRequest
-	2,  // 22: market.Market.CreateGoldPrice:output_type -> market.CreateGoldPriceResponse
-	4,  // 23: market.Market.GetGoldPrice:output_type -> market.GetGoldPriceResponse
-	6,  // 24: market.Market.ListGoldPrices:output_type -> market.ListGoldPricesResponse
-	8,  // 25: market.Market.UpdateGoldPrice:output_type -> market.UpdateGoldPriceResponse
-	21, // 26: market.Market.DeleteGoldPrice:output_type -> google.protobuf.Empty
-	12, // 27: market.Market.CreateBuybackPolicy:output_type -> market.CreateBuybackPolicyResponse
-	14, // 28: market.Market.GetBuybackPolicy:output_type -> market.GetBuybackPolicyResponse
-	16, // 29: market.Market.ListBuybackPolicies:output_type -> market.ListBuybackPoliciesResponse
-	18, // 30: market.Market.UpdateBuybackPolicy:output_type -> market.UpdateBuybackPolicyResponse
-	21, // 31: market.Market.DeleteBuybackPolicy:output_type -> google.protobuf.Empty
-	22, // [22:32] is the sub-list for method output_type
-	12, // [12:22] is the sub-list for method input_type
-	12, // [12:12] is the sub-list for extension type_name
-	12, // [12:12] is the sub-list for extension extendee
-	0,  // [0:12] is the sub-list for field type_name
+	0,  // 4: market.GetLatestGoldPriceResponse.gold_prices:type_name -> market.GoldPrice
+	0,  // 5: market.ListGoldPricesResponse.gold_prices:type_name -> market.GoldPrice
+	22, // 6: market.UpdateGoldPriceRequest.date:type_name -> google.protobuf.Timestamp
+	0,  // 7: market.UpdateGoldPriceResponse.gold_price:type_name -> market.GoldPrice
+	22, // 8: market.BuybackPolicy.created_at:type_name -> google.protobuf.Timestamp
+	12, // 9: market.CreateBuybackPolicyResponse.buyback_policy:type_name -> market.BuybackPolicy
+	12, // 10: market.GetBuybackPolicyResponse.buyback_policy:type_name -> market.BuybackPolicy
+	12, // 11: market.ListBuybackPoliciesResponse.buyback_policies:type_name -> market.BuybackPolicy
+	12, // 12: market.UpdateBuybackPolicyResponse.buyback_policy:type_name -> market.BuybackPolicy
+	1,  // 13: market.Market.CreateGoldPrice:input_type -> market.CreateGoldPriceRequest
+	3,  // 14: market.Market.GetGoldPrice:input_type -> market.GetGoldPriceRequest
+	5,  // 15: market.Market.GetLatestGoldPrice:input_type -> market.GetLatestGoldPriceRequest
+	7,  // 16: market.Market.ListGoldPrices:input_type -> market.ListGoldPricesRequest
+	9,  // 17: market.Market.UpdateGoldPrice:input_type -> market.UpdateGoldPriceRequest
+	11, // 18: market.Market.DeleteGoldPrice:input_type -> market.DeleteGoldPriceRequest
+	13, // 19: market.Market.CreateBuybackPolicy:input_type -> market.CreateBuybackPolicyRequest
+	15, // 20: market.Market.GetBuybackPolicy:input_type -> market.GetBuybackPolicyRequest
+	17, // 21: market.Market.ListBuybackPolicies:input_type -> market.ListBuybackPoliciesRequest
+	19, // 22: market.Market.UpdateBuybackPolicy:input_type -> market.UpdateBuybackPolicyRequest
+	21, // 23: market.Market.DeleteBuybackPolicy:input_type -> market.DeleteBuybackPolicyRequest
+	2,  // 24: market.Market.CreateGoldPrice:output_type -> market.CreateGoldPriceResponse
+	4,  // 25: market.Market.GetGoldPrice:output_type -> market.GetGoldPriceResponse
+	6,  // 26: market.Market.GetLatestGoldPrice:output_type -> market.GetLatestGoldPriceResponse
+	8,  // 27: market.Market.ListGoldPrices:output_type -> market.ListGoldPricesResponse
+	10, // 28: market.Market.UpdateGoldPrice:output_type -> market.UpdateGoldPriceResponse
+	23, // 29: market.Market.DeleteGoldPrice:output_type -> google.protobuf.Empty
+	14, // 30: market.Market.CreateBuybackPolicy:output_type -> market.CreateBuybackPolicyResponse
+	16, // 31: market.Market.GetBuybackPolicy:output_type -> market.GetBuybackPolicyResponse
+	18, // 32: market.Market.ListBuybackPolicies:output_type -> market.ListBuybackPoliciesResponse
+	20, // 33: market.Market.UpdateBuybackPolicy:output_type -> market.UpdateBuybackPolicyResponse
+	23, // 34: market.Market.DeleteBuybackPolicy:output_type -> google.protobuf.Empty
+	24, // [24:35] is the sub-list for method output_type
+	13, // [13:24] is the sub-list for method input_type
+	13, // [13:13] is the sub-list for extension type_name
+	13, // [13:13] is the sub-list for extension extendee
+	0,  // [0:13] is the sub-list for field type_name
 }
 
 func init() { file_market_market_proto_init() }
@@ -1333,7 +1424,7 @@ func file_market_market_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_market_market_proto_rawDesc), len(file_market_market_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   20,
+			NumMessages:   22,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
