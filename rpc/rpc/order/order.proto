@@ -7,7 +7,7 @@ import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/linhhuynhcoding/jss-microservices/rpc/gen/order";
 
-// =================== Models ===================
+// ===== Models =====
 enum OrderStatus {
   ORDER_STATUS_UNSPECIFIED = 0;
   PENDING   = 1;
@@ -32,24 +32,7 @@ message OrderItem {
   double line_total    = 12;
 }
 
-message Order {
-  int32  order_id       = 1;
-  string customer_name  = 2;
-  string staff_id       = 3;
-  repeated OrderItem items = 4;
-  repeated string voucher_codes = 5;
-
-  double total_price     = 6;
-  double discount_amount = 7;
-  double final_price     = 8;
-  double shipping_cost   = 9;
-  google.protobuf.Timestamp created_at = 10;
-
-  OrderStatus status = 11;
-  repeated StatusHistory status_history = 12;
-}
-
-// =================== Requests/Responses ===================
+// ===== Requests/Responses =====
 message CreateOrderItem {
   int32 product_id = 1;
   int32 quantity   = 2;
@@ -60,6 +43,9 @@ message CreateOrderRequest {
   repeated CreateOrderItem items = 2;
   repeated string voucher_codes = 3;
   double shipping_cost = 4;
+
+  // NEW: optional customer_id (nếu nhân viên chọn khách trong hệ thống)
+  int32 customer_id = 5;
 }
 
 message CreateOrderResponse {
@@ -87,13 +73,28 @@ message ListOrdersResponse {
   PaginationResponse pagination = 2;
 }
 
-// Xuất hóa đơn PDF
-message GenerateInvoiceResponse {
-  string file_name = 1;   // ví dụ: invoice-1234.pdf
-  bytes  file_data = 2;   // PDF bytes; qua HTTP JSON sẽ trả base64
+// ===== Entity =====
+message Order {
+  int32  order_id       = 1;
+  string customer_name  = 2;
+  string staff_id       = 3;
+  repeated OrderItem items = 4;
+  repeated string voucher_codes = 5;
+
+  double total_price     = 6;
+  double discount_amount = 7;
+  double final_price     = 8;
+  double shipping_cost   = 9;
+  google.protobuf.Timestamp created_at = 10;
+
+  OrderStatus status = 11;
+  repeated StatusHistory status_history = 12;
+
+  // NEW: optional customer_id được lưu lại
+  int32 customer_id = 13;
 }
 
-// =================== Service ===================
+// ===== Service =====
 service OrderService {
   rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse) {
     option (google.api.http) = {
@@ -111,13 +112,6 @@ service OrderService {
   rpc ListOrders(ListOrdersRequest) returns (ListOrdersResponse) {
     option (google.api.http) = {
       get: "/v1/orders"
-    };
-  }
-
-  // GET /v1/orders/{order_id}/invoice → trả về PDF (base64 nếu đi qua gateway JSON)
-  rpc GenerateInvoice(GetOrderRequest) returns (GenerateInvoiceResponse) {
-    option (google.api.http) = {
-      get: "/v1/orders/{order_id}/invoice"
     };
   }
 }

@@ -25,8 +25,6 @@ type OrderServiceClient interface {
 	CreateOrder(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*CreateOrderResponse, error)
 	GetOrder(ctx context.Context, in *GetOrderRequest, opts ...grpc.CallOption) (*Order, error)
 	ListOrders(ctx context.Context, in *ListOrdersRequest, opts ...grpc.CallOption) (*ListOrdersResponse, error)
-	// GET /v1/orders/{order_id}/invoice → trả về PDF (base64 nếu đi qua gateway JSON)
-	GenerateInvoice(ctx context.Context, in *GetOrderRequest, opts ...grpc.CallOption) (*GenerateInvoiceResponse, error)
 }
 
 type orderServiceClient struct {
@@ -64,15 +62,6 @@ func (c *orderServiceClient) ListOrders(ctx context.Context, in *ListOrdersReque
 	return out, nil
 }
 
-func (c *orderServiceClient) GenerateInvoice(ctx context.Context, in *GetOrderRequest, opts ...grpc.CallOption) (*GenerateInvoiceResponse, error) {
-	out := new(GenerateInvoiceResponse)
-	err := c.cc.Invoke(ctx, "/order.OrderService/GenerateInvoice", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // OrderServiceServer is the server API for OrderService service.
 // All implementations must embed UnimplementedOrderServiceServer
 // for forward compatibility
@@ -80,8 +69,6 @@ type OrderServiceServer interface {
 	CreateOrder(context.Context, *CreateOrderRequest) (*CreateOrderResponse, error)
 	GetOrder(context.Context, *GetOrderRequest) (*Order, error)
 	ListOrders(context.Context, *ListOrdersRequest) (*ListOrdersResponse, error)
-	// GET /v1/orders/{order_id}/invoice → trả về PDF (base64 nếu đi qua gateway JSON)
-	GenerateInvoice(context.Context, *GetOrderRequest) (*GenerateInvoiceResponse, error)
 	mustEmbedUnimplementedOrderServiceServer()
 }
 
@@ -97,9 +84,6 @@ func (UnimplementedOrderServiceServer) GetOrder(context.Context, *GetOrderReques
 }
 func (UnimplementedOrderServiceServer) ListOrders(context.Context, *ListOrdersRequest) (*ListOrdersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListOrders not implemented")
-}
-func (UnimplementedOrderServiceServer) GenerateInvoice(context.Context, *GetOrderRequest) (*GenerateInvoiceResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GenerateInvoice not implemented")
 }
 func (UnimplementedOrderServiceServer) mustEmbedUnimplementedOrderServiceServer() {}
 
@@ -168,24 +152,6 @@ func _OrderService_ListOrders_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _OrderService_GenerateInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetOrderRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(OrderServiceServer).GenerateInvoice(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/order.OrderService/GenerateInvoice",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrderServiceServer).GenerateInvoice(ctx, req.(*GetOrderRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // OrderService_ServiceDesc is the grpc.ServiceDesc for OrderService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -204,10 +170,6 @@ var OrderService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListOrders",
 			Handler:    _OrderService_ListOrders_Handler,
-		},
-		{
-			MethodName: "GenerateInvoice",
-			Handler:    _OrderService_GenerateInvoice_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
