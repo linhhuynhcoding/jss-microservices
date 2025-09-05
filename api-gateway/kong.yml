@@ -143,6 +143,18 @@ services:
               key_claim_name: iss
               secret_is_base64: false
               claims_to_verify: [exp]
+      - name: invoice-order
+        paths:
+          - "~/v1/orders/([0-9]+)/invoice$"
+        strip_path: false
+        methods: [GET, OPTIONS]
+        regex_priority: 300
+        plugins:
+          - name: jwt
+            config:
+              key_claim_name: iss
+              secret_is_base64: false
+              claims_to_verify: [exp]
 plugins:
   - name: cors
     config:

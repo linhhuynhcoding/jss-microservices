@@ -1,12 +1,15 @@
 package service
 
 import (
+	"bytes"
 	"context"
 	"errors"
 	"fmt"
+	"strconv"
 	"strings"
 	"time"
 
+	"github.com/jung-kurt/gofpdf"
 	"github.com/linhhuynhcoding/jss-microservices/order-service/config"
 	"github.com/linhhuynhcoding/jss-microservices/order-service/internal/adapter"
 	"github.com/linhhuynhcoding/jss-microservices/order-service/internal/domain"
@@ -302,6 +305,109 @@ func (s *Service) ListOrders(ctx context.Context, req *orderpb.ListOrdersRequest
 }
 
 
+func (s *Service) GenerateInvoice(ctx context.Context, req *orderpb.GetOrderRequest) (*orderpb.GenerateInvoiceResponse, error) {
+	// Auth
+	accessToken, err := bearerFromMD(ctx)
+	if err != nil {
+		return nil, err
+	}
+	valid, userID, role, err := s.authClient.Validate(ctx, accessToken)
+	if err != nil || !valid {
+		return nil, fmt.Errorf("unauthorised")
+	}
+
+	// Fetch order (VALUE)
+	ord, err := s.repo.Get(ctx, req.GetOrderId())
+	if err != nil {
+		if errors.Is(err, repository.ErrNotFound) {
+			return nil, fmt.Errorf("order not found")
+		}
+		return nil, err
+	}
+	// RBAC
+	if role == "STAFF" && ord.StaffID != userID {
+		return nil, fmt.Errorf("forbidden")
+	}
+
+	// PDF (ASCII-only text — no Unicode)
+	pdf := gofpdf.New("P", "mm", "A4", "")
+	pdf.SetMargins(15, 15, 15)
+	pdf.AddPage()
+
+	// Header
+	pdf.SetFont("Arial", "B", 16)
+	pdf.Cell(0, 10, "INVOICE")
+	pdf.Ln(8)
+
+	pdf.SetFont("Arial", "", 11)
+	pdf.Cell(0, 7, fmt.Sprintf("Order #: %d", ord.OrderID))
+	pdf.Ln(6)
+	pdf.Cell(0, 7, fmt.Sprintf("Date: %s", ord.CreatedAt.Format("2006-01-02 15:04")))
+	pdf.Ln(6)
+	pdf.Cell(0, 7, fmt.Sprintf("Staff: %s", ord.StaffID))
+	pdf.Ln(6)
+	if ord.CustomerName != "" {
+		pdf.Cell(0, 7, fmt.Sprintf("Customer: %s (ID: %d)", ord.CustomerName, ord.CustomerID))
+	} else {
+		pdf.Cell(0, 7, fmt.Sprintf("Customer ID: %d", ord.CustomerID))
+	}
+	pdf.Ln(10)
+
+	// Table header
+	pdf.SetFont("Arial", "B", 11)
+	pdf.CellFormat(15, 8, "ID", "1", 0, "C", false, 0, "")
+	pdf.CellFormat(85, 8, "Item", "1", 0, "L", false, 0, "")
+	pdf.CellFormat(20, 8, "Qty", "1", 0, "C", false, 0, "")
+	pdf.CellFormat(35, 8, "Unit Price", "1", 0, "R", false, 0, "")
+	pdf.CellFormat(35, 8, "Line Total", "1", 0, "R", false, 0, "")
+	pdf.Ln(-1)
+
+	// Rows
+	pdf.SetFont("Arial", "", 10)
+	for _, it := range ord.Items {
+		name := it.ProductName
+		if name == "" {
+			name = fmt.Sprintf("Product #%d", it.ProductID)
+		}
+		pdf.CellFormat(15, 8, fmt.Sprintf("%d", it.ProductID), "1", 0, "C", false, 0, "")
+		pdf.CellFormat(85, 8, name, "1", 0, "L", false, 0, "")
+		pdf.CellFormat(20, 8, fmt.Sprintf("%d", it.Quantity), "1", 0, "C", false, 0, "")
+		pdf.CellFormat(35, 8, formatVNDEn(it.UnitPrice), "1", 0, "R", false, 0, "")
+		pdf.CellFormat(35, 8, formatVNDEn(it.LineTotal), "1", 0, "R", false, 0, "")
+		pdf.Ln(-1)
+	}
+
+	// Totals
+	pdf.Ln(2)
+	pdf.SetFont("Arial", "", 11)
+	right := func(label, value string) {
+		pdf.CellFormat(155, 7, label, "", 0, "R", false, 0, "")
+		pdf.CellFormat(35, 7, value, "1", 1, "R", false, 0, "")
+	}
+	right("Subtotal:", formatVNDEn(ord.TotalPrice))
+	right("Shipping:", formatVNDEn(ord.ShippingCost))
+	right("Discount:", "- "+formatVNDEn(ord.DiscountAmount))
+	pdf.SetFont("Arial", "B", 12)
+	right("TOTAL:", formatVNDEn(ord.FinalPrice))
+
+	// Footer
+	pdf.Ln(8)
+	pdf.SetFont("Arial", "I", 10)
+	pdf.Cell(0, 6, "Thank you for your purchase.")
+
+	// Output
+	var buf bytes.Buffer
+	if err := pdf.Output(&buf); err != nil {
+		return nil, fmt.Errorf("failed to render pdf: %w", err)
+	}
+
+	return &orderpb.GenerateInvoiceResponse{
+		FileName: fmt.Sprintf("invoice_%d.pdf", ord.OrderID),
+		FileData: buf.Bytes(),
+	}, nil
+}
+
+
 // ===== helpers =====
 
 func bearerFromMD(ctx context.Context) (string, error) {
@@ -367,4 +473,33 @@ func orderStatusDomainToPB(s domain.OrderStatus) orderpb.OrderStatus {
 	default:
 		return orderpb.OrderStatus_ORDER_STATUS_UNSPECIFIED
 	}
+}
+
+
+func formatVNDEn(n float64) string {
+	// round to integer VND
+	i := int64(n + 0.5)
+	s := strconv.FormatInt(i, 10)
+	// insert commas
+	var rev []byte
+	for j, c := range []byte(s) {
+		_ = j
+		rev = append(rev, c)
+	}
+	// reverse for grouping
+	for l, r := 0, len(rev)-1; l < r; l, r = l+1, r-1 {
+		rev[l], rev[r] = rev[r], rev[l]
+	}
+	var out []byte
+	for k := 0; k < len(rev); k++ {
+		if k > 0 && k%3 == 0 {
+			out = append(out, ',')
+		}
+		out = append(out, rev[k])
+	}
+	// reverse back
+	for l, r := 0, len(out)-1; l < r; l, r = l+1, r-1 {
+		out[l], out[r] = out[r], out[l]
+	}
+	return string(out) + " VND"
 }
