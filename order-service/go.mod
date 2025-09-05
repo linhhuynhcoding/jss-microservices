@@ -5,7 +5,7 @@ go 1.24.6
 require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.1
 	github.com/linhhuynhcoding/jss-microservices/mq v0.0.0-20250825055631-2e9381e61cf7
-	github.com/linhhuynhcoding/jss-microservices/rpc v0.0.0-20250901141604-8ee201cc0acb
+	github.com/linhhuynhcoding/jss-microservices/rpc v0.0.0-20250902123517-b2fb3667f9f7
 	github.com/spf13/viper v1.16.0
 	go.mongodb.org/mongo-driver v1.11.0
 	go.uber.org/zap v1.27.0
@@ -17,6 +17,7 @@ require (
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
+	github.com/jung-kurt/gofpdf v1.16.2
 	github.com/klauspost/compress v1.13.6 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
