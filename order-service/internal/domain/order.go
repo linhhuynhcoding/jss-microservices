@@ -1,32 +1,45 @@
 package domain
 
-import (
-    "time"
+import "time"
+
+type OrderStatus int32
+
+const (
+	OrderStatusUnspecified OrderStatus = 0
+	OrderStatusPending     OrderStatus = 1
+	OrderStatusPaid        OrderStatus = 2
+	OrderStatusCompleted   OrderStatus = 3
+	OrderStatusCanceled    OrderStatus = 4
 )
 
-// OrderItem represents a purchased product within an order.  It records
-// the product identifier, quantity and the unit price at the time of
-// purchase.  Storing unit_price allows accurate reconciliation even if
-// product prices change later.
-type OrderItem struct {
-    ProductID int32   `bson:"product_id" json:"product_id"`
-    Quantity  int32   `bson:"quantity" json:"quantity"`
-    UnitPrice float64 `bson:"unit_price" json:"unit_price"`
+type StatusHistory struct {
+	Status OrderStatus `bson:"status" json:"status"`
+	Note   string      `bson:"note" json:"note"`
+	At     time.Time   `bson:"at" json:"at"`
 }
 
-// Order represents an order placed by a customer and created by a staff
-// member.  In addition to the MongoDB ObjectID (omitted here), each order
-// has a sequential integer ID used when interfacing with the product and
-// loyalty services.  Voucher codes applied to the order are persisted.
-type Order struct {
-    OrderID       int32       `bson:"order_id" json:"order_id"`
-    CustomerID    int32       `bson:"customer_id" json:"customer_id"`
-    StaffID       string      `bson:"staff_id" json:"staff_id"`
-    Items         []OrderItem `bson:"items" json:"items"`
-    VoucherCodes  []string    `bson:"voucher_codes" json:"voucher_codes"`
-    TotalPrice    float64     `bson:"total_price" json:"total_price"`
-    DiscountAmount float64    `bson:"discount_amount" json:"discount_amount"`
-    FinalPrice    float64     `bson:"final_price" json:"final_price"`
-    ShippingCost  float64     `bson:"shipping_cost" json:"shipping_cost"`
-    CreatedAt     time.Time   `bson:"created_at" json:"created_at"`
+type OrderItem struct {
+	ProductID    int32   `bson:"product_id" json:"product_id"`
+	Quantity     int32   `bson:"quantity" json:"quantity"`
+	UnitPrice    float64 `bson:"unit_price" json:"unit_price"`
+	ProductName  string  `bson:"product_name" json:"product_name"`
+	ProductImage string  `bson:"product_image" json:"product_image"`
+	LineTotal    float64 `bson:"line_total" json:"line_total"`
 }
+
+type Order struct {
+    OrderID        int32           `bson:"order_id" json:"order_id"`
+    CustomerName   string          `bson:"customer_name" json:"customer_name"`
+    CustomerID     int32           `bson:"customer_id,omitempty" json:"customer_id,omitempty"` // NEW
+    StaffID        string          `bson:"staff_id" json:"staff_id"`
+    Items          []OrderItem     `bson:"items" json:"items"`
+    VoucherCodes   []string        `bson:"voucher_codes" json:"voucher_codes"`
+    TotalPrice     float64         `bson:"total_price" json:"total_price"`
+    DiscountAmount float64         `bson:"discount_amount" json:"discount_amount"`
+    FinalPrice     float64         `bson:"final_price" json:"final_price"`
+    ShippingCost   float64         `bson:"shipping_cost" json:"shipping_cost"`
+    CreatedAt      time.Time       `bson:"created_at" json:"created_at"`
+    Status         OrderStatus     `bson:"status" json:"status"`
+    StatusHistory  []StatusHistory `bson:"status_history" json:"status_history"`
+}
+
