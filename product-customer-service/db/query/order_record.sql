@@ -4,7 +4,13 @@ INSERT INTO order_record (
 ) VALUES (
   $1, $2, $3, $4, COALESCE($5, 'pending')
 )
+ON CONFLICT (customer_id, product_id, order_id)
+DO UPDATE SET
+  quantity   = order_record.quantity + EXCLUDED.quantity,
+  status     = COALESCE(EXCLUDED.status, order_record.status),
+  updated_at = NOW()
 RETURNING *;
+
 
 -- name: GetOrderRecord :one
 SELECT *

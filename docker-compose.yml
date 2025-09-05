@@ -17,7 +17,7 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - microservice-network
+      - jss-network
 
   minio-init:
     image: minio/mc:latest
@@ -32,7 +32,7 @@ services:
         echo 'Buckets created'; exit 0
       "
     networks:
-      - microservice-network
+      - jss-network
     restart: "no"
 
   prometheus:
@@ -43,7 +43,7 @@ services:
       - prometheus_data:/prometheus
     ports:
       - "9090:9090"
-    networks: [microservice-network]
+    networks: [jss-network]
 
   loki:
     image: grafana/loki:2.9.0
@@ -55,18 +55,22 @@ services:
     depends_on:
       minio-init:
         condition: service_completed_successfully
-    networks: [microservice-network]
+    networks: [jss-network]
 
   promtail:
-    image: grafana/promtail:2.9.0
+    image: grafana/promtail:2.9.1
     container_name: promtail
+    command: ["-config.file=/etc/promtail/config.yml"]
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - ./monitoring/promtail-config.yaml:/etc/promtail/promtail.yaml:ro
-    command: -config.file=/etc/promtail/promtail.yaml
-    depends_on: [loki]
-    networks: [microservice-network]
+      - ./monitoring/promtail-config.yaml:/etc/promtail/config.yml:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro   # đọc file log
+      - /var/run/docker.sock:/var/run/docker.sock:ro               # docker_sd
+    ports:
+      - "9080:9080"    # để debug /targets, /metrics
+    networks: [jss-network]
+    depends_on:
+      loki:
+        condition: service_started
 
   tempo:
     image: grafana/tempo:2.4.1
@@ -78,7 +82,7 @@ services:
     ports:
       - "4317:4317"
       - "3200:3200"
-    networks: [microservice-network]
+    networks: [jss-network]
     depends_on:
       minio-init:
         condition: service_completed_successfully
@@ -100,7 +104,7 @@ services:
       - prometheus
       - loki
       - tempo
-    networks: [microservice-network]
+    networks: [jss-network]
 
   rabbitmq:
     image: rabbitmq:3.13-management
@@ -121,7 +125,7 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - microservice-network
+      - jss-network
 
   notification-service:
     build:
@@ -135,7 +139,7 @@ services:
       - SUBSCRIBER_NAME=noti.notification.create
 
     ports:
-      - "50002:50002"
+      - "50022:50022"
       - "8082:8082"
     depends_on:
       rabbitmq:
@@ -143,7 +147,7 @@ services:
       minio:
         condition: service_healthy
     networks:
-      - microservice-network
+      - jss-network
 
   seed:
     build:
@@ -155,7 +159,7 @@ services:
       - ./auth-service/.env.example
     command: ["./seed"]
     networks:
-      - microservice-network
+      - jss-network
 
   auth-service:
     build:
@@ -166,14 +170,51 @@ services:
     env_file:
       - ./auth-service/.env.example
     ports:
-      - "50001:50001"
+      - "50011:50011"
       - "8080:8080"
     depends_on:
       seed:
         condition: service_completed_successfully
       rabbitmq:
         condition: service_healthy
-    networks: [microservice-network]
+    networks: [jss-network]
+
+  order-service:
+    build:
+      context: ./order-service
+      dockerfile: Dockerfile
+    container_name: order-service
+    env_file:
+      - ./order-service/.env.example
+    environment:
+      # Nếu bạn dùng Atlas như auth-service thì override tại đây (không cần mongo container)
+      # MONGO_URI: "mongodb+srv://<user>:<pass>@<cluster>/<DB>?retryWrites=true&w=majority"
+      # MONGO_DB:  "OrderService"
+
+      # Địa chỉ GRPC các service phụ thuộc trong docker network
+      AUTH_GRPC_ADDR: auth-service:50011
+      PRODUCT_GRPC_ADDR: product-service:50001
+      LOYALTY_GRPC_ADDR: loyalty-service:50051
+
+      # RabbitMQ (khớp với cluster hiện tại đang load từ definitions.json)
+      RABBITMQ_URL: amqp://noti:noti123@rabbitmq:5672/
+      EXCHANGE_NAME: notifications
+      PUBLISHER_NAME: order-service
+    ports:
+      - "50033:50033"   # gRPC (nếu bạn cần call trực tiếp từ ngoài)
+      - "8083:8083"     # HTTP Gateway (Kong sẽ forward vào đây)
+    depends_on:
+      auth-service:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+      # Hai service dưới đây cần chạy (trong compose khác hoặc thêm vào compose này)
+      # Nếu đang chạy ở compose khác thì bỏ depends_on cũng được
+      # product-customer-service:
+      #   condition: service_started
+      # loyalty-service:
+      #   condition: service_started
+    networks: [jss-network]
 
   kong:
     image: kong:3.3.1
@@ -197,7 +238,7 @@ services:
       - "8444:8444"
     volumes:
       - ./api-gateway/kong.yml:/usr/local/kong/declarative/kong.yml:ro
-    networks: [microservice-network]
+    networks: [jss-network]
     healthcheck:
       test: ["CMD", "kong", "health"]
       interval: 10s
@@ -215,5 +256,4 @@ volumes:
   grafana_data:
 
 networks:
-  microservice-network:
-    driver: bridge
+  jss-network:

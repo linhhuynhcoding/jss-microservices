@@ -25,5 +25,5 @@ RUN chmod +x /wait-for.sh
 HEALTHCHECK --interval=10s --timeout=3s --start-period=5s \
     CMD curl -f http://localhost:8001/health || exit 1
 
-EXPOSE 8001 50001
+EXPOSE 8001 50011
 CMD ["/wait-for.sh", "rabbitmq", "5672", "--", "./auth-service"]

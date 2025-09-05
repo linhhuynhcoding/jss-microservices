@@ -23,6 +23,6 @@ COPY --from=build /app/main /app/main
 COPY --from=build /app/wait-for.sh /app/wait-for.sh
 RUN chmod +x /app/wait-for.sh
 
-EXPOSE 8082 50002
+EXPOSE 8082 50022
 
 CMD ["/app/main"]

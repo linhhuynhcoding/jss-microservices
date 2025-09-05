@@ -7,99 +7,94 @@ import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/linhhuynhcoding/jss-microservices/rpc/gen/order";
 
-// Trạng thái đơn hàng tại cửa tiệm
+// ===== Models =====
 enum OrderStatus {
   ORDER_STATUS_UNSPECIFIED = 0;
-  PENDING   = 1;  // tạo đơn, chưa thanh toán
-  PAID      = 2;  // đã thanh toán
-  COMPLETED = 3;  // hoàn tất (giao cho khách tại quầy)
-  CANCELED  = 4;  // huỷ
+  PENDING   = 1;
+  PAID      = 2;
+  COMPLETED = 3;
+  CANCELED  = 4;
 }
 
-// Lịch sử thay đổi trạng thái (tuỳ chọn)
 message StatusHistory {
   OrderStatus status = 1;
   string note = 2;
   google.protobuf.Timestamp at = 3;
 }
 
-// Dòng sản phẩm trong đơn (lưu snapshot để hiển thị nhanh, không phụ thuộc product-service)
 message OrderItem {
-  int32  product_id    = 1;   // ID sản phẩm
-  int32  quantity      = 2;   // Số lượng
-  double unit_price    = 3;   // Đơn giá tại thời điểm mua
+  int32  product_id    = 1;
+  int32  quantity      = 2;
+  double unit_price    = 3;
 
-  // NEW: ảnh & tên sản phẩm (snapshot)
-  string product_name  = 10;  // tên tại thời điểm mua
-  string product_image = 11;  // URL ảnh hiển thị
-  double line_total    = 12;  // = unit_price * quantity (server tính)
+  string product_name  = 10;
+  string product_image = 11;
+  double line_total    = 12;
 }
 
-// Tạo đơn tại quầy (không có customer_id, chỉ lưu tên khách nếu cần)
-message CreateOrderRequest {
-  string customer_name = 1;                // tên khách (nhập tự do tại quầy)
-  repeated CreateOrderItem items = 2;      // danh sách sp và số lượng
-  repeated string voucher_codes = 3;       // mã giảm giá áp dụng
-  double shipping_cost = 4;                // mặc định 0 cho bán tại chỗ
-}
-
-// Item trong request khi tạo đơn
+// ===== Requests/Responses =====
 message CreateOrderItem {
   int32 product_id = 1;
   int32 quantity   = 2;
 }
 
-// Kết quả tạo đơn
+message CreateOrderRequest {
+  string customer_name = 1;
+  repeated CreateOrderItem items = 2;
+  repeated string voucher_codes = 3;
+  double shipping_cost = 4;
+
+  // NEW: optional customer_id (nếu nhân viên chọn khách trong hệ thống)
+  int32 customer_id = 5;
+}
+
 message CreateOrderResponse {
   Order order = 1;
 }
 
-// Lấy 1 đơn theo ID
 message GetOrderRequest {
   int32 order_id = 1;
 }
 
-// Yêu cầu phân trang
 message ListOrdersRequest {
-  int32 page  = 1;  // từ 0
+  int32 page  = 1; // from 0
   int32 limit = 2;
 }
 
-// ✅ PaginationResponse nhúng thẳng trong order.proto
 message PaginationResponse {
-  int32 total    = 1; // tổng số bản ghi
-  int32 limit    = 2; // số bản ghi mỗi trang
-  int32 page     = 3; // trang hiện tại
-  bool  has_next = 4; // còn trang tiếp theo không
+  int32 total    = 1;
+  int32 limit    = 2;
+  int32 page     = 3;
+  bool  has_next = 4;
 }
 
-// Kết quả danh sách đơn
 message ListOrdersResponse {
   repeated Order orders = 1;
   PaginationResponse pagination = 2;
 }
 
-// Thực thể Đơn hàng (không có address, không có customer_id)
+// ===== Entity =====
 message Order {
-  int32  order_id       = 1;   // ID tuần tự
-  string customer_name  = 2;   // tên khách (tại quầy)
-  string staff_id       = 3;   // ID người tạo (user trong hệ thống)
+  int32  order_id       = 1;
+  string customer_name  = 2;
+  string staff_id       = 3;
   repeated OrderItem items = 4;
   repeated string voucher_codes = 5;
 
-  // GIỮ nguyên numbering cũ để tránh xung đột:
-  double total_price     = 6;   // tạm hiểu = subtotal trước khuyến mãi
+  double total_price     = 6;
   double discount_amount = 7;
-  double final_price     = 8;   // = total_price - discount_amount + shipping_cost
-  double shipping_cost   = 9;   // thường = 0 cho bán tại quầy
+  double final_price     = 8;
+  double shipping_cost   = 9;
   google.protobuf.Timestamp created_at = 10;
 
-  // NEW:
   OrderStatus status = 11;
   repeated StatusHistory status_history = 12;
+
+  // NEW: optional customer_id được lưu lại
+  int32 customer_id = 13;
 }
 
-// Dịch vụ Order
+// ===== Service =====
 service OrderService {
   rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse) {
     option (google.api.http) = {
