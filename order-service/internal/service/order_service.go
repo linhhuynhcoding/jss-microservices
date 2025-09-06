@@ -17,6 +17,7 @@ import (
 
 	mq "github.com/linhhuynhcoding/jss-microservices/mq"
 	mqconfig "github.com/linhhuynhcoding/jss-microservices/mq/config"
+	"github.com/linhhuynhcoding/jss-microservices/mq/consts"
 
 	_ "github.com/linhhuynhcoding/jss-microservices/rpc/gen/auth"
 	loyaltypb "github.com/linhhuynhcoding/jss-microservices/rpc/gen/loyalty"
@@ -58,9 +59,9 @@ func New(cfg config.Config, db *mongo.Database, log *zap.Logger) (*Service, erro
 
 	pubCfg := mqconfig.RabbitMQConfig{
 		ConnStr:       cfg.RabbitMQURL,
-		ExchangeName:  cfg.ExchangeName,
+		ExchangeName:  consts.EXCHANGE_ORDER_SERVICE,
 		ExchangeType:  "topic",
-		PublisherName: cfg.PublisherName,
+		PublisherName: consts.EXCHANGE_ORDER_SERVICE,
 	}
 	publisher, err := mq.NewPublisher(pubCfg, log)
 	if err != nil {
@@ -229,10 +230,14 @@ func (s *Service) CreateOrder(ctx context.Context, req *orderpb.CreateOrderReque
 		s.logger.Error("failed to publish notification", zap.Error(err))
 	}
 
-	// 10) Response
+	// 10) Publish ORDER_CREATED
+	if err := s.publisher.SendMessage(toPBOrder(order), consts.TOPIC_CREATE_ORDER); err != nil {
+		s.logger.Error("failed to publish order created event", zap.Error(err))
+	}
+
+	// 11) Response
 	return &orderpb.CreateOrderResponse{Order: toPBOrder(order)}, nil
 }
-
 
 func (s *Service) GetOrder(ctx context.Context, req *orderpb.GetOrderRequest) (*orderpb.Order, error) {
 	accessToken, err := bearerFromMD(ctx)
@@ -303,7 +308,6 @@ func (s *Service) ListOrders(ctx context.Context, req *orderpb.ListOrdersRequest
 	}
 	return &orderpb.ListOrdersResponse{Orders: pbOrders, Pagination: pagi}, nil
 }
-
 
 func (s *Service) GenerateInvoice(ctx context.Context, req *orderpb.GetOrderRequest) (*orderpb.GenerateInvoiceResponse, error) {
 	// Auth
@@ -407,7 +411,6 @@ func (s *Service) GenerateInvoice(ctx context.Context, req *orderpb.GetOrderRequ
 	}, nil
 }
 
-
 // ===== helpers =====
 
 func bearerFromMD(ctx context.Context) (string, error) {
@@ -474,7 +477,6 @@ func orderStatusDomainToPB(s domain.OrderStatus) orderpb.OrderStatus {
 		return orderpb.OrderStatus_ORDER_STATUS_UNSPECIFIED
 	}
 }
-
 
 func formatVNDEn(n float64) string {
 	// round to integer VND
