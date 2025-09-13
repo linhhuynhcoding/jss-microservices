@@ -6,7 +6,8 @@ require (
 	github.com/cloudinary/cloudinary-go/v2 v2.13.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.1
 	github.com/jackc/pgx/v5 v5.7.5
-	github.com/linhhuynhcoding/jss-microservices/rpc v0.0.0-20250831153039-746231f793d4
+	github.com/linhhuynhcoding/jss-microservices/mq v0.0.0-20250913014727-3c2c08aecddb
+	github.com/linhhuynhcoding/jss-microservices/rpc v0.0.0-20250913014727-3c2c08aecddb
 	github.com/spf13/viper v1.20.1
 	go.uber.org/zap v1.27.0
 	google.golang.org/grpc v1.74.2
@@ -23,6 +24,7 @@ require (
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.3 // indirect
+	github.com/rabbitmq/amqp091-go v1.10.0 // indirect
 	github.com/sagikazarmark/locafero v0.7.0 // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
 	github.com/spf13/afero v1.12.0 // indirect

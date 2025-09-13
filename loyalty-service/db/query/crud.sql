@@ -70,6 +70,11 @@ SET code = $2, description = $3, discount_type = $4, discount_value = $5,
 WHERE id = $1
 RETURNING *;
 
+-- name: DecreaseVoucher :exec
+UPDATE vouchers
+SET usage_limit = usage_limit - 1
+WHERE id = $1;
+
 -- name: DeleteVoucher :exec
 DELETE FROM vouchers
 WHERE id = $1;

@@ -26,6 +26,8 @@ type Config struct {
 	UploadFolder string `mapstructure:"UPLOAD_FOLDER"`
 
 	MarketServiceUrl string `mapstructure:"MARKET_SERVICE_URL"`
+
+	MqConnStr string `mapstructure:"MQ_CONN_STR"`
 }
 
 func NewConfig() Config {

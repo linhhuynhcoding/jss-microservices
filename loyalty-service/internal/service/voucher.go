@@ -521,6 +521,11 @@ func (s *Service) UsingVoucher(ctx context.Context, req *api.UsingVoucherRequest
 
 	err = s.queries.ExecTx(ctx, func(q *db.Queries) error {
 		for _, voucher := range vouchersResp {
+			err = s.queries.DecreaseVoucher(ctx, voucher.Id)
+			if err != nil {
+				logger.Error("Failed to decrease voucher", zap.Error(err))
+				return err
+			}
 			_, err = s.queries.UpsertUsageRecord(ctx, db.UpsertUsageRecordParams{
 				CustomerID: req.CustomerId,
 				VoucherID:  voucher.Id,

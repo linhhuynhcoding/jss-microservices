@@ -189,10 +189,12 @@ func (s *Service) PurchaseProduct(ctx context.Context, req *api.PurchaseProductR
 				log.Error("not enough stock", zap.Error(err))
 				return status.Error(codes.Internal, "not enough stock")
 			}
-			product.Stock.Int32 -= p.Quantity
 			_, err := s.queries.UpdateProductByCode(ctx, db.UpdateProductByCodeParams{
-				Code:    product.Code,
-				Stock:   product.Stock,
+				Code: product.Code,
+				Stock: pgtype.Int4{
+					Int32: product.Stock.Int32 - p.Quantity,
+					Valid: true,
+				},
 				BuyTurn: utils.Int32(product.BuyTurn.Int32 + 1),
 			})
 			if err != nil {

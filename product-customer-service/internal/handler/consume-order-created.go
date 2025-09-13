@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/linhhuynhcoding/jss-microservices/loyalty/config"
 	"github.com/linhhuynhcoding/jss-microservices/mq"
 	mqConfig "github.com/linhhuynhcoding/jss-microservices/mq/config"
 	"github.com/linhhuynhcoding/jss-microservices/mq/consts"
+	"github.com/linhhuynhcoding/jss-microservices/product/config"
 	"github.com/linhhuynhcoding/jss-microservices/rpc/gen/order"
 	"go.uber.org/zap"
 	"google.golang.org/protobuf/encoding/protojson"
