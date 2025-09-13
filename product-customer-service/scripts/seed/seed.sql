@@ -2,27 +2,27 @@ TRUNCATE TABLE product_categories CASCADE;
 TRUNCATE TABLE products CASCADE;
 TRUNCATE TABLE customers CASCADE;
 
-INSERT INTO product_categories (name)
+INSERT INTO product_categories (id, name)
 VALUES 
-  ('Nhẫn'),
-  ('Dây Chuyền'),
-  ('Mặt Dây Chuyền'),
-  ('Bông Tai'),
-  ('Lắc'),
-  ('Vòng'),
-  ('Charm'),
-  ('Dây Cổ')
-ON CONFLICT (name) 
+  (1, 'Nhẫn'),
+  (2, 'Dây Chuyền'),
+  (3, 'Mặt Dây Chuyền'),
+  (4, 'Bông Tai'),
+  (5, 'Lắc'),
+  (6, 'Vòng'),
+  (7, 'Charm'),
+  (8, 'Dây Cổ')
+ON CONFLICT (id) 
 DO UPDATE SET name = EXCLUDED.name;
 
 -- Seed data for products
 INSERT INTO products 
 (name, code, category_id, weight, gold_price_at_time, labor_cost, stone_cost, markup_rate, selling_price, warranty_period, image, created_at, updated_at, stock) 
 VALUES
-('Gold Ring Classic', 'PRD001', 1, 5.20, 5600000, 500000, 0, 10.00, 6700000, 12, 'ring1.jpg', NOW(), NOW(), 10),
-('Diamond Necklace', 'PRD002', 2, 12.50, 5600000, 1200000, 3500000, 15.00, 13000000, 24, 'necklace1.jpg', NOW(), NOW(), 10),
-('Gold Bracelet', 'PRD003', 1, 8.75, 5600000, 800000, 0, 8.50, 9000000, 6, 'bracelet1.jpg', NOW(), NOW(), 10),
-('Platinum Earrings', 'PRD004', 3, 3.40, 7500000, 400000, 500000, 12.00, 8900000, 18, 'earring1.jpg', NOW(), NOW(), 10);
+('Gold Ring Classic', 1, 1, 5.20, 5600000, 500000, 0, 10.00, 6700000, 12, 'ring1.jpg', NOW(), NOW(), 10),
+('Diamond Necklace', 2, 2, 12.50, 5600000, 1200000, 3500000, 15.00, 13000000, 24, 'necklace1.jpg', NOW(), NOW(), 10),
+('Gold Bracelet', 3, 1, 8.75, 5600000, 800000, 0, 8.50, 9000000, 6, 'bracelet1.jpg', NOW(), NOW(), 10),
+('Platinum Earrings', 4, 3, 3.40, 7500000, 400000, 500000, 12.00, 8900000, 18, 'earring1.jpg', NOW(), NOW(), 10);
 
 -- Seed data for customers
 INSERT INTO customers 
