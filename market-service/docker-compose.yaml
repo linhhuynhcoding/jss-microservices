@@ -47,7 +47,7 @@ services:
       dockerfile: Dockerfile
     container_name: market-service
     ports:
-      - "8006:8080"
+      - "8086:8080"
       - "50006:50051"
     environment:
       - DB_SOURCE=postgresql://root:secret@market-postgres:5432/jss_market?sslmode=disable
