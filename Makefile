@@ -1,5 +1,6 @@
 run-app:
 	docker compose \
+		-f ./docker-compose.yml \
 		-f ./market-service/docker-compose.yaml \
 		-f ./product-customer-service/docker-compose.yaml \
 		-f ./loyalty-service/docker-compose.yaml \
@@ -9,6 +10,7 @@ run-app:
 
 down-app:
 	docker compose \
+		-f ./docker-compose.yml \
 		-f ./market-service/docker-compose.yaml \
 		-f ./product-customer-service/docker-compose.yaml \
 		-f ./loyalty-service/docker-compose.yaml \
