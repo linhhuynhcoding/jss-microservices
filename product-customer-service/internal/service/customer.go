@@ -27,7 +27,7 @@ func (s *Service) CreateCustomer(ctx context.Context, req *pb.CreateCustomerRequ
 
 // ----- GetCustomer -----
 func (s *Service) GetCustomer(ctx context.Context, req *pb.GetCustomerRequest) (*pb.CustomerResponse, error) {
-	customer, err := s.queries.GetCustomerByID(ctx, req.Id)
+	customer, err := s.queries.GetCustomerByPhone(ctx, req.Phone)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return nil, fmt.Errorf("customer not found")
@@ -40,7 +40,7 @@ func (s *Service) GetCustomer(ctx context.Context, req *pb.GetCustomerRequest) (
 // ----- ListCustomers -----
 func (s *Service) ListCustomers(ctx context.Context, req *pb.ListCustomersRequest) (*pb.ListCustomersResponse, error) {
 	customers, err := s.queries.ListCustomers(ctx, db.ListCustomersParams{
-		Limit: req.Limit,
+		Limit:  req.Limit,
 		Offset: req.Page * req.Limit,
 	})
 	if err != nil {
