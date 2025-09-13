@@ -31,7 +31,7 @@ type AuthService struct {
 	refreshRepo *repository.RefreshTokenRepository
 	hashingSvc  *hashing.HashingService
 	tokenSvc    *token.TokenService
-	log         *zap.Logger 
+	log         *zap.Logger
 }
 
 func NewAuthService(
@@ -49,8 +49,8 @@ func NewAuthService(
 		hashingSvc:  hashingSvc,
 		tokenSvc:    tokenSvc,
 		log:         log,
-	} 
-	
+	}
+
 }
 
 func (s *AuthService) Login(ctx context.Context, req dto.LoginRequest) (*dto.TokenResponse, error) {
@@ -62,6 +62,7 @@ func (s *AuthService) Login(ctx context.Context, req dto.LoginRequest) (*dto.Tok
 
 	ok, err := s.hashingSvc.Compare(req.Password, user.Password)
 	if err != nil || !ok {
+		s.log.Error("failed to compare password", zap.Error(err), zap.String("email", req.Email), zap.String("password", req.Password))
 		return nil, ErrInvalidCredentials
 	}
 
@@ -78,20 +79,20 @@ func (s *AuthService) Login(ctx context.Context, req dto.LoginRequest) (*dto.Tok
 	pubCfg := mqconfig.RabbitMQConfig{
 		ConnStr:       cfg.RabbitMQURL,
 		ExchangeName:  "notifications", // nếu dùng exchange
-		ExchangeType:  "topic",          // (nếu cần)
+		ExchangeType:  "topic",         // (nếu cần)
 		PublisherName: "auth-service",
 	}
 	publisher, err := mq.NewPublisher(pubCfg, s.log)
 	// ...
 	evt := &notificationevent.CreateNotificationRequest{
-		UserId: user.ID.Hex(),              // hoặc dùng Role
-		Title:  "Login successfully",
-		Message:"User just have got into system successfully",
+		UserId:  user.ID.Hex(), // hoặc dùng Role
+		Title:   "Login successfully",
+		Message: "User just have got into system successfully",
 	}
 	err = publisher.SendMessage(evt, "notification.create")
 	if err != nil {
-    s.log.Error("failed to send notification event", zap.Error(err))
-  }
+		s.log.Error("failed to send notification event", zap.Error(err))
+	}
 
 	// KHÔNG còn user.RoleID / user.Role.Name — dùng user.Role (string)
 	return s.generateTokens(ctx, user.ID, created.ID, primitive.NilObjectID, user.Role)
@@ -139,7 +140,6 @@ func (s *AuthService) RefreshToken(
 	return s.generateTokens(ctx, userObjID, oldRT.DeviceID, primitive.NilObjectID, user.Role)
 
 }
-
 
 func (s *AuthService) Logout(ctx context.Context, rt string) error {
 	deleted, err := s.refreshRepo.Delete(ctx, rt)

@@ -65,7 +65,7 @@ service ProductCustomer {
 
     rpc GetCustomer (GetCustomerRequest) returns (CustomerResponse) {
         option (google.api.http) = {
-            get: "/v1/customers/{id}"
+            get: "/v1/customers/{phone}"
         };
     }
 
@@ -182,7 +182,7 @@ message CreateCustomerRequest {
 }
 
 message GetCustomerRequest {
-    int32 id = 1;
+    string phone = 1;
 }
 
 message ListCustomersRequest {
