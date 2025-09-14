@@ -40,8 +40,8 @@ FROM loyalty_points
 WHERE customer_id = $1;
 
 -- name: CreateVoucher :one
-INSERT INTO vouchers (code, description, discount_type, discount_value, start_date, end_date, usage_limit, created_at)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+INSERT INTO vouchers (code, description, discount_type, discount_value, start_date, end_date, usage_limit, created_at, is_global)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
 RETURNING *;
 
 -- name: GetVoucher :one
@@ -84,7 +84,7 @@ SELECT * FROM customer_vouchers
 WHERE id = $1 LIMIT 1;
 
 -- name: GetCustomerVouchers :many
-SELECT cv.*, v.code, v.description, v.discount_type, v.discount_value, v.start_date, v.end_date
+SELECT cv.*, v.code, v.description, v.discount_type, v.discount_value, v.start_date, v.end_date, v.usage_limit, v.is_global
 FROM customer_vouchers cv
 JOIN vouchers v ON cv.voucher_id = v.id
 WHERE cv.customer_id = $1

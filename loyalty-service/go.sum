@@ -35,8 +35,8 @@ github.com/linhhuynhcoding/jss-microservices/jss-shared v0.0.0-20250914023911-1b
 github.com/linhhuynhcoding/jss-microservices/jss-shared v0.0.0-20250914023911-1b7ef29c8321/go.mod h1:y9p8pvYR7Vdom3O7VMjSoZLyXiNXzxMTBEga0E77IBI=
 github.com/linhhuynhcoding/jss-microservices/mq v0.0.0-20250901080750-ae80f5212865 h1:u8jQiF536zVV7UQRvqqX8tGMmOfs28QzRSu/FWVZTE4=
 github.com/linhhuynhcoding/jss-microservices/mq v0.0.0-20250901080750-ae80f5212865/go.mod h1:lHTDO9bIBtcnNoeQ1TQgcTh2S0fWOGkCBoNym4S7NGg=
-github.com/linhhuynhcoding/jss-microservices/rpc v0.0.0-20250831142025-139c50b44c93 h1:qnTExkogngU0YpI/AwCz+fw9OqFxkvHCrDzNblzO+RQ=
-github.com/linhhuynhcoding/jss-microservices/rpc v0.0.0-20250831142025-139c50b44c93/go.mod h1:WyyGxx1nmJaA7jAX/kpd5Al/DQTbG+dbMc7Ij9CTW14=
+github.com/linhhuynhcoding/jss-microservices/rpc v0.0.0-20250914034005-bff0a1fd2254 h1:Q+8hYFQ7OcMkuXN+Ao3flbM+R82b0vFiLp5mmc8vbx8=
+github.com/linhhuynhcoding/jss-microservices/rpc v0.0.0-20250914034005-bff0a1fd2254/go.mod h1:WyyGxx1nmJaA7jAX/kpd5Al/DQTbG+dbMc7Ij9CTW14=
 github.com/pelletier/go-toml/v2 v2.2.3 h1:YmeHyLY8mFWbdkNWwpr+qIL2bEqT0o95WSdkNHvL12M=
 github.com/pelletier/go-toml/v2 v2.2.3/go.mod h1:MfCQTFTvCcUyyvvwm1+G6H/jORL20Xlb6rzQu9GuUkc=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=

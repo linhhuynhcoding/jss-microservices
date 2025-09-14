@@ -7,7 +7,7 @@ require (
 	github.com/jackc/pgx/v5 v5.7.5
 	github.com/linhhuynhcoding/jss-microservices/jss-shared v0.0.0-20250914023911-1b7ef29c8321
 	github.com/linhhuynhcoding/jss-microservices/mq v0.0.0-20250901080750-ae80f5212865
-	github.com/linhhuynhcoding/jss-microservices/rpc v0.0.0-20250831142025-139c50b44c93
+	github.com/linhhuynhcoding/jss-microservices/rpc v0.0.0-20250914034005-bff0a1fd2254
 	github.com/spf13/viper v1.20.1
 	go.uber.org/zap v1.27.0
 	google.golang.org/grpc v1.75.1

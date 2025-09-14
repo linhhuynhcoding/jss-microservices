@@ -156,7 +156,7 @@ func (s *Service) PurchaseProduct(ctx context.Context, req *api.PurchaseProductR
 		return nil, status.Error(codes.InvalidArgument, "invalid order id")
 	}
 
-	customer, err := s.queries.GetCustomerByID(ctx, req.CustomerId)
+	customer, err := s.queries.GetCustomerByPhone(ctx, req.CustomerId)
 	if err != nil {
 		log.Error("failed to get customer", zap.Error(err))
 		return nil, status.Error(codes.Internal, "failed to get customer")

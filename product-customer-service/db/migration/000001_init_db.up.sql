@@ -36,7 +36,7 @@ CREATE TABLE "customers" (
 );
 
 CREATE TABLE "order_record" (
-  "customer_id" int NOT NULL,
+  "customer_id" varchar NOT NULL,
   "product_id" int NOT NULL,
   "order_id" int NOT NULL,
   "quantity" int NOT NULL,
@@ -50,5 +50,5 @@ CREATE TABLE "order_record" (
 );
 
 ALTER TABLE "products" ADD FOREIGN KEY ("category_id") REFERENCES "product_categories" ("id");
-ALTER TABLE "order_record" ADD FOREIGN KEY ("customer_id") REFERENCES "customers" ("id");
+ALTER TABLE "order_record" ADD FOREIGN KEY ("customer_id") REFERENCES "customers" ("phone");
 ALTER TABLE "order_record" ADD FOREIGN KEY ("product_id") REFERENCES "products" ("id");

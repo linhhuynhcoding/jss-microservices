@@ -13,3 +13,8 @@ DO UPDATE SET
     status = EXCLUDED.status,
     updated_at = EXCLUDED.updated_at
 RETURNING *;
+
+-- name: DecreaseVoucher :exec
+UPDATE vouchers
+SET usage_limit = usage_limit - 1
+WHERE id = $1;
