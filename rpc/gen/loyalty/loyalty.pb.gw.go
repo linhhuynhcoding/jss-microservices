@@ -116,7 +116,7 @@ func request_Loyalty_GetLoyaltyPointsByCustomer_0(ctx context.Context, marshaler
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customer_id")
 	}
-	protoReq.CustomerId, err = runtime.Int32(val)
+	protoReq.CustomerId, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customer_id", err)
 	}
@@ -140,7 +140,7 @@ func local_request_Loyalty_GetLoyaltyPointsByCustomer_0(ctx context.Context, mar
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customer_id")
 	}
-	protoReq.CustomerId, err = runtime.Int32(val)
+	protoReq.CustomerId, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customer_id", err)
 	}
@@ -339,7 +339,7 @@ func request_Loyalty_GetCustomerTotalPoints_0(ctx context.Context, marshaler run
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customer_id")
 	}
-	protoReq.CustomerId, err = runtime.Int32(val)
+	protoReq.CustomerId, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customer_id", err)
 	}
@@ -357,7 +357,7 @@ func local_request_Loyalty_GetCustomerTotalPoints_0(ctx context.Context, marshal
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customer_id")
 	}
-	protoReq.CustomerId, err = runtime.Int32(val)
+	protoReq.CustomerId, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customer_id", err)
 	}
@@ -666,7 +666,7 @@ func request_Loyalty_GetAvailableVouchersForCustomer_0(ctx context.Context, mars
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customer_id")
 	}
-	protoReq.CustomerId, err = runtime.Int32(val)
+	protoReq.CustomerId, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customer_id", err)
 	}
@@ -690,7 +690,7 @@ func local_request_Loyalty_GetAvailableVouchersForCustomer_0(ctx context.Context
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customer_id")
 	}
-	protoReq.CustomerId, err = runtime.Int32(val)
+	protoReq.CustomerId, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customer_id", err)
 	}
@@ -758,7 +758,7 @@ func request_Loyalty_GetCustomerVouchers_0(ctx context.Context, marshaler runtim
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customer_id")
 	}
-	protoReq.CustomerId, err = runtime.Int32(val)
+	protoReq.CustomerId, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customer_id", err)
 	}
@@ -782,7 +782,7 @@ func local_request_Loyalty_GetCustomerVouchers_0(ctx context.Context, marshaler 
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customer_id")
 	}
-	protoReq.CustomerId, err = runtime.Int32(val)
+	protoReq.CustomerId, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customer_id", err)
 	}
@@ -812,7 +812,7 @@ func request_Loyalty_GetCustomerVouchersByStatus_0(ctx context.Context, marshale
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customer_id")
 	}
-	protoReq.CustomerId, err = runtime.Int32(val)
+	protoReq.CustomerId, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customer_id", err)
 	}
@@ -846,7 +846,7 @@ func local_request_Loyalty_GetCustomerVouchersByStatus_0(ctx context.Context, ma
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customer_id")
 	}
-	protoReq.CustomerId, err = runtime.Int32(val)
+	protoReq.CustomerId, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customer_id", err)
 	}

@@ -256,7 +256,7 @@ func (x *PaginationResponse) GetHasNext() bool {
 type LoyaltyPoint struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	CustomerId    int32                  `protobuf:"varint,2,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	CustomerId    string                 `protobuf:"bytes,2,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
 	Points        int32                  `protobuf:"varint,3,opt,name=points,proto3" json:"points,omitempty"`
 	Source        string                 `protobuf:"bytes,4,opt,name=source,proto3" json:"source,omitempty"`
 	ReferenceId   *int32                 `protobuf:"varint,5,opt,name=reference_id,json=referenceId,proto3,oneof" json:"reference_id,omitempty"`
@@ -302,11 +302,11 @@ func (x *LoyaltyPoint) GetId() int32 {
 	return 0
 }
 
-func (x *LoyaltyPoint) GetCustomerId() int32 {
+func (x *LoyaltyPoint) GetCustomerId() string {
 	if x != nil {
 		return x.CustomerId
 	}
-	return 0
+	return ""
 }
 
 func (x *LoyaltyPoint) GetPoints() int32 {
@@ -458,7 +458,7 @@ func (x *Voucher) GetUsedNumber() int32 {
 type CustomerVoucher struct {
 	state      protoimpl.MessageState `protogen:"open.v1"`
 	Id         int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	CustomerId int32                  `protobuf:"varint,2,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	CustomerId string                 `protobuf:"bytes,2,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
 	VoucherId  int32                  `protobuf:"varint,3,opt,name=voucher_id,json=voucherId,proto3" json:"voucher_id,omitempty"`
 	Status     CustomerVoucher_Status `protobuf:"varint,4,opt,name=status,proto3,enum=common.CustomerVoucher_Status" json:"status,omitempty"`
 	UsedAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=used_at,json=usedAt,proto3,oneof" json:"used_at,omitempty"`
@@ -505,11 +505,11 @@ func (x *CustomerVoucher) GetId() int32 {
 	return 0
 }
 
-func (x *CustomerVoucher) GetCustomerId() int32 {
+func (x *CustomerVoucher) GetCustomerId() string {
 	if x != nil {
 		return x.CustomerId
 	}
-	return 0
+	return ""
 }
 
 func (x *CustomerVoucher) GetVoucherId() int32 {
@@ -557,7 +557,7 @@ const file_loyalty_common_proto_rawDesc = "" +
 	"=*\x13Pagination Response2&Pagination metadata for list responses\"\x87\x05\n" +
 	"\fLoyaltyPoint\x12E\n" +
 	"\x02id\x18\x01 \x01(\x05B5\x92A22.Unique identifier for the loyalty point record@\x01R\x02id\x12N\n" +
-	"\vcustomer_id\x18\x02 \x01(\x05B-\x92A*2(ID of the customer who earned the pointsR\n" +
+	"\vcustomer_id\x18\x02 \x01(\tB-\x92A*2(ID of the customer who earned the pointsR\n" +
 	"customerId\x12O\n" +
 	"\x06points\x18\x03 \x01(\x05B7\x92A422Number of points (can be negative for redemptions)R\x06points\x12[\n" +
 	"\x06source\x18\x04 \x01(\tBC\x92A@2<Source of the points (e.g., 'purchase', 'referral', 'bonus')x2R\x06source\x12d\n" +
@@ -595,7 +595,7 @@ const file_loyalty_common_proto_rawDesc = "" +
 	"\f_used_number\"\xd2\x05\n" +
 	"\x0fCustomerVoucher\x12H\n" +
 	"\x02id\x18\x01 \x01(\x05B8\x92A521Unique identifier for the customer voucher record@\x01R\x02id\x12M\n" +
-	"\vcustomer_id\x18\x02 \x01(\x05B,\x92A)2'ID of the customer who owns the voucherR\n" +
+	"\vcustomer_id\x18\x02 \x01(\tB,\x92A)2'ID of the customer who owns the voucherR\n" +
 	"customerId\x125\n" +
 	"\n" +
 	"voucher_id\x18\x03 \x01(\x05B\x16\x92A\x132\x11ID of the voucherR\tvoucherId\x12k\n" +

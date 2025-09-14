@@ -12,6 +12,7 @@ import (
 
 	"github.com/jackc/pgx/v5/pgtype"
 	utils "github.com/linhhuynhcoding/jss-microservices/jss-shared/utils/format"
+	token "github.com/linhhuynhcoding/jss-microservices/jss-shared/utils/token"
 	db "github.com/linhhuynhcoding/jss-microservices/loyalty/internal/repository"
 	api "github.com/linhhuynhcoding/jss-microservices/rpc/gen/loyalty"
 )
@@ -22,6 +23,19 @@ func (s *Service) CreateVoucher(ctx context.Context, req *api.CreateVoucherReque
 	s.logger.Info("Creating voucher",
 		zap.String("code", req.Code),
 		zap.String("discount_type", req.DiscountType.String()))
+
+	// 1) Auth
+	accessToken, err := token.BearerFromMD(ctx)
+	if err != nil {
+		return nil, err
+	}
+	valid, _, role, err := s.authClient.Validate(ctx, accessToken)
+	if err != nil || !valid {
+		return nil, fmt.Errorf("unauthorised")
+	}
+	if role != "MANAGER" && role != "ADMIN" {
+		return nil, fmt.Errorf("unauthorised role: %s, just Manager and Admin could update voucher", role)
+	}
 
 	if req.Code == "" {
 		return nil, status.Error(codes.InvalidArgument, "code is required")
@@ -35,6 +49,7 @@ func (s *Service) CreateVoucher(ctx context.Context, req *api.CreateVoucherReque
 	// 	return nil, status.Error(codes.InvalidArgument, "dates must be in YYYY-MM-DD format")
 	// }
 
+	isGlobal := req.Target == "ALL"
 	createParams := db.CreateVoucherParams{
 		Code:          req.Code,
 		Description:   utils.StringPointerToPgText(req.Description),
@@ -43,6 +58,7 @@ func (s *Service) CreateVoucher(ctx context.Context, req *api.CreateVoucherReque
 		StartDate:     utils.StringDateToPgDate(req.StartDate),
 		EndDate:       utils.StringDateToPgDate(req.EndDate),
 		UsageLimit:    utils.Int(req.UsageLimit),
+		IsGlobal:      pgtype.Bool{Bool: isGlobal, Valid: true},
 	}
 
 	voucher, err := s.queries.CreateVoucher(ctx, createParams)
@@ -241,10 +257,10 @@ func (s *Service) DeleteVoucher(ctx context.Context, req *api.DeleteVoucherReque
 
 func (s *Service) CreateCustomerVoucher(ctx context.Context, req *api.CreateCustomerVoucherRequest) (*api.GetCustomerVoucherResponse, error) {
 	s.logger.Info("Creating customer voucher",
-		zap.Int32("customer_id", req.CustomerId),
+		zap.String("customer_id", req.CustomerId),
 		zap.Int32("voucher_id", req.VoucherId))
 
-	if req.CustomerId <= 0 {
+	if req.CustomerId == "" {
 		return nil, status.Error(codes.InvalidArgument, "customer_id must be positive")
 	}
 	if req.VoucherId <= 0 {
@@ -292,9 +308,9 @@ func (s *Service) GetCustomerVoucher(ctx context.Context, req *api.GetCustomerVo
 }
 
 func (s *Service) GetCustomerVouchers(ctx context.Context, req *api.GetCustomerVouchersRequest) (*api.GetCustomerVouchersResponse, error) {
-	s.logger.Info("Getting customer vouchers", zap.Int32("customer_id", req.CustomerId))
+	s.logger.Info("Getting customer vouchers", zap.String("customer_id", req.CustomerId))
 
-	if req.CustomerId <= 0 {
+	if req.CustomerId == "" {
 		return nil, status.Error(codes.InvalidArgument, "customer_id must be positive")
 	}
 	var (
@@ -338,10 +354,10 @@ func (s *Service) GetCustomerVouchers(ctx context.Context, req *api.GetCustomerV
 
 func (s *Service) GetCustomerVouchersByStatus(ctx context.Context, req *api.GetCustomerVouchersByStatusRequest) (*api.GetCustomerVouchersResponse, error) {
 	s.logger.Info("Getting customer vouchers by status",
-		zap.Int32("customer_id", req.CustomerId),
+		zap.String("customer_id", req.CustomerId),
 		zap.String("status", req.Status.String()))
 
-	if req.CustomerId <= 0 {
+	if req.CustomerId == "" {
 		return nil, status.Error(codes.InvalidArgument, "customer_id must be positive")
 	}
 
@@ -427,9 +443,9 @@ func (s *Service) GetAllCustomerVouchers(ctx context.Context, req *api.GetAllCus
 }
 
 func (s *Service) GetAvailableVouchersForCustomer(ctx context.Context, req *api.GetAvailableVouchersForCustomerRequest) (*api.GetVouchersResponse, error) {
-	s.logger.Info("Getting available vouchers for customer", zap.Int32("customer_id", req.CustomerId))
+	s.logger.Info("Getting available vouchers for customer", zap.String("customer_id", req.CustomerId))
 
-	if req.CustomerId <= 0 {
+	if req.CustomerId == "" {
 		return nil, status.Error(codes.InvalidArgument, "customer_id must be positive")
 	}
 
@@ -485,7 +501,7 @@ func (s *Service) CalculateDiscountAmount(ctx context.Context, req *api.Calculat
 	logger := s.logger.With(zap.String("method", "CalculateDiscountAmount"))
 	logger.Info("Calculating discount amount", zap.Any("customer_id", req.CustomerId))
 
-	if req.CustomerId <= 0 {
+	if req.CustomerId == "" {
 		logger.Error("Invalid customer_id", zap.Any("customer_id", req.CustomerId))
 		return nil, fmt.Errorf("invalid customer_id: %d", req.CustomerId)
 	}
@@ -535,6 +551,21 @@ func (s *Service) UsingVoucher(ctx context.Context, req *api.UsingVoucherRequest
 			})
 			if err != nil {
 				logger.Error("Failed to upsert usage record", zap.Error(err))
+				return err
+			}
+
+			_, err = s.queries.UpdateCustomerVoucherStatus(ctx, db.UpdateCustomerVoucherStatusParams{
+				ID:     voucher.Id,
+				Status: utils.StringToPgText("used"),
+			})
+			if err != nil {
+				logger.Error("Failed to update customer voucher status", zap.Error(err))
+				return err
+			}
+
+			err = s.queries.DecreaseVoucher(ctx, voucher.Id)
+			if err != nil {
+				logger.Error("Failed to decrease voucher", zap.Error(err))
 				return err
 			}
 		}

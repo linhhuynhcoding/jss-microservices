@@ -230,7 +230,7 @@ message UploadFileResponse {
 }
 
 message PurchaseProductRequest {
-    int32 customer_id = 1;
+    string customer_id = 1;
     repeated PurchaseProductRequest_Product products = 2;
     int32 order_id = 3;
 }

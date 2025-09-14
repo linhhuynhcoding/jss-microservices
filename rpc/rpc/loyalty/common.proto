@@ -83,7 +83,7 @@ message LoyaltyPoint {
     read_only: true
   }];
   
-  int32 customer_id = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+  string customer_id = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "ID of the customer who earned the points"
   }];
   
@@ -192,7 +192,7 @@ message CustomerVoucher {
     read_only: true
   }];
   
-  int32 customer_id = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+  string customer_id = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "ID of the customer who owns the voucher"
   }];
   

@@ -17,11 +17,11 @@ import (
 
 func (s *Service) CreateLoyaltyPoint(ctx context.Context, req *api.CreateLoyaltyPointRequest) (*api.GetLoyaltyPointResponse, error) {
 	s.logger.Info("Creating loyalty point",
-		zap.Int32("customer_id", req.CustomerId),
+		zap.String("customer_id", req.CustomerId),
 		zap.Int32("points", req.Points),
 		zap.String("source", req.Source))
 
-	if req.CustomerId <= 0 {
+	if req.CustomerId == "" {
 		return nil, status.Error(codes.InvalidArgument, "customer_id must be positive")
 	}
 	if req.Source == "" {
@@ -70,9 +70,9 @@ func (s *Service) GetLoyaltyPoint(ctx context.Context, req *api.GetLoyaltyPointR
 }
 
 func (s *Service) GetLoyaltyPointsByCustomer(ctx context.Context, req *api.GetLoyaltyPointsByCustomerRequest) (*api.GetLoyaltyPointsResponse, error) {
-	s.logger.Info("Getting loyalty points by customer", zap.Int32("customer_id", req.CustomerId))
+	s.logger.Info("Getting loyalty points by customer", zap.String("customer_id", req.CustomerId))
 
-	if req.CustomerId <= 0 {
+	if req.CustomerId == "" {
 		return nil, status.Error(codes.InvalidArgument, "customer_id must be positive")
 	}
 
@@ -254,9 +254,9 @@ func (s *Service) DeleteLoyaltyPoint(ctx context.Context, req *api.DeleteLoyalty
 }
 
 func (s *Service) GetCustomerTotalPoints(ctx context.Context, req *api.GetCustomerTotalPointsRequest) (*api.GetCustomerTotalPointsResponse, error) {
-	s.logger.Info("Getting customer total points", zap.Int32("customer_id", req.CustomerId))
+	s.logger.Info("Getting customer total points", zap.String("customer_id", req.CustomerId))
 
-	if req.CustomerId <= 0 {
+	if req.CustomerId == "" {
 		return nil, status.Error(codes.InvalidArgument, "customer_id must be positive")
 	}
 

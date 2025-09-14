@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"slices"
+	"time"
 
 	utils "github.com/linhhuynhcoding/jss-microservices/jss-shared/utils/format"
 	db "github.com/linhhuynhcoding/jss-microservices/loyalty/internal/repository"
@@ -43,7 +44,7 @@ func (s *Service) calculateDiscountAmount(
 
 func (s *Service) validateVoucher(
 	ctx context.Context,
-	customerId int32,
+	customerId string,
 	voucherIds []string,
 ) ([]db.Voucher, error) {
 	logger := s.logger.With(zap.Any("method", "ValidateVoucher"))
@@ -58,21 +59,32 @@ func (s *Service) validateVoucher(
 		logger.Error("failed to get customer vouchers")
 		return nil, fmt.Errorf("failed to get customer vouchers: %w", err)
 	}
-	voucherMapCode := make(map[string]db.GetCustomerVouchersRow)
 	for _, custVoucher := range custVouchers {
 		if slices.Contains(voucherIds, custVoucher.Code) {
-			voucherMapCode[custVoucher.Code] = custVoucher
+			if custVoucher.Status.String == "used" {
+				logger.Error("voucher is used")
+				return nil, fmt.Errorf("voucher is used")
+			}
+			if custVoucher.StartDate.Time.After(time.Now()) {
+				logger.Error("voucher is not active")
+				return nil, fmt.Errorf("voucher is not active")
+			}
+			if custVoucher.EndDate.Time.Before(time.Now()) {
+				logger.Error("voucher is expired")
+				return nil, fmt.Errorf("voucher is expired")
+			}
+			vouchers = append(vouchers, db.Voucher{
+				ID:            custVoucher.ID,
+				Code:          custVoucher.Code,
+				Description:   custVoucher.Description,
+				DiscountType:  custVoucher.DiscountType,
+				DiscountValue: custVoucher.DiscountValue,
+				StartDate:     custVoucher.StartDate,
+				EndDate:       custVoucher.EndDate,
+				UsageLimit:    custVoucher.UsageLimit,
+				IsGlobal:      custVoucher.IsGlobal,	
+			})
 		}
 	}
-
-	for code := range voucherMapCode {
-		voucherDb, err := s.queries.GetVoucherByCode(ctx, code)
-		if err != nil {
-			logger.Error("failed to get voucher", zap.String("voucher", code))
-			return nil, fmt.Errorf("failed to get voucher: %w", err)
-		}
-		vouchers = append(vouchers, voucherDb)
-	}
-
 	return vouchers, nil
 }
