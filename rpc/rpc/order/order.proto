@@ -45,7 +45,7 @@ message CreateOrderRequest {
   double shipping_cost = 4;
 
   // NEW: optional customer_id (nếu nhân viên chọn khách trong hệ thống)
-  int32 customer_id = 5;
+  string customer_id = 5;
 }
 
 message CreateOrderResponse {
@@ -97,7 +97,7 @@ message Order {
   repeated StatusHistory status_history = 12;
 
   // NEW: optional customer_id được lưu lại
-  int32 customer_id = 13;
+  string customer_id = 13;
 }
 
 // ===== Service =====

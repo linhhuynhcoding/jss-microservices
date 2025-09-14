@@ -30,7 +30,7 @@ type OrderItem struct {
 type Order struct {
     OrderID        int32           `bson:"order_id" json:"order_id"`
     CustomerName   string          `bson:"customer_name" json:"customer_name"`
-    CustomerID     int32           `bson:"customer_id,omitempty" json:"customer_id,omitempty"` // NEW
+    CustomerID     string           `bson:"customer_id,omitempty" json:"customer_id,omitempty"` // NEW
     StaffID        string          `bson:"staff_id" json:"staff_id"`
     Items          []OrderItem     `bson:"items" json:"items"`
     VoucherCodes   []string        `bson:"voucher_codes" json:"voucher_codes"`
