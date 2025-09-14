@@ -57,7 +57,7 @@ message CreateLoyaltyPointRequest {
     }
   };
 
-  int32 customer_id = 1;
+  string customer_id = 1;
   int32 points = 2;
   string source = 3;
   optional int32 reference_id = 4;
@@ -70,7 +70,7 @@ message GetLoyaltyPointRequest {
 }
 
 message GetLoyaltyPointsByCustomerRequest {
-  int32 customer_id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+  string customer_id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "Customer ID to filter by"
   }];
   common.PaginationRequest pagination = 2;
@@ -99,7 +99,7 @@ message DeleteLoyaltyPointRequest {
 }
 
 message GetCustomerTotalPointsRequest {
-  int32 customer_id = 1;
+  string customer_id = 1;
 }
 
 // Response messages for loyalty points
@@ -116,7 +116,7 @@ message GetCustomerTotalPointsResponse {
   int32 total_points = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "Total points for the customer"
   }];
-  int32 customer_id = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+  string customer_id = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "Customer ID"
   }];
 }
@@ -200,7 +200,7 @@ message CreateCustomerVoucherRequest {
     }
   };
 
-  int32 customer_id = 1;
+  string customer_id = 1;
   int32 voucher_id = 2;
   optional common.CustomerVoucher.Status status = 3;
 }
@@ -212,14 +212,14 @@ message GetCustomerVoucherRequest {
 }
 
 message GetCustomerVouchersRequest {
-  int32 customer_id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+  string customer_id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "Customer ID to filter by"
   }];
   common.PaginationRequest pagination = 2;
 }
 
 message GetCustomerVouchersByStatusRequest {
-  int32 customer_id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+  string customer_id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "Customer ID to filter by"
   }];
   common.CustomerVoucher.Status status = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
@@ -248,7 +248,7 @@ message DeleteCustomerVoucherRequest {
 }
 
 message GetAvailableVouchersForCustomerRequest {
-  int32 customer_id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+  string customer_id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
     description: "Customer ID to get available vouchers for"
   }];
   common.PaginationRequest pagination = 2;
@@ -268,7 +268,7 @@ message CalculateDiscountAmountRequest {
   repeated string vouchers = 1;
   double total_product_amount = 2;
   double total_shipping_amount = 3;
-  int32 customer_id = 4; // for validate voucher usage limit
+  string customer_id = 4; // for validate voucher usage limit
 }
 
 message CalculateDiscountAmountResponse {
@@ -287,7 +287,7 @@ message UsingVoucherRequest {
   repeated string vouchers = 1;
   double total_product_amount = 2;
   double total_shipping_amount = 3;
-  int32 customer_id = 4;
+  string customer_id = 4;
   int32 order_id = 5;
 }
 

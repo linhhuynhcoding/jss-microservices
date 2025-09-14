@@ -28,7 +28,7 @@ const (
 // Request messages for loyalty points
 type CreateLoyaltyPointRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	CustomerId    int32                  `protobuf:"varint,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	CustomerId    string                 `protobuf:"bytes,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
 	Points        int32                  `protobuf:"varint,2,opt,name=points,proto3" json:"points,omitempty"`
 	Source        string                 `protobuf:"bytes,3,opt,name=source,proto3" json:"source,omitempty"`
 	ReferenceId   *int32                 `protobuf:"varint,4,opt,name=reference_id,json=referenceId,proto3,oneof" json:"reference_id,omitempty"`
@@ -66,11 +66,11 @@ func (*CreateLoyaltyPointRequest) Descriptor() ([]byte, []int) {
 	return file_loyalty_loyalty_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *CreateLoyaltyPointRequest) GetCustomerId() int32 {
+func (x *CreateLoyaltyPointRequest) GetCustomerId() string {
 	if x != nil {
 		return x.CustomerId
 	}
-	return 0
+	return ""
 }
 
 func (x *CreateLoyaltyPointRequest) GetPoints() int32 {
@@ -140,7 +140,7 @@ func (x *GetLoyaltyPointRequest) GetId() int32 {
 
 type GetLoyaltyPointsByCustomerRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	CustomerId    int32                  `protobuf:"varint,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	CustomerId    string                 `protobuf:"bytes,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
 	Pagination    *PaginationRequest     `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -176,11 +176,11 @@ func (*GetLoyaltyPointsByCustomerRequest) Descriptor() ([]byte, []int) {
 	return file_loyalty_loyalty_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *GetLoyaltyPointsByCustomerRequest) GetCustomerId() int32 {
+func (x *GetLoyaltyPointsByCustomerRequest) GetCustomerId() string {
 	if x != nil {
 		return x.CustomerId
 	}
-	return 0
+	return ""
 }
 
 func (x *GetLoyaltyPointsByCustomerRequest) GetPagination() *PaginationRequest {
@@ -400,7 +400,7 @@ func (x *DeleteLoyaltyPointRequest) GetId() int32 {
 
 type GetCustomerTotalPointsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	CustomerId    int32                  `protobuf:"varint,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	CustomerId    string                 `protobuf:"bytes,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -435,11 +435,11 @@ func (*GetCustomerTotalPointsRequest) Descriptor() ([]byte, []int) {
 	return file_loyalty_loyalty_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *GetCustomerTotalPointsRequest) GetCustomerId() int32 {
+func (x *GetCustomerTotalPointsRequest) GetCustomerId() string {
 	if x != nil {
 		return x.CustomerId
 	}
-	return 0
+	return ""
 }
 
 // Response messages for loyalty points
@@ -542,7 +542,7 @@ func (x *GetLoyaltyPointsResponse) GetPagination() *PaginationResponse {
 type GetCustomerTotalPointsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TotalPoints   int32                  `protobuf:"varint,1,opt,name=total_points,json=totalPoints,proto3" json:"total_points,omitempty"`
-	CustomerId    int32                  `protobuf:"varint,2,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	CustomerId    string                 `protobuf:"bytes,2,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -584,11 +584,11 @@ func (x *GetCustomerTotalPointsResponse) GetTotalPoints() int32 {
 	return 0
 }
 
-func (x *GetCustomerTotalPointsResponse) GetCustomerId() int32 {
+func (x *GetCustomerTotalPointsResponse) GetCustomerId() string {
 	if x != nil {
 		return x.CustomerId
 	}
-	return 0
+	return ""
 }
 
 // Request messages for vouchers
@@ -1112,7 +1112,7 @@ func (x *GetVouchersResponse) GetPagination() *PaginationResponse {
 // Request messages for customer vouchers
 type CreateCustomerVoucherRequest struct {
 	state         protoimpl.MessageState  `protogen:"open.v1"`
-	CustomerId    int32                   `protobuf:"varint,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	CustomerId    string                  `protobuf:"bytes,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
 	VoucherId     int32                   `protobuf:"varint,2,opt,name=voucher_id,json=voucherId,proto3" json:"voucher_id,omitempty"`
 	Status        *CustomerVoucher_Status `protobuf:"varint,3,opt,name=status,proto3,enum=common.CustomerVoucher_Status,oneof" json:"status,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -1149,11 +1149,11 @@ func (*CreateCustomerVoucherRequest) Descriptor() ([]byte, []int) {
 	return file_loyalty_loyalty_proto_rawDescGZIP(), []int{20}
 }
 
-func (x *CreateCustomerVoucherRequest) GetCustomerId() int32 {
+func (x *CreateCustomerVoucherRequest) GetCustomerId() string {
 	if x != nil {
 		return x.CustomerId
 	}
-	return 0
+	return ""
 }
 
 func (x *CreateCustomerVoucherRequest) GetVoucherId() int32 {
@@ -1216,7 +1216,7 @@ func (x *GetCustomerVoucherRequest) GetId() int32 {
 
 type GetCustomerVouchersRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	CustomerId    int32                  `protobuf:"varint,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	CustomerId    string                 `protobuf:"bytes,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
 	Pagination    *PaginationRequest     `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1252,11 +1252,11 @@ func (*GetCustomerVouchersRequest) Descriptor() ([]byte, []int) {
 	return file_loyalty_loyalty_proto_rawDescGZIP(), []int{22}
 }
 
-func (x *GetCustomerVouchersRequest) GetCustomerId() int32 {
+func (x *GetCustomerVouchersRequest) GetCustomerId() string {
 	if x != nil {
 		return x.CustomerId
 	}
-	return 0
+	return ""
 }
 
 func (x *GetCustomerVouchersRequest) GetPagination() *PaginationRequest {
@@ -1268,7 +1268,7 @@ func (x *GetCustomerVouchersRequest) GetPagination() *PaginationRequest {
 
 type GetCustomerVouchersByStatusRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	CustomerId    int32                  `protobuf:"varint,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	CustomerId    string                 `protobuf:"bytes,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
 	Status        CustomerVoucher_Status `protobuf:"varint,2,opt,name=status,proto3,enum=common.CustomerVoucher_Status" json:"status,omitempty"`
 	Pagination    *PaginationRequest     `protobuf:"bytes,3,opt,name=pagination,proto3" json:"pagination,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -1305,11 +1305,11 @@ func (*GetCustomerVouchersByStatusRequest) Descriptor() ([]byte, []int) {
 	return file_loyalty_loyalty_proto_rawDescGZIP(), []int{23}
 }
 
-func (x *GetCustomerVouchersByStatusRequest) GetCustomerId() int32 {
+func (x *GetCustomerVouchersByStatusRequest) GetCustomerId() string {
 	if x != nil {
 		return x.CustomerId
 	}
-	return 0
+	return ""
 }
 
 func (x *GetCustomerVouchersByStatusRequest) GetStatus() CustomerVoucher_Status {
@@ -1512,7 +1512,7 @@ func (x *DeleteCustomerVoucherRequest) GetId() int32 {
 
 type GetAvailableVouchersForCustomerRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	CustomerId    int32                  `protobuf:"varint,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	CustomerId    string                 `protobuf:"bytes,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
 	Pagination    *PaginationRequest     `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1548,11 +1548,11 @@ func (*GetAvailableVouchersForCustomerRequest) Descriptor() ([]byte, []int) {
 	return file_loyalty_loyalty_proto_rawDescGZIP(), []int{28}
 }
 
-func (x *GetAvailableVouchersForCustomerRequest) GetCustomerId() int32 {
+func (x *GetAvailableVouchersForCustomerRequest) GetCustomerId() string {
 	if x != nil {
 		return x.CustomerId
 	}
-	return 0
+	return ""
 }
 
 func (x *GetAvailableVouchersForCustomerRequest) GetPagination() *PaginationRequest {
@@ -1664,7 +1664,7 @@ type CalculateDiscountAmountRequest struct {
 	Vouchers            []string               `protobuf:"bytes,1,rep,name=vouchers,proto3" json:"vouchers,omitempty"`
 	TotalProductAmount  float64                `protobuf:"fixed64,2,opt,name=total_product_amount,json=totalProductAmount,proto3" json:"total_product_amount,omitempty"`
 	TotalShippingAmount float64                `protobuf:"fixed64,3,opt,name=total_shipping_amount,json=totalShippingAmount,proto3" json:"total_shipping_amount,omitempty"`
-	CustomerId          int32                  `protobuf:"varint,4,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"` // for validate voucher usage limit
+	CustomerId          string                 `protobuf:"bytes,4,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"` // for validate voucher usage limit
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -1720,11 +1720,11 @@ func (x *CalculateDiscountAmountRequest) GetTotalShippingAmount() float64 {
 	return 0
 }
 
-func (x *CalculateDiscountAmountRequest) GetCustomerId() int32 {
+func (x *CalculateDiscountAmountRequest) GetCustomerId() string {
 	if x != nil {
 		return x.CustomerId
 	}
-	return 0
+	return ""
 }
 
 type CalculateDiscountAmountResponse struct {
@@ -1852,7 +1852,7 @@ type UsingVoucherRequest struct {
 	Vouchers            []string               `protobuf:"bytes,1,rep,name=vouchers,proto3" json:"vouchers,omitempty"`
 	TotalProductAmount  float64                `protobuf:"fixed64,2,opt,name=total_product_amount,json=totalProductAmount,proto3" json:"total_product_amount,omitempty"`
 	TotalShippingAmount float64                `protobuf:"fixed64,3,opt,name=total_shipping_amount,json=totalShippingAmount,proto3" json:"total_shipping_amount,omitempty"`
-	CustomerId          int32                  `protobuf:"varint,4,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	CustomerId          string                 `protobuf:"bytes,4,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
 	OrderId             int32                  `protobuf:"varint,5,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
@@ -1909,11 +1909,11 @@ func (x *UsingVoucherRequest) GetTotalShippingAmount() float64 {
 	return 0
 }
 
-func (x *UsingVoucherRequest) GetCustomerId() int32 {
+func (x *UsingVoucherRequest) GetCustomerId() string {
 	if x != nil {
 		return x.CustomerId
 	}
-	return 0
+	return ""
 }
 
 func (x *UsingVoucherRequest) GetOrderId() int32 {
@@ -1981,7 +1981,7 @@ const file_loyalty_loyalty_proto_rawDesc = "" +
 	"\n" +
 	"\x15loyalty/loyalty.proto\x12\aloyalty\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x14loyalty/common.proto\"\x98\x02\n" +
 	"\x19CreateLoyaltyPointRequest\x12\x1f\n" +
-	"\vcustomer_id\x18\x01 \x01(\x05R\n" +
+	"\vcustomer_id\x18\x01 \x01(\tR\n" +
 	"customerId\x12\x16\n" +
 	"\x06points\x18\x02 \x01(\x05R\x06points\x12\x16\n" +
 	"\x06source\x18\x03 \x01(\tR\x06source\x12&\n" +
@@ -1991,7 +1991,7 @@ const file_loyalty_loyalty_proto_rawDesc = "" +
 	"\x16GetLoyaltyPointRequest\x123\n" +
 	"\x02id\x18\x01 \x01(\x05B#\x92A 2\x1eID of the loyalty point recordR\x02id\"\x9e\x01\n" +
 	"!GetLoyaltyPointsByCustomerRequest\x12>\n" +
-	"\vcustomer_id\x18\x01 \x01(\x05B\x1d\x92A\x1a2\x18Customer ID to filter byR\n" +
+	"\vcustomer_id\x18\x01 \x01(\tB\x1d\x92A\x1a2\x18Customer ID to filter byR\n" +
 	"customerId\x129\n" +
 	"\n" +
 	"pagination\x18\x02 \x01(\v2\x19.common.PaginationRequestR\n" +
@@ -2014,7 +2014,7 @@ const file_loyalty_loyalty_proto_rawDesc = "" +
 	"\x19DeleteLoyaltyPointRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\"@\n" +
 	"\x1dGetCustomerTotalPointsRequest\x12\x1f\n" +
-	"\vcustomer_id\x18\x01 \x01(\x05R\n" +
+	"\vcustomer_id\x18\x01 \x01(\tR\n" +
 	"customerId\"T\n" +
 	"\x17GetLoyaltyPointResponse\x129\n" +
 	"\rloyalty_point\x18\x01 \x01(\v2\x14.common.LoyaltyPointR\floyaltyPoint\"\x93\x01\n" +
@@ -2025,7 +2025,7 @@ const file_loyalty_loyalty_proto_rawDesc = "" +
 	"pagination\"\x9a\x01\n" +
 	"\x1eGetCustomerTotalPointsResponse\x12E\n" +
 	"\ftotal_points\x18\x01 \x01(\x05B\"\x92A\x1f2\x1dTotal points for the customerR\vtotalPoints\x121\n" +
-	"\vcustomer_id\x18\x02 \x01(\x05B\x10\x92A\r2\vCustomer IDR\n" +
+	"\vcustomer_id\x18\x02 \x01(\tB\x10\x92A\r2\vCustomer IDR\n" +
 	"customerId\"\xd3\x03\n" +
 	"\x14CreateVoucherRequest\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\tR\x04code\x12%\n" +
@@ -2077,7 +2077,7 @@ const file_loyalty_loyalty_proto_rawDesc = "" +
 	"pagination\x18\x02 \x01(\v2\x1a.common.PaginationResponseR\n" +
 	"pagination\"\x94\x02\n" +
 	"\x1cCreateCustomerVoucherRequest\x12\x1f\n" +
-	"\vcustomer_id\x18\x01 \x01(\x05R\n" +
+	"\vcustomer_id\x18\x01 \x01(\tR\n" +
 	"customerId\x12\x1d\n" +
 	"\n" +
 	"voucher_id\x18\x02 \x01(\x05R\tvoucherId\x12;\n" +
@@ -2088,13 +2088,13 @@ const file_loyalty_loyalty_proto_rawDesc = "" +
 	"\x19GetCustomerVoucherRequest\x126\n" +
 	"\x02id\x18\x01 \x01(\x05B&\x92A#2!ID of the customer voucher recordR\x02id\"\x97\x01\n" +
 	"\x1aGetCustomerVouchersRequest\x12>\n" +
-	"\vcustomer_id\x18\x01 \x01(\x05B\x1d\x92A\x1a2\x18Customer ID to filter byR\n" +
+	"\vcustomer_id\x18\x01 \x01(\tB\x1d\x92A\x1a2\x18Customer ID to filter byR\n" +
 	"customerId\x129\n" +
 	"\n" +
 	"pagination\x18\x02 \x01(\v2\x19.common.PaginationRequestR\n" +
 	"pagination\"\xf1\x01\n" +
 	"\"GetCustomerVouchersByStatusRequest\x12>\n" +
-	"\vcustomer_id\x18\x01 \x01(\x05B\x1d\x92A\x1a2\x18Customer ID to filter byR\n" +
+	"\vcustomer_id\x18\x01 \x01(\tB\x1d\x92A\x1a2\x18Customer ID to filter byR\n" +
 	"customerId\x12P\n" +
 	"\x06status\x18\x02 \x01(\x0e2\x1e.common.CustomerVoucher.StatusB\x18\x92A\x152\x13Status to filter byR\x06status\x129\n" +
 	"\n" +
@@ -2112,7 +2112,7 @@ const file_loyalty_loyalty_proto_rawDesc = "" +
 	"\x1cDeleteCustomerVoucherRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\"\xb4\x01\n" +
 	"&GetAvailableVouchersForCustomerRequest\x12O\n" +
-	"\vcustomer_id\x18\x01 \x01(\x05B.\x92A+2)Customer ID to get available vouchers forR\n" +
+	"\vcustomer_id\x18\x01 \x01(\tB.\x92A+2)Customer ID to get available vouchers forR\n" +
 	"customerId\x129\n" +
 	"\n" +
 	"pagination\x18\x02 \x01(\v2\x19.common.PaginationRequestR\n" +
@@ -2128,7 +2128,7 @@ const file_loyalty_loyalty_proto_rawDesc = "" +
 	"\bvouchers\x18\x01 \x03(\tR\bvouchers\x120\n" +
 	"\x14total_product_amount\x18\x02 \x01(\x01R\x12totalProductAmount\x122\n" +
 	"\x15total_shipping_amount\x18\x03 \x01(\x01R\x13totalShippingAmount\x12\x1f\n" +
-	"\vcustomer_id\x18\x04 \x01(\x05R\n" +
+	"\vcustomer_id\x18\x04 \x01(\tR\n" +
 	"customerId\"\xa3\x01\n" +
 	"\x1fCalculateDiscountAmountResponse\x122\n" +
 	"\x15total_discount_amount\x18\x01 \x01(\x01R\x13totalDiscountAmount\x12L\n" +
@@ -2142,7 +2142,7 @@ const file_loyalty_loyalty_proto_rawDesc = "" +
 	"\bvouchers\x18\x01 \x03(\tR\bvouchers\x120\n" +
 	"\x14total_product_amount\x18\x02 \x01(\x01R\x12totalProductAmount\x122\n" +
 	"\x15total_shipping_amount\x18\x03 \x01(\x01R\x13totalShippingAmount\x12\x1f\n" +
-	"\vcustomer_id\x18\x04 \x01(\x05R\n" +
+	"\vcustomer_id\x18\x04 \x01(\tR\n" +
 	"customerId\x12\x19\n" +
 	"\border_id\x18\x05 \x01(\x05R\aorderId\"\x98\x01\n" +
 	"\x14UsingVoucherResponse\x122\n" +

@@ -1288,7 +1288,7 @@ func (x *UploadFileResponse) GetFileUrl() string {
 
 type PurchaseProductRequest struct {
 	state         protoimpl.MessageState            `protogen:"open.v1"`
-	CustomerId    int32                             `protobuf:"varint,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	CustomerId    string                            `protobuf:"bytes,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
 	Products      []*PurchaseProductRequest_Product `protobuf:"bytes,2,rep,name=products,proto3" json:"products,omitempty"`
 	OrderId       int32                             `protobuf:"varint,3,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -1325,11 +1325,11 @@ func (*PurchaseProductRequest) Descriptor() ([]byte, []int) {
 	return file_product_product_proto_rawDescGZIP(), []int{22}
 }
 
-func (x *PurchaseProductRequest) GetCustomerId() int32 {
+func (x *PurchaseProductRequest) GetCustomerId() string {
 	if x != nil {
 		return x.CustomerId
 	}
-	return 0
+	return ""
 }
 
 func (x *PurchaseProductRequest) GetProducts() []*PurchaseProductRequest_Product {
@@ -1549,7 +1549,7 @@ const file_product_product_proto_rawDesc = "" +
 	"\tfile_size\x18\x04 \x01(\x03R\bfileSize\x12\x19\n" +
 	"\bfile_url\x18\x05 \x01(\tR\afileUrl\"\x99\x01\n" +
 	"\x16PurchaseProductRequest\x12\x1f\n" +
-	"\vcustomer_id\x18\x01 \x01(\x05R\n" +
+	"\vcustomer_id\x18\x01 \x01(\tR\n" +
 	"customerId\x12C\n" +
 	"\bproducts\x18\x02 \x03(\v2'.product.PurchaseProductRequest_ProductR\bproducts\x12\x19\n" +
 	"\border_id\x18\x03 \x01(\x05R\aorderId\"[\n" +
