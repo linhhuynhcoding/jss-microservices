@@ -12,6 +12,7 @@ import (
 
 	"github.com/jackc/pgx/v5/pgtype"
 	utils "github.com/linhhuynhcoding/jss-microservices/jss-shared/utils/format"
+	token "github.com/linhhuynhcoding/jss-microservices/jss-shared/utils/token"
 	db "github.com/linhhuynhcoding/jss-microservices/loyalty/internal/repository"
 	api "github.com/linhhuynhcoding/jss-microservices/rpc/gen/loyalty"
 )
@@ -22,6 +23,19 @@ func (s *Service) CreateVoucher(ctx context.Context, req *api.CreateVoucherReque
 	s.logger.Info("Creating voucher",
 		zap.String("code", req.Code),
 		zap.String("discount_type", req.DiscountType.String()))
+
+	// 1) Auth
+	accessToken, err := token.BearerFromMD(ctx)
+	if err != nil {
+		return nil, err
+	}
+	valid, _, role, err := s.authClient.Validate(ctx, accessToken)
+	if err != nil || !valid {
+		return nil, fmt.Errorf("unauthorised")
+	}
+	if role != "MANAGER" && role != "ADMIN" {
+		return nil, fmt.Errorf("unauthorised role: %s, just Manager and Admin could update voucher", role)
+	}
 
 	if req.Code == "" {
 		return nil, status.Error(codes.InvalidArgument, "code is required")

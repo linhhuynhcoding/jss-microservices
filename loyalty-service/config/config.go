@@ -9,6 +9,8 @@ import (
 type Config struct {
 	DBSource  string `mapstructure:"db_source"`
 	MqConnStr string `mapstructure:"mq_conn_str"` //"amqp://admin:admin@localhost:5672/"
+
+	AuthServiceAddr string `mapstructure:"auth_service_addr"`
 }
 
 func NewConfig() Config {
@@ -20,7 +22,7 @@ func NewConfig() Config {
 }
 
 func LoadDefaultConfig(cfg *Config) {
-
+	cfg.AuthServiceAddr = "auth-service:50011"
 }
 
 func LoadConfig(path string) (config Config, err error) {

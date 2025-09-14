@@ -63,7 +63,8 @@ func NewServer(
 	}
 
 	s := grpc.NewServer()
-	loyalty.RegisterLoyaltyServer(s, service.NewService(ctx, log, config.NewConfig(), store))
+	ser, err := service.NewService(log, config.NewConfig(), store)
+	loyalty.RegisterLoyaltyServer(s, ser)
 
 	log.Info("gRPC server listening on :50051")
 	if err := s.Serve(lis); err != nil {

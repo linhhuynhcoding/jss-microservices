@@ -45,7 +45,7 @@ message CreateOrderRequest {
   double shipping_cost = 4;
 
   // NEW: optional customer_id (nếu nhân viên chọn khách trong hệ thống)
-  string customer_id = 5;
+  string customer_id = 5; // phone
 }
 
 message CreateOrderResponse {
